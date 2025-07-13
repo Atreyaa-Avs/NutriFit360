@@ -1,0 +1,669 @@
+{
+  "16-5-2025": {
+    "breakfast": [
+      {
+        "name": "Boiled Eggs and Toast",
+        "calories": 280,
+        "protein": 18,
+        "carbs": 25,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Grilled Paneer Wrap",
+        "calories": 450,
+        "protein": 30,
+        "carbs": 40,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Lentil Soup with Whole Grain Bread",
+        "calories": 400,
+        "protein": 22,
+        "carbs": 45,
+        "fats": 10
+      }
+    ]
+  },
+  "17-5-2025": {
+    "breakfast": [
+      {
+        "name": "Banana Peanut Butter Toast",
+        "calories": 320,
+        "protein": 10,
+        "carbs": 35,
+        "fats": 15
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Vegetable Biryani with Raita",
+        "calories": 500,
+        "protein": 15,
+        "carbs": 65,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Grilled Fish with Quinoa",
+        "calories": 450,
+        "protein": 35,
+        "carbs": 30,
+        "fats": 15
+      }
+    ]
+  },
+  "18-5-2025": {
+    "breakfast": [
+      {
+        "name": "Chia Pudding with Berries",
+        "calories": 300,
+        "protein": 12,
+        "carbs": 35,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Rajma with Brown Rice",
+        "calories": 480,
+        "protein": 20,
+        "carbs": 60,
+        "fats": 10
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Chicken Stir-fry with Veggies",
+        "calories": 420,
+        "protein": 30,
+        "carbs": 25,
+        "fats": 15
+      }
+    ]
+  },
+  "19-5-2025": {
+    "breakfast": [
+      {
+        "name": "Masala Oats",
+        "calories": 280,
+        "protein": 10,
+        "carbs": 35,
+        "fats": 8
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Stuffed Paratha with Curd",
+        "calories": 520,
+        "protein": 18,
+        "carbs": 55,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Grilled Tofu with Brown Rice",
+        "calories": 450,
+        "protein": 25,
+        "carbs": 40,
+        "fats": 15
+      }
+    ]
+  },
+  "20-5-2025": {
+    "breakfast": [
+      {
+        "name": "Upma with Coconut Chutney",
+        "calories": 300,
+        "protein": 8,
+        "carbs": 40,
+        "fats": 10
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Chickpea Salad Bowl",
+        "calories": 420,
+        "protein": 20,
+        "carbs": 35,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Vegetable Pasta",
+        "calories": 470,
+        "protein": 18,
+        "carbs": 55,
+        "fats": 16
+      }
+    ]
+  },
+  "21-5-2025": {
+    "breakfast": [
+      {
+        "name": "Moong Dal Chilla",
+        "calories": 280,
+        "protein": 15,
+        "carbs": 30,
+        "fats": 8
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Egg Curry with Rice",
+        "calories": 500,
+        "protein": 25,
+        "carbs": 40,
+        "fats": 22
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Zucchini Noodles with Pesto",
+        "calories": 400,
+        "protein": 18,
+        "carbs": 30,
+        "fats": 20
+      }
+    ]
+  },
+  "22-5-2025": {
+    "breakfast": [
+      {
+        "name": "Poha with Peanuts",
+        "calories": 300,
+        "protein": 9,
+        "carbs": 40,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Grilled Paneer with Couscous",
+        "calories": 480,
+        "protein": 28,
+        "carbs": 40,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Pumpkin Soup and Toast",
+        "calories": 380,
+        "protein": 12,
+        "carbs": 35,
+        "fats": 14
+      }
+    ]
+  },
+  "23-5-2025": {
+    "breakfast": [
+      {
+        "name": "Oats and Banana Pancakes",
+        "calories": 320,
+        "protein": 10,
+        "carbs": 40,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Mixed Veg Curry with Chapati",
+        "calories": 450,
+        "protein": 15,
+        "carbs": 50,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Grilled Chicken with Veggies",
+        "calories": 460,
+        "protein": 35,
+        "carbs": 30,
+        "fats": 16
+      }
+    ]
+  },
+  "24-5-2025": {
+    "breakfast": [
+      {
+        "name": "Idli with Sambar",
+        "calories": 290,
+        "protein": 10,
+        "carbs": 40,
+        "fats": 8
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Tofu Buddha Bowl",
+        "calories": 480,
+        "protein": 25,
+        "carbs": 50,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Spinach Soup with Croutons",
+        "calories": 370,
+        "protein": 12,
+        "carbs": 30,
+        "fats": 14
+      }
+    ]
+  },
+  "25-5-2025": {
+    "breakfast": [
+      {
+        "name": "Apple Cinnamon Oatmeal",
+        "calories": 310,
+        "protein": 10,
+        "carbs": 42,
+        "fats": 9
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Chicken Pita Pocket",
+        "calories": 460,
+        "protein": 30,
+        "carbs": 35,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Veggie Pizza (Homemade)",
+        "calories": 500,
+        "protein": 20,
+        "carbs": 55,
+        "fats": 20
+      }
+    ]
+  },
+  "26-5-2025": {
+    "breakfast": [
+      {
+        "name": "Protein Shake with Almonds",
+        "calories": 350,
+        "protein": 25,
+        "carbs": 25,
+        "fats": 15
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Chole with Rice",
+        "calories": 480,
+        "protein": 20,
+        "carbs": 55,
+        "fats": 14
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Stuffed Bell Peppers",
+        "calories": 430,
+        "protein": 18,
+        "carbs": 35,
+        "fats": 17
+      }
+    ]
+  },
+  "27-5-2025": {
+    "breakfast": [
+      {
+        "name": "Dosa with Chutney",
+        "calories": 300,
+        "protein": 8,
+        "carbs": 40,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Vegetable Pulao with Curd",
+        "calories": 470,
+        "protein": 15,
+        "carbs": 60,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Minestrone Soup with Breadstick",
+        "calories": 380,
+        "protein": 14,
+        "carbs": 35,
+        "fats": 12
+      }
+    ]
+  },
+  "28-5-2025": {
+    "breakfast": [
+      {
+        "name": "Cornflakes with Milk and Fruits",
+        "calories": 280,
+        "protein": 9,
+        "carbs": 40,
+        "fats": 8
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Egg Fried Rice",
+        "calories": 480,
+        "protein": 20,
+        "carbs": 50,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Paneer Bhurji with Roti",
+        "calories": 450,
+        "protein": 22,
+        "carbs": 35,
+        "fats": 20
+      }
+    ]
+  },
+  "29-5-2025": {
+    "breakfast": [
+      {
+        "name": "Fruit Salad with Nuts",
+        "calories": 300,
+        "protein": 10,
+        "carbs": 35,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Methi Thepla with Pickle",
+        "calories": 430,
+        "protein": 12,
+        "carbs": 50,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Vegetable Khichdi with Ghee",
+        "calories": 400,
+        "protein": 15,
+        "carbs": 45,
+        "fats": 14
+      }
+    ]
+  },
+  "30-5-2025": {
+    "breakfast": [
+      {
+        "name": "Avocado Toast with Egg",
+        "calories": 330,
+        "protein": 14,
+        "carbs": 30,
+        "fats": 18
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Mixed Dal with Jeera Rice",
+        "calories": 450,
+        "protein": 18,
+        "carbs": 50,
+        "fats": 15
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Roasted Vegetables with Hummus",
+        "calories": 390,
+        "protein": 16,
+        "carbs": 30,
+        "fats": 16
+      }
+    ]
+  },
+  "31-5-2025": {
+    "breakfast": [
+      {
+        "name": "Multigrain Toast with Cottage Cheese",
+        "calories": 300,
+        "protein": 16,
+        "carbs": 30,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Chicken Tikka with Paratha",
+        "calories": 500,
+        "protein": 30,
+        "carbs": 40,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Vegetable Soup and Crackers",
+        "calories": 370,
+        "protein": 14,
+        "carbs": 30,
+        "fats": 14
+      }
+    ]
+  },
+  "1-6-2025": {
+    "breakfast": [
+      {
+        "name": "Peanut Butter Banana Smoothie",
+        "calories": 320,
+        "protein": 14,
+        "carbs": 35,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Veg Grilled Sandwich",
+        "calories": 440,
+        "protein": 15,
+        "carbs": 45,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Rajma Soup and Toast",
+        "calories": 410,
+        "protein": 18,
+        "carbs": 35,
+        "fats": 14
+      }
+    ]
+  },
+  "2-6-2025": {
+    "breakfast": [
+      {
+        "name": "Sabudana Khichdi",
+        "calories": 300,
+        "protein": 6,
+        "carbs": 40,
+        "fats": 15
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Masoor Dal with Rice",
+        "calories": 460,
+        "protein": 20,
+        "carbs": 50,
+        "fats": 14
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Sautéed Vegetables with Paneer",
+        "calories": 430,
+        "protein": 22,
+        "carbs": 30,
+        "fats": 18
+      }
+    ]
+  },
+  "3-6-2025": {
+    "breakfast": [
+      {
+        "name": "Oats Upma",
+        "calories": 280,
+        "protein": 9,
+        "carbs": 35,
+        "fats": 10
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Vegetable Wrap with Hummus",
+        "calories": 450,
+        "protein": 18,
+        "carbs": 40,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Egg Curry with Quinoa",
+        "calories": 460,
+        "protein": 28,
+        "carbs": 35,
+        "fats": 18
+      }
+    ]
+  },
+  "4-6-2025": {
+    "breakfast": [
+      {
+        "name": "Pancakes with Maple Syrup",
+        "calories": 320,
+        "protein": 8,
+        "carbs": 45,
+        "fats": 12
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Dal Palak with Rice",
+        "calories": 460,
+        "protein": 20,
+        "carbs": 45,
+        "fats": 16
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Tofu Curry with Chapati",
+        "calories": 430,
+        "protein": 24,
+        "carbs": 30,
+        "fats": 18
+      }
+    ]
+  },
+  "5-6-2025": {
+    "breakfast": [
+      {
+        "name": "Vegetable Dalia",
+        "calories": 290,
+        "protein": 10,
+        "carbs": 35,
+        "fats": 10
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Soya Chunk Curry with Rice",
+        "calories": 470,
+        "protein": 30,
+        "carbs": 40,
+        "fats": 18
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Mushroom Soup with Garlic Bread",
+        "calories": 400,
+        "protein": 16,
+        "carbs": 35,
+        "fats": 15
+      }
+    ]
+  },
+  "6-6-2025": {
+    "breakfast": [
+      {
+        "name": "Sprouts Salad",
+        "calories": 260,
+        "protein": 12,
+        "carbs": 25,
+        "fats": 8
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Chicken Curry with Rice",
+        "calories": 500,
+        "protein": 35,
+        "carbs": 40,
+        "fats": 20
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Mixed Veg Stew with Bread",
+        "calories": 430,
+        "protein": 18,
+        "carbs": 35,
+        "fats": 17
+      }
+    ]
+  },
+  "7-6-2025": {
+    "breakfast": [
+      {
+        "name": "Greek Yogurt with Muesli",
+        "calories": 310,
+        "protein": 15,
+        "carbs": 35,
+        "fats": 10
+      }
+    ],
+    "lunch": [
+      {
+        "name": "Vegetable Lasagna",
+        "calories": 480,
+        "protein": 20,
+        "carbs": 45,
+        "fats": 22
+      }
+    ],
+    "dinner": [
+      {
+        "name": "Grilled Fish with Couscous",
+        "calories": 460,
+        "protein": 35,
+        "carbs": 30,
+        "fats": 16
+      }
+    ]
+  }
+}
