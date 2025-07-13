@@ -1,0 +1,30 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 24 24"
+  width="24"
+  height="24"
+  fill="none"
+  stroke="black"
+  stroke-width="2"
+  stroke-linecap="round"
+  stroke-linejoin="round"
+>
+  <!-- First path (checkmark or tick-style path) -->
+  <path
+    d="M9,11 C9,11 12,14 12,14 C12,14 22.763,-6.263 22.996,-6.496"
+    transform="translate(1,3)"
+  />
+  
+  <!-- Second path (rounded rectangle-like or capsule) -->
+  <path
+    d="M9,0.64 
+       C9,3.908 9,7 9,7 
+       C9,8.1 8.1,9 7,9 
+       C7,9 -7,9 -7,9 
+       C-8.1,9 -9,8.1 -9,7 
+       C-9,7 -9,-7 -9,-7 
+       C-9,-8.1 -8.1,-9 -7,-9 
+       C-7,-9 -0.774,-9 3.374,-9"
+    transform="translate(12,12)"
+  />
+</svg>
