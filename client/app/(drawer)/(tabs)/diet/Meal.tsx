@@ -3,43 +3,51 @@ import CameraButton from "@/components/Diet/AddMeal/CameraButton";
 import GalleryButton from "@/components/Diet/AddMeal/GalleryButton";
 import ProceedButton from "@/components/Diet/AddMeal/ProceedButton";
 import CameraComponent from "@/components/Diet/CameraComponent";
-import React from "react";
-import { Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import React, { useState } from "react";
+import { Pressable, Text, View } from "react-native";
+
+import FlashlightOff from "@/assets/svgs/diet/flashlight-off.svg";
+import FlashlightOn from "@/assets/svgs/diet/flashlight-on.svg";
 
 const Meal = () => {
+  const [flash, setFlash] = useState(false);
+
   return (
-    <SafeAreaView className="bg-gray-200 min-h-screen">
-      <View className="p-4">
-        <View>
-          <Text className="text-xl text-center">
+    <View className="flex-1">
+      {/* Camera in background */}
+      <View className="absolute top-0 bottom-0 left-0 right-0 z-0">
+        <CameraComponent flash={flash} />
+      </View>
+
+      {/* Foreground content */}
+      <View className="z-10 gap-12 mt-28">
+        <View className="mt-2">
+          <Text className="text-xl font-bold text-center text-white">
             Put the meal inside the box!
           </Text>
         </View>
-        <View className="flex-row mx-auto mt-5 w-60 h-60 rounded-xl border-[5px] border-gray-400"></View>
 
-        {/* <View className="flex-row justify-between my-5 items-center mx-4">
+        <View className="flex-row mx-auto w-60 h-60 rounded-xl border-[5px] border-white bg-transparent" />
+
+        <View className="flex-row items-center justify-between mx-4 mt-5">
           <GalleryButton />
           <CameraButton />
           <ProceedButton />
-        </View> */}
-
-        <CameraComponent />
-
-        {/* <View className="bg-neutral-300 p-3 px-5 rounded-xl">
-          <Text className="mb-2 font-bold text-xl">Estimated Nutrition:</Text>
-          <Text className="">Carbs:</Text>
-          <View className="w-full my-2">
-            <AnimatedBar percentage={50} color="#8EFBFC" />
-          </View>
-          <Text className="">Protein:</Text>
-          <View className="w-full my-2">
-            <AnimatedBar percentage={70} color="#BFFA64" />
-          </View>
-          <NutritionInfo title={"Fats"} percentage={75} color={"#FA111E"} />
-        </View> */}
+        </View>
+        <View className="grid px-2 py-3 mx-auto -mt-8 bg-gray-400 rounded-2xl place-items-center">
+          <Pressable
+            className={flash ? "mt-0" : "-mt-2"}
+            onPress={() => setFlash(!flash)}
+          >
+            {flash ? (
+              <FlashlightOn width={50} height={50} color={"#fff"} />
+            ) : (
+              <FlashlightOff width={50} height={50} color={"#000"} />
+            )}
+          </Pressable>
+        </View>
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 

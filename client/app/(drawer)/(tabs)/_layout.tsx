@@ -85,9 +85,9 @@ interface TabConfig {
 const tabs: TabConfig[] = [
   { name: "home/index", title: "Home", icon: Home },
   { name: "diet", title: "Diet", icon: Food, strokeWidth: 5 },
-  { name: "workout/index", title: "Workout", icon: Exercise, strokeWidth: 20 },
-  { name: "progress/index", title: "Progress", icon: Progress, strokeWidth: 20 },
-  { name: "profile/index", title: "Profile", icon: Profile },
+  { name: "workout", title: "Workout", icon: Exercise, strokeWidth: 20 },
+  { name: "progress", title: "Progress", icon: Progress, strokeWidth: 20 },
+  { name: "profile", title: "Profile", icon: Profile },
 ];
 
 const tabMetaMap = tabs.reduce(

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg 
+  xmlns="http://www.w3.org/2000/svg" 
+  width="24" 
+  height="24" 
+  viewBox="0 0 24 24" 
+  fill="none" 
+  stroke="currentColor" 
+  stroke-width="1.5"
+>
+  <!-- Star (Recommendation) at the top -->
+  <path 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    d="M12 2l2.2 4.6 5.1.75-3.7 3.6.9 5.05L12 13.9 7.5 16l.9-5.05L4.7 7.35l5.1-.75L12 2z" 
+  />
+  
+  <!-- Dumbbell (Workout) at the bottom with spacing -->
+  <path 
+    stroke-linecap="round" 
+    stroke-linejoin="round" 
+    d="M4 19l1-1m14 1l-1-1m-3-1h-4m7 0h1a1 1 0 001-1v-2a1 1 0 00-1-1h-1m-10 0H6a1 1 0 00-1 1v2a1 1 0 001 1h1" 
+    transform="translate(0,2)" 
+  />
+</svg>

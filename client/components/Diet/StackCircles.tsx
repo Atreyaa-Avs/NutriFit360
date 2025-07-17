@@ -1,4 +1,3 @@
-import ActivtyRingCenter from "@/assets/svgs/diet/ActivityRingCenter.svg";
 import Checkbox from "@/assets/svgs/diet/Checkbox.svg";
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View } from "react-native";
@@ -8,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import Svg, { Circle } from "react-native-svg";
+import Svg, { Circle, SvgProps } from "react-native-svg";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -21,21 +20,27 @@ type RingData = {
 };
 
 interface ActivityRingsProps {
+  Icon: React.FC<SvgProps>;
+  title: string;
   data: RingData[];
   circleWidth?: number;
   strokeWidth?: number;
   gap?: number;
   start?: boolean;
   scale?: number;
+  unit: string;
 }
 
 const StackCircles = ({
+  Icon,
+  title,
   data,
   circleWidth = 200,
   strokeWidth = 10,
   gap = 12,
   start = false,
   scale = 1,
+  unit,
 }: ActivityRingsProps) => {
   const baseRadius = 30;
 
@@ -82,7 +87,7 @@ const StackCircles = ({
   const viewBoxSize = outermostRadius * 2 + strokeWidth;
 
   return (
-    <View className="flex-row-reverse justify-between w-full bg-white p-4 rounded-lg">
+    <View className="flex-row-reverse justify-between w-full p-4 bg-white rounded-lg">
       <View
         style={[
           styles.container,
@@ -121,30 +126,28 @@ const StackCircles = ({
           ))}
         </Svg>
         <View style={styles.centerText}>
-          <ActivtyRingCenter width={40} height={40} />
+          <Icon width={40} height={40} />
         </View>
       </View>
 
       <View>
-        <Text className="font-extrabold text-3xl mt-1 underline">
-          Nutrition
-        </Text>
+        <Text className="mt-1 text-3xl font-extrabold underline">{title}</Text>
         <View className="flex my-auto mt-5">
           {/* {data.map((ring, i) => (
             <View className="py-1" key={i}>
-              <View className="flex-col bg-neutral-300 px-4 py-1 rounded-xl">
+              <View className="flex-col px-4 py-1 bg-neutral-300 rounded-xl">
                 <View className="flex-row items-center pt-2">
                   <View
-                    className="w-3 h-3 rounded-full mr-2"
+                    className="w-3 h-3 mr-2 rounded-full"
                     style={{ backgroundColor: ring.strokeColor }}
                   />
                   <Text className="font-semibold">
                     {ring.label}: {ring.percentage}%
                   </Text>
                 </View>
-                <View className="ml-5 my-2">
+                <View className="my-2 ml-5">
                   <Text>
-                    <Text className="font-extrabold text-3xl">{ring.value ?? 0}</Text>
+                    <Text className="text-3xl font-extrabold">{ring.value ?? 0}</Text>
                     <Text className="text-neutral-500"> / {ring.target ?? 0}g</Text>
                   </Text>
                 </View>
@@ -159,6 +162,7 @@ const StackCircles = ({
                 value={ring.value ?? 0}
                 strokeColor={ring.strokeColor}
                 target={ring.target ?? 0}
+                unit={unit}
               />
             </View>
           ))}
@@ -174,6 +178,7 @@ interface StackComponentProps {
   target: number;
   strokeColor: string;
   percentage: number;
+  unit: string;
 }
 
 const InfoComponent = ({
@@ -182,16 +187,17 @@ const InfoComponent = ({
   value,
   target,
   strokeColor,
+  unit,
 }: StackComponentProps) => {
   return (
-    <View className="flex-col my-1 p-2 px-4 rounded-xl bg-gray-300">
+    <View className="flex-col p-2 px-4 my-1 bg-gray-300 rounded-xl">
       <View className="flex-row">
-        <View className="flex-row gap-2 items-center pb-2">
+        <View className="flex-row items-center gap-2 pb-2">
           <View
             className="w-3 h-3 rounded-full"
             style={{ backgroundColor: strokeColor }}
           ></View>
-          <Text className="font-semibold text-base">{title}:</Text>
+          <Text className="text-base font-semibold">{title}:</Text>
           <Text>{percentage}%</Text>
         </View>
       </View>
@@ -204,8 +210,12 @@ const InfoComponent = ({
           </View>
         )}
         <Text>
-          <Text className="font-extrabold text-2xl">{value ?? 0}</Text>
-          <Text className="text-neutral-500"> / {target ?? 0}g</Text>
+          <Text className="text-2xl font-extrabold">{value ?? 0}</Text>
+          <Text className="text-neutral-500">
+            {" "}
+            / {target ?? 0}
+            {unit}
+          </Text>
         </Text>
       </View>
     </View>
