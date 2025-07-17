@@ -64,17 +64,18 @@ const WorkoutCalendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
 
   return (
     <View>
-      <View className="flex-row items-center justify-between bg-primary px-4 py-2 rounded-lg mb-2">
-        <Text className="text-white font-bold text-base">Calendar</Text>
-        <Text className="text-white text-sm flex-1 text-center">
-          {isToday(selectedDate)
-            ? "Today"
-            : formatDate(selectedDate)}
-        </Text>
+      <View className="flex-row items-center justify-between px-4 py-2 mb-2 rounded-lg bg-primary">
+          <Text className="text-base font-bold text-white">Calendar</Text>
+          <Text className="flex-1 text-sm text-center text-white">
+            {isToday(selectedDate) ? "Today" : formatDate(selectedDate)}
+          </Text>
+        <TouchableOpacity
+          onPress={toggleCalendar}
+          className="px-4 py-1 bg-gray-200 rounded-xl"
+        >
 
-        <TouchableOpacity onPress={toggleCalendar} className="bg-gray-200 px-4 py-1 rounded-xl">
           <Animated.View style={arrowAnimatedStyle}>
-            <Text className="text-black text-lg">{">"}</Text>
+            <Text className="text-lg text-black">{">"}</Text>
           </Animated.View>
         </TouchableOpacity>
       </View>

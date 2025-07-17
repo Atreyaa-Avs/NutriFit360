@@ -1,8 +1,12 @@
-import React from "react";
-import { View, Text, Button, SafeAreaView } from "react-native";
 import { CameraView, useCameraPermissions } from "expo-camera";
+import React from "react";
+import { Button, SafeAreaView, Text, View } from "react-native";
 
-const CameraComponent = () => {
+interface CameraComponentProps {
+  flash?: boolean;
+}
+
+const CameraComponent = ({ flash }: CameraComponentProps) => {
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
@@ -11,21 +15,31 @@ const CameraComponent = () => {
 
   if (!permission.granted) {
     return (
-      <SafeAreaView className="flex-1 justify-center items-center bg-white">
-        <Text className="text-lg mb-4">We need camera permission</Text>
+      <SafeAreaView
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+          backgroundColor: "white",
+        }}
+      >
+        <Text style={{ fontSize: 18, marginBottom: 20 }}>
+          We need camera permission
+        </Text>
         <Button onPress={requestPermission} title="Grant Permission" />
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView className="flex-1 bg-black">
+    <SafeAreaView style={{ flex: 1, backgroundColor: "black" }}>
       <CameraView
-        className="flex-1"
+        style={{ flex: 1 }}
         facing="back"
+        enableTorch={flash}
         active={true}
+        zoom={0.3}
       />
-      <Text>OP</Text>
     </SafeAreaView>
   );
 };

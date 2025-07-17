@@ -1,12 +1,14 @@
+import ActivityRingDiet from "@/assets/svgs/diet/ActivityRingCenter.svg";
+import RecommendationRecipeSvg from "@/assets/svgs/diet/RecommendationRecipe.svg";
 import AddMeal from "@/components/Diet/AddMeal/AddMealLayout";
 import DietCalendar from "@/components/Diet/DietCalendar";
 import StackCircles from "@/components/Diet/StackCircles";
 import ViewMeal from "@/components/Diet/ViewMeal/ViewMealLayout";
+import { router } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import rawData from "./DietDemo.json";
-import { router } from "expo-router";
 
 // interface DietIndexProps {
 //   selectedDate: Array<String>[]
@@ -49,7 +51,7 @@ const Diet = () => {
   return (
     <ScrollView>
       <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 -mt-7 px-4 pt-2">
-        <Text className="text-4xl tracking-tighter pb-3 font-semibold">
+        <Text className="pb-3 text-4xl font-semibold tracking-tighter">
           Diet Tracker
         </Text>
         <View>{/* <Calendar /> */}</View>
@@ -76,7 +78,9 @@ const Diet = () => {
         <Text>{Data["06-07-2025"].breakfast[0].name}</Text>
         <View className="flex-row w-full gap-4">
           <View className="flex-1">
-            <Pressable onPress={() => router.push("/(drawer)/(tabs)/diet/Meal")}>
+            <Pressable
+              onPress={() => router.push("/(drawer)/(tabs)/diet/Meal")}
+            >
               <AddMeal />
             </Pressable>
           </View>
@@ -84,10 +88,25 @@ const Diet = () => {
             <ViewMeal />
           </View>
         </View>
+        <View>
+          <Pressable
+            onPress={() => router.push("/(drawer)/(tabs)/diet/Recommendation")}
+          >
+            <View className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
+              <RecommendationRecipeSvg />
+              <Text className="text-lg font-semibold text-center">
+                View Diet Recommendations
+              </Text>
+            </View>
+          </Pressable>
+        </View>
 
         <StackCircles
+          Icon={ActivityRingDiet}
+          title={"Nutrition"}
           start={true}
           scale={0.9}
+          unit="g"
           data={[
             {
               label: "Carbs",
