@@ -6,7 +6,9 @@ export default function DietLayout() {
     const navigation = useNavigation();
 
     return (
-      <View className={`absolute top-0 left-0 right-0 z-20 ${title ? "px-0" : "px-4 pt-4"} `}>
+      <View
+        className={`absolute top-0 left-0 right-0 z-20 ${title ? "px-0" : "px-4 pt-4"} `}
+      >
         <Pressable
           onPress={() => navigation.goBack()}
           className="flex-row items-center gap-4"
@@ -56,6 +58,13 @@ export default function DietLayout() {
         options={{
           presentation: "modal",
           header: () => <CustomMealHeader title="Diet Recommendation" />,
+        }}
+      />
+      <Stack.Screen
+        name="AnalyzeRecipe"
+        options={{
+          presentation: "modal",
+          header: () => <CustomMealHeader title="Analyze Recipe" />,
         }}
       />
     </Stack>

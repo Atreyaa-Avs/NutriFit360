@@ -1,20 +1,26 @@
 import Avatar from "@/assets/svgs/avatar.svg";
+import ExerciseSvg from "@/assets/svgs/home/exercise.svg";
 import React from "react";
 import { ImageBackground, Text, View } from "react-native";
+import StepsSvg from "@/assets/svgs/home/steps.svg";
+import HeartSvg from "@/assets/svgs/home/heart.svg";
 
 const Banner = () => {
   return (
     <View className="mt-3">
-      {/* Banner Background */}
       <ImageBackground
         source={require("@/assets/images/profile/profilebanner.jpg")}
         style={{ width: "100%", height: 230 }}
-        imageStyle={{ borderRadius: 16 }}
+        imageStyle={{
+          borderTopLeftRadius: 16,
+          borderTopRightRadius: 16,
+          borderBottomLeftRadius: 0,
+          borderBottomRightRadius: 0,
+        }}
         className="pb-4"
       >
         <View className="flex-row items-center justify-between h-full pr-2">
-          {/* Avatar Section with Purple Background */}
-          <View className="bg-[#736EEA] h-full justify-center rounded-tl-2xl px-2">
+          <View className="justify-center h-full px-2 rounded-tl-2xl">
             <View className="w-[80px] h-[80px] rounded-full overflow-hidden border-[3px] border-primary/90 bg-gray-200">
               <Avatar
                 width="100%"
@@ -52,9 +58,13 @@ const Banner = () => {
       </ImageBackground>
 
       <View
-        className="bg-[#736EEA] h-10 w-full -mt-5 rounded-b-xl"
+        className="flex-row items-center justify-center w-full h-20 gap-12 bg-white/50 rounded-b-xl"
         style={{ elevation: 4 }}
-      />
+      >
+        <StepsSvg width={38} height={38} fill="#736EEA" />
+        <HeartSvg width={38} height={38} fill="#FF6A5E" />
+        <ExerciseSvg width={38} height={38} fill="" />
+      </View>
     </View>
   );
 };

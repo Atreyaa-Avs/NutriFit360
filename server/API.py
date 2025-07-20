@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI,Request
+from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import pandas as pd
 import numpy as np
@@ -6,6 +7,12 @@ import joblib
 from sklearn.metrics.pairwise import cosine_similarity
 import random
 import uvicorn
+import base64
+import requests
+from typing import Optional
+import os
+import json
+import re
 
 app = FastAPI()
 
@@ -98,6 +105,72 @@ def recommend(user: UserInput):
         ]
     }
 
-# === Run the server on port 8080 ===
+@app.post("/analyze/ollama")
+async def analyze_image(request:Request):
+    try:
+        data = await request.json()
+        image_base64 = data.get("image")
+
+        if not image_base64:
+            return JSONResponse(status_code=400, content={"error": "Missing base64 image data"})
+
+        # Decode base64 to bytes
+        try:
+            contents = base64.b64decode(image_base64)
+        except Exception as decode_err:
+            return JSONResponse(status_code=400, content={"error": "Invalid base64 image", "details": str(decode_err)})
+
+        # Send to Ollama
+        response = requests.post(
+            "http://localhost:11434/api/generate",
+            json={
+                "model": "llava",
+                "prompt": (
+                    "Identify the recipe name and list the ingredients that would be used to make this recipe and their approximate nutrition facts "
+                    "(calories(kcal), protein(g), fat(g), carbs(g), fiber(g), sugar(g), sodium(mg), cholesterol(mg)) for the dish shown in this image. "
+                    "Respond ONLY in the following JSON format:\n"
+                    "{\n"
+                    '  "recipe": "<dish name>",\n'
+                    '  "ingredients": ["ingredient1", "ingredient2", "..."],\n'
+                    '  "nutrition": {\n'
+                    '    "calories": <number>,\n'
+                    '    "protein": <number>,\n'
+                    '    "carbs": <number>,\n'
+                    '    "fat": <number>,\n'
+                    '    "fiber": <number>,\n'
+                    '    "sugar": <number>,\n'
+                    '    "sodium": <number>,\n'
+                    '    "cholesterol": <number>\n'
+                    "  }\n"
+                    "}\n"
+                    "No other text or explanation is needed. Don't return the units."
+                ),
+                "images": [image_base64],
+                "stream": False,
+            }
+        )
+
+        if response.ok:
+            raw = response.json().get("response", "")
+
+            # Try to extract clean JSON inside triple backticks
+            match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", raw, re.DOTALL)
+            if match:
+                clean_json = match.group(1)
+                parsed = json.loads(clean_json)
+                return parsed
+            else:
+                # fallback: raw json
+                try:
+                    return json.loads(raw)
+                except:
+                    return JSONResponse(status_code=500, content={"error": "Model response is not valid JSON", "raw": raw})
+        else:
+            return JSONResponse(status_code=response.status_code, content={"error": response.text})
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
+
 if __name__ == "__main__":
     uvicorn.run("API:app", host="0.0.0.0", port=8080, reload=True)
