@@ -38,7 +38,6 @@ const CameraComponent = ({ flash }: CameraComponentProps) => {
         facing="back"
         enableTorch={flash}
         active={true}
-        zoom={0.3}
       />
     </SafeAreaView>
   );
