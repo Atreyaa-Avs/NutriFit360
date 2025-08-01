@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Platform, Text, TouchableOpacity, View } from "react-native";
 import { Calendar } from "react-native-calendars";
 import Animated, {
   Easing,
@@ -74,7 +74,7 @@ const DietCalendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
 
         <TouchableOpacity onPress={toggleCalendar} className="bg-gray-200 px-4 py-1 rounded-xl">
           <Animated.View style={arrowAnimatedStyle}>
-            <Text className="text-black text-lg">{">"}</Text>
+            <Text className={`text-black text-lg ${Platform.OS === "ios" && "pb-1"}`}>{">"}</Text>
           </Animated.View>
         </TouchableOpacity>
       </View>

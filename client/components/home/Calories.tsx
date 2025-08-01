@@ -13,18 +13,13 @@ const Calories = ({ startAnimation }: { startAnimation: boolean }) => {
       <View className="items-center pb-8">
         <CircleProgressBar
           showPercentage={false}
-          percentage={(345 / 600) * 100}
+          percentage={(145 / 600) * 100}
           color={"#000"}
           start={startAnimation}
           strokeColor="#3CB87F"
-          content={
-            <View>
-              <Text>345</Text>
-              <Text className="text-center" style={{ fontSize: 8 }}>
-                kcal
-              </Text>
-            </View>
-          }
+          value={345}
+          valColor={"text-black"}
+          unit={"kcal"}
         />
       </View>
     </View>

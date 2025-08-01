@@ -10,7 +10,7 @@ export default function SettingsScreen() {
     if (router.canGoBack()) {
       router.back();
     } else {
-      router.replace("/(drawer)/(tabs)"); // or a specific screen
+      router.replace("/(drawer)/(tabs)/home"); // or a specific screen
     }
   };
 

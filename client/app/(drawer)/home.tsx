@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Home() {
+export default function index() {
   const theme = useColorScheme();
 
   const showNotificationNow = async () => {

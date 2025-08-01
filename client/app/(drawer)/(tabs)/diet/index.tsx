@@ -4,9 +4,10 @@ import AddMeal from "@/components/Diet/AddMeal/AddMealLayout";
 import DietCalendar from "@/components/Diet/DietCalendar";
 import StackCircles from "@/components/Diet/StackCircles";
 import ViewMeal from "@/components/Diet/ViewMeal/ViewMealLayout";
-import { router } from "expo-router";
+import * as Haptics from "expo-haptics";
+import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Pressable, ScrollView, Text, View } from "react-native";
+import { Button, Platform, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import rawData from "./DietDemo.json";
 
@@ -50,8 +51,8 @@ const Diet = () => {
 
   return (
     <ScrollView>
-      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 -mt-7 px-4 pt-2">
-        <Text className="pb-3 text-4xl font-semibold tracking-tighter">
+      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 -mt-7 px-4">
+        <Text className={`pb-3 text-4xl font-semibold tracking-tighter`}>
           Diet Tracker
         </Text>
         <View>{/* <Calendar /> */}</View>
@@ -132,6 +133,30 @@ const Diet = () => {
           ]}
           gap={1}
         />
+
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
+          className="mt-4 gap-2"
+        >
+          <Button
+            title="Haptic Impact"
+            onPress={() =>
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
+            }
+          />
+          <Button
+            title="Haptic Success"
+            onPress={() =>
+              Haptics.notificationAsync(
+                Haptics.NotificationFeedbackType.Success
+              )
+            }
+          />
+          <Button
+            title="Haptic Selection"
+            onPress={() => Haptics.selectionAsync()}
+          />
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

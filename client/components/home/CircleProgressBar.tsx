@@ -1,5 +1,6 @@
-import React, { JSX, useEffect } from "react";
-import { StyleSheet, View } from "react-native";
+import MedalSvg from "@/assets/svgs/home/medal.svg";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View } from "react-native";
 import Animated, {
   Easing,
   useAnimatedProps,
@@ -16,11 +17,13 @@ interface CircleProgressBarProps {
   strokeColor?: string;
   backgroundStroke?: string;
   strokeWidth?: number;
-  content: JSX.Element;
   scale?: number;
   color?: string;
   start?: boolean;
   showPercentage?: boolean;
+  value: number | string;
+  unit: string;
+  valColor?: string;
 }
 
 const CircleProgressBar = ({
@@ -29,11 +32,13 @@ const CircleProgressBar = ({
   strokeColor = "#12c2e9",
   backgroundStroke = "#D3D3D4",
   strokeWidth = 6,
-  content,
   scale = 1.7,
   color = "#FFF",
   start = false,
   showPercentage = true,
+  unit,
+  value,
+  valColor = "text-white",
 }: CircleProgressBarProps) => {
   const radius = 30;
   const normalizedRadius = radius + strokeWidth / 2;
@@ -87,7 +92,7 @@ const CircleProgressBar = ({
           cy={normalizedRadius}
           r={radius}
           strokeWidth={strokeWidth}
-          stroke={strokeColor}
+          stroke={percentage >= 100 ? "#FFD700" : `${strokeColor}`}
           fill="none"
           strokeDasharray={`${dashArray}, ${dashArray}`}
           animatedProps={animatedProps}
@@ -95,8 +100,20 @@ const CircleProgressBar = ({
           transform={`rotate(90 ${normalizedRadius} ${normalizedRadius})`}
         />
       </Svg>
+
       <View style={styles.textContainer}>
-        <View>{content}</View>
+        <View className="">
+          <View className="mx-auto">
+            {percentage >= 100 && <MedalSvg color={"#FFD700"} width={12} height={12} />}
+          </View>
+          <Text className={`${valColor} font-bold text-sm`}>{value}</Text>
+          <Text
+            className="text-center text-neutral-400"
+            style={{ fontSize: 8 }}
+          >
+            {unit}
+          </Text>
+        </View>
         {showPercentage && (
           <Animated.Text
             style={[

@@ -5,6 +5,7 @@ import {
   ActivityIndicator,
   Image,
   Modal,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -97,7 +98,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
               style={styles.closeButton}
               className="bg-[#ddd]"
             >
-              <Text style={styles.closeButtonText}>Close</Text>
+              <Text style={styles.closeButtonText} className={`${Platform.OS === "ios" && "pt-1"}`}>Close</Text>
             </TouchableOpacity>
             <TouchableOpacity
               onPress={handleProceed}
