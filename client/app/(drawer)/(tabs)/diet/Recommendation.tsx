@@ -1,6 +1,6 @@
 import { useProfileStore } from "@/store/useProfileStore";
 import React from "react";
-import { Dimensions, ScrollView, Text, View } from "react-native";
+import { Dimensions, Platform, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import FoodSvg from "@/assets/svgs/tabs/food.svg";
@@ -25,10 +25,10 @@ const DietRecommendation = () => {
   const snapWidth = screenWidth * 0.48 + 115;
 
   return (
-    <ScrollView contentContainerStyle={{ paddingTop: 32 }}>
+    <ScrollView contentContainerStyle={{ marginTop: -40 }}>
       <SafeAreaView className="min-h-screen p-4 pb-28">
-        <View className="mt-4">
-          <View className="flex-row items-center justify-center gap-2 mb-4">
+        <View className={`${Platform.OS === "android" ? "mt-4" : "mt-10"}`}>
+          <View className="flex-row items-center gap-2 mb-4 mx-auto">
             <FoodSvg
               width={24}
               height={24}

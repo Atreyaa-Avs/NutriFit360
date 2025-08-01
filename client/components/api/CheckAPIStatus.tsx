@@ -5,12 +5,13 @@ import axios from "axios";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import Spinner from "../Loaders/Spinner";
+import { IP } from "@/IP";
 
 const CheckAPIStatus = () => {
   const { data, isLoading, error, refetch, isFetching, isFetched } = useQuery({
     queryKey: ["details"],
     queryFn: async () => {
-      const res = await axios.get("http://192.168.1.2:8080/");
+      const res = await axios.get(`http://${IP}:8080/`);
       return res.data;
     },
     enabled: false,

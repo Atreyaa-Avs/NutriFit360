@@ -1,12 +1,18 @@
-import { CameraView, useCameraPermissions } from "expo-camera";
+import { CameraType, CameraView, useCameraPermissions } from "expo-camera";
 import React from "react";
 import { Button, SafeAreaView, Text, View } from "react-native";
 
 interface CameraComponentProps {
   flash?: boolean;
+  zoom: number;
+  setCameraRef?: (ref: CameraType | null) => void;
 }
 
-const CameraComponent = ({ flash }: CameraComponentProps) => {
+const CameraComponent = ({
+  flash,
+  zoom,
+  setCameraRef,
+}: CameraComponentProps) => {
   const [permission, requestPermission] = useCameraPermissions();
 
   if (!permission) {
@@ -38,6 +44,8 @@ const CameraComponent = ({ flash }: CameraComponentProps) => {
         facing="back"
         enableTorch={flash}
         active={true}
+        zoom={zoom}
+        responsiveOrientationWhenOrientationLocked
       />
     </SafeAreaView>
   );

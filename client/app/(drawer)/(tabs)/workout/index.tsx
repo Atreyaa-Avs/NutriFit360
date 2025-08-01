@@ -27,7 +27,7 @@ const Workout = () => {
 
   return (
     <ScrollView>
-      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-24 -mt-7 px-4 pt-2">
+      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-24 -mt-7 px-4">
         <Text className="pb-3 text-4xl font-semibold tracking-tighter">
           Workout Tracker
         </Text>

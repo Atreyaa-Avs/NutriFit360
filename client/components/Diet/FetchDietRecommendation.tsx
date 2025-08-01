@@ -19,11 +19,11 @@ const FetchDietRecommendation = () => {
     <View>
       <View className="p-3 my-3 bg-blue-500 rounded-xl">
         <Pressable onPress={() => refetch()}>
-          <View className="flex-row items-center justify-center gap-12">
+          <View className="flex-row items-center justify-center gap-2">
+            {isFetching && <Spinner size={25} />}
             <Text className="text-xl text-center text-white">
-              Fetch Recommendation
+              {!isFetching ? "Fetch Recommendation" : "Fetching..."}
             </Text>
-            {isFetching && <Spinner size={30} />}
           </View>
         </Pressable>
       </View>

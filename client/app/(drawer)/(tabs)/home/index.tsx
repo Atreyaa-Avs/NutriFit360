@@ -4,13 +4,14 @@ import { sendNotification } from "@/utils/notification";
 import {
   Button,
   Image,
+  Platform,
   StatusBar,
   Text,
   View,
   useColorScheme,
 } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Index() {
   const theme = useColorScheme();
@@ -25,8 +26,10 @@ export default function Index() {
   };
 
   return (
-    <ScrollView>
-      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-24">
+    <ScrollView contentInsetAdjustmentBehavior="never">
+      <SafeAreaView
+        className={`flex-1 bg-[#E5E5E5] min-h-screen ${Platform.OS === "ios" ? "pb-16" : "pb-24"}`}
+      >
         <StatusBar
           barStyle={"dark-content"}
           backgroundColor={theme === "dark" ? "#1a1a1a" : "#E5E5E5"}
@@ -43,7 +46,7 @@ export default function Index() {
             onPress={showNotificationNow}
           />
         </View>
-      
+
         <Stats />
       </SafeAreaView>
     </ScrollView>
@@ -111,7 +114,7 @@ const Header = () => {
           <View className="relative w-full mr-6">
             <Image
               source={require("@/assets/images/greetings/afternoon.jpg")}
-              className="object-cover h-24 mt-12 rounded-full right-12 w-44"
+              className="object-cover h-24 mt-14 rounded-full right-10 w-44"
             />
           </View>
         )}

@@ -19,23 +19,12 @@ const Calories = ({ startAnimation }: { startAnimation: boolean }) => {
       <View className="items-center pb-8">
         <CircleProgressBar
           showPercentage={false}
-          percentage={(4112 / 5000) * 100}
+          percentage={(5000 / 5000) * 100}
           color={"#000"}
           start={startAnimation}
           strokeColor="#fff"
-          content={
-            <View>
-              <Text className="text-white font-bold text-sm">
-                {formatToIndianNumberSystem(4112)}
-              </Text>
-              <Text
-                className="text-center text-neutral-400"
-                style={{ fontSize: 8 }}
-              >
-                Steps
-              </Text>
-            </View>
-          }
+          value={formatToIndianNumberSystem(4112)}
+          unit={"Steps"}
         />
       </View>
     </View>

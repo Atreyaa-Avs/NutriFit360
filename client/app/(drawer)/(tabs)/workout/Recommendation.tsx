@@ -25,9 +25,9 @@ const WorkoutRecommendation = () => {
   const snapWidth = screenWidth * 0.48 + 115;
 
   return (
-    <ScrollView contentContainerStyle={{ paddingTop: 32 }}>
+    <ScrollView>
       <SafeAreaView className="min-h-screen p-4 pb-28">
-        <View className="mt-4">
+        <View className="-mt-5">
           <View className="flex-row items-center justify-center gap-2 mb-4">
             <ExerciseSvg
               width={24}
