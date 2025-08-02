@@ -21,7 +21,7 @@ export const useProfileStore = create<ProfileState>((set) => ({
   age: 19,
   bmi: 26,
   height: 1.6,
-  weight: 68,
+  weight: 58,
   gender: "male",
   hypertension: "no",
   diabetes: "no",
