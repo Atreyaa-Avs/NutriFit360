@@ -90,11 +90,11 @@ const Diet = () => {
           </View>
         </View>
         <View>
-          <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
-          <Pressable className="my-4 bg-white/50 rounded-xl p-4 flex-row items-center justify-center gap-2">
+          <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
+          <Pressable className="flex-row items-center justify-center gap-2 p-4 my-4 bg-white/50 rounded-xl">
             <RecommendationRecipeSvg />
             <Text className="text-lg font-semibold text-center">
-              View Workout Recommendation
+              View Diet Recommendation
             </Text>
           </Pressable>
         </Link>
@@ -134,7 +134,7 @@ const Diet = () => {
 
         <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
-          className="mt-4 gap-2"
+          className="gap-2 mt-4"
         >
           <Button
             title="Haptic Impact"
