@@ -90,16 +90,14 @@ const Diet = () => {
           </View>
         </View>
         <View>
-          <Pressable
-            onPress={() => router.push("/(drawer)/(tabs)/diet/Recommendation")}
-          >
-            <View className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
-              <RecommendationRecipeSvg />
-              <Text className="text-lg font-semibold text-center">
-                View Diet Recommendations
-              </Text>
-            </View>
+          <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
+          <Pressable className="my-4 bg-white/50 rounded-xl p-4 flex-row items-center justify-center gap-2">
+            <RecommendationRecipeSvg />
+            <Text className="text-lg font-semibold text-center">
+              View Workout Recommendation
+            </Text>
           </Pressable>
+        </Link>
         </View>
 
         <StackCircles

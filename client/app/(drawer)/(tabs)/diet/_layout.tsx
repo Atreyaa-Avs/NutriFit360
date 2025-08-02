@@ -12,36 +12,37 @@ export default function DietLayout() {
       <>
         <StatusBar barStyle="dark-content" backgroundColor="#E5E7EB" />
         <View className={`pt-2 ${!title && "pl-2 pt-6"}`}>
-          {title ? (
-            <View
-              className="flex-row items-end -mt-6 gap-4 pb-4 px-2 bg-neutral-400"
-              style={{ elevation: 7, paddingTop: insets.top + 40 }}
-            >
-              <View className="">
+          <View className={`${title && "border-b border-[#888]"}`} style={{ elevation: title ? 7 : 0 }}>
+            {title ? (
+              <View
+                className="flex-row items-center -mt-6 gap-4 pb-2 px-2 bg-neutral-300"
+                style={{ paddingTop: insets.top + 40 }}
+              >
                 <Pressable
                   onPress={() => navigation.goBack()}
-                  className="items-end justify-centerw-10 h-10 rounded-full"
+                  className="items-center justify-center w-10 h-10 rounded-full bg-transparent overflow-hidden"
                 >
                   <Text
-                    className={`text-5xl font-bold text-white ml-2 ${Platform.OS === "android" && "-mt-1"}`}
+                    className={`text-4xl font-bold text-black ${
+                      Platform.OS === "android" && "-mt-1"
+                    }`}
                   >
                     &lsaquo;
                   </Text>
                 </Pressable>
+
+                <Text className="text-xl font-bold tracking-wide">{title}</Text>
               </View>
-              <Text className="text-2xl tracking-tighter font-bold">
-                {title}
-              </Text>
-            </View>
-          ) : (
-            <Pressable
-              onPress={() => navigation.goBack()}
-              className="items-center justify-center w-16 h-16 rounded-full bg-neutral-500 mt-14 pr-1"
-              style={{ elevation: 6 }}
-            >
-              <Text className="text-3xl font-bold text-white">{"<"}</Text>
-            </Pressable>
-          )}
+            ) : (
+              <Pressable
+                onPress={() => navigation.goBack()}
+                className="items-center justify-center w-16 h-16 rounded-full bg-neutral-500 mt-14 pr-1"
+                style={{ elevation: 6 }}
+              >
+                <Text className="text-3xl font-bold text-white">{"<"}</Text>
+              </Pressable>
+            )}
+          </View>
         </View>
       </>
     );
