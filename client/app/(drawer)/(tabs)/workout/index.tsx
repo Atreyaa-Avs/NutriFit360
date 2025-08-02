@@ -4,7 +4,7 @@ import StackCircles from "@/components/Diet/StackCircles";
 import WorkoutCalendar from "@/components/Workout/WorkoutCalendar";
 import { Link } from "expo-router";
 import React, { useState } from "react";
-import { Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -26,28 +26,34 @@ const Workout = () => {
   const [selectedDate, setSelectedDate] = useState(todayISO);
 
   return (
-    <ScrollView>
-      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-24 -mt-7 px-4">
+    <SafeAreaView className="flex-1 bg-[#E5E5E5] -mt-7 px-4">
+      <ScrollView
+        contentContainerStyle={{
+          paddingBottom: 110,
+        }}
+        showsVerticalScrollIndicator={false}
+      >
         <Text className="pb-3 text-4xl font-semibold tracking-tighter">
           Workout Tracker
         </Text>
+
         <View>
           <WorkoutCalendar
             selectedDate={selectedDate}
             setSelectedDate={setSelectedDate}
           />
         </View>
+
         <Text>Selected Date: {formatDateToDMY(selectedDate)}</Text>
 
-        <View className="flex-row items-center justify-center gap-2 p-4 my-4 bg-white/50 rounded-xl">
-          <RecommendationWorkout />
-          <Link
-            href={"/(drawer)/(tabs)/workout/Recommendation"}
-            className="text-lg font-semibold text-center"
-          >
-            View Workout Recommendation
-          </Link>
-        </View>
+        <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
+          <Pressable className="my-4 bg-white/50 rounded-xl p-4 flex-row items-center justify-center gap-2">
+            <RecommendationWorkout />
+            <Text className="text-lg font-semibold text-center">
+              View Workout Recommendation
+            </Text>
+          </Pressable>
+        </Link>
 
         <StackCircles
           Icon={ActivityRingWorkout}
@@ -80,8 +86,8 @@ const Workout = () => {
           ]}
           gap={1}
         />
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
