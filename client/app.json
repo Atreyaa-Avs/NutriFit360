@@ -9,7 +9,11 @@
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "jsEngine": "hermes",
+      "infoPlist": {
+        "NSFaceIDUsageDescripion": "We use Face ID to verify your identity before saving profile data."
+      }
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +27,8 @@
         "CAMERA",
         "RECORD_AUDIO"
       ],
-      "package": "com.anonymous.NutriFit360"
+      "package": "com.anonymous.NutriFit360",
+      "jsEngine": "hermes"
     },
     "web": {
       "bundler": "metro",
@@ -40,6 +45,12 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "expo-local-authentication",
+        {
+          "faceIDPermission": "Allow $(PRODUCT_NAME) to use Face ID."
         }
       ],
       [

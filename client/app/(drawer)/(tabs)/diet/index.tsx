@@ -7,7 +7,7 @@ import ViewMeal from "@/components/Diet/ViewMeal/ViewMealLayout";
 import * as Haptics from "expo-haptics";
 import { Link, router } from "expo-router";
 import React, { useState } from "react";
-import { Button, Platform, Pressable, ScrollView, Text, View } from "react-native";
+import { Button, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import rawData from "./DietDemo.json";
 
@@ -50,8 +50,17 @@ const Diet = () => {
   const [selectedDate, setSelectedDate] = useState(todayISO);
 
   return (
-    <ScrollView>
-      <SafeAreaView className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 -mt-7 px-4">
+    <SafeAreaView
+      edges={["left", "right", "bottom"]}
+      className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 pt-4"
+    >
+      <ScrollView
+        contentInsetAdjustmentBehavior="never"
+        contentContainerStyle={{
+          paddingBottom: 100,
+        }}
+        style={{ paddingLeft: 16, paddingRight: 16 }}
+      >
         <Text className={`pb-3 text-4xl font-semibold tracking-tighter`}>
           Diet Tracker
         </Text>
@@ -91,20 +100,20 @@ const Diet = () => {
         </View>
         <View>
           <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
-          <Pressable className="flex-row items-center justify-center gap-2 p-4 my-4 bg-white/50 rounded-xl">
-            <RecommendationRecipeSvg />
-            <Text className="text-lg font-semibold text-center">
-              View Diet Recommendation
-            </Text>
-          </Pressable>
-        </Link>
+            <Pressable className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
+              <RecommendationRecipeSvg />
+              <Text className="text-lg font-semibold text-center">
+                View Diet Recommendation
+              </Text>
+            </Pressable>
+          </Link>
         </View>
 
         <StackCircles
           Icon={ActivityRingDiet}
           title={"Nutrition"}
           start={true}
-          scale={0.9}
+          scale={0.8}
           unit="g"
           data={[
             {
@@ -155,8 +164,8 @@ const Diet = () => {
             onPress={() => Haptics.selectionAsync()}
           />
         </View>
-      </SafeAreaView>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

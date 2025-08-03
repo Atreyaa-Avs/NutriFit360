@@ -28,7 +28,8 @@ export default function Index() {
   return (
     <ScrollView contentInsetAdjustmentBehavior="never">
       <SafeAreaView
-        className={`flex-1 bg-[#E5E5E5] min-h-screen ${Platform.OS === "ios" ? "pb-16" : "pb-24"}`}
+        edges={["left", "right", "bottom"]}
+        className={`flex-1 bg-[#E5E5E5] ${Platform.OS === "ios" ? "pb-16" : "pb-24"} pt-4`}
       >
         <StatusBar
           barStyle={"dark-content"}
@@ -59,14 +60,14 @@ const Header = () => {
 
     if (hour >= 6 && hour < 12) return "Good Morning,";
     if (hour >= 12 && hour < 15) return "Good Afternoon,";
-    if (hour >= 15 && hour < 23) return "Good Evening,";
+    if (hour >= 15 && hour <= 22) return "Good Evening,";
     return "Good Night,";
   };
 
   const greeting: string = getGreeting();
 
   return (
-    <View className="flex-col items-start p-2 -mt-10">
+    <View className="flex-col items-start p-2">
       <View className="flex-row justify-between w-full">
         {/* <Image
           source={require("@/assets/images/home/greeting-bg.jpg")}

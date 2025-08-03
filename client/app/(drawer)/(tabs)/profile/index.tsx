@@ -25,38 +25,38 @@ import FitnessTypeSvg from "@/assets/svgs/profile/fitnessType.svg";
 import GenderSvg from "@/assets/svgs/profile/gender.svg";
 import HeightSvg from "@/assets/svgs/profile/height.svg";
 import HypertensionSvg from "@/assets/svgs/profile/hypertension.svg";
-import SaveSvg from "@/assets/svgs/profile/save.svg";
+
 import WeightSvg from "@/assets/svgs/profile/weight.svg";
 import {
   ProfileState,
   titleToKey,
   useProfileStore,
 } from "@/store/useProfileStore";
-import { mapProfileToRequestBody } from "@/utils/mapProfileToRequestBody";
 import { SvgProps } from "react-native-svg";
+import SaveButton from "@/components/Profile/SaveButton";
 
 const Profile = () => {
-  const handleSave = () => {
-    const profile = useProfileStore.getState();
-    const body = mapProfileToRequestBody(profile);
-    alert("Saved!");
-    console.log("Final Request Body: ", body);
-  };
 
   return (
-    <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
-      style={{ flex: 1 }}
+    <SafeAreaView
+      edges={["left", "right", "bottom"]}
+      className="flex-1 bg-[#E5E5E5] px-4"
     >
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0}
+        style={{ flex: 1 }}
+      >
         <ScrollView
-          contentContainerStyle={{ flexGrow: 1 }}
-          keyboardShouldPersistTaps="handled"
+          contentContainerStyle={{ paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
+          keyboardShouldPersistTaps="handled" // <- important for tap handling
         >
-          <SafeAreaView>
-            <View className="flex-1 bg-[#E5E5E5] pb-36 -mt-10 px-4 pt-2 min-h-screen -mb-5">
+          <TouchableWithoutFeedback
+            onPress={Keyboard.dismiss}
+            accessible={false}
+          >
+            <View className="pt-2 min-h-screen -mb-5">
               {/* <Text className="text-3xl font-bold text-center">Profile</Text> */}
               <Banner />
               <Text className="mt-6 text-3xl font-bold text-center underline">
@@ -88,6 +88,7 @@ const Profile = () => {
                   unit={"kg"}
                   defaultVal={58}
                 />
+
                 <DropDownCard
                   Icon={GenderSvg}
                   title={"Gender"}
@@ -123,17 +124,13 @@ const Profile = () => {
                   arrVals={["Muscular Fitness", "Cardio Fitness"]}
                 />
               </View>
-              <TouchableOpacity onPress={handleSave}>
-                <View className="flex-row items-center justify-center gap-3 p-3 mt-6 bg-blue-500 rounded-xl">
-                  <SaveSvg width={20} height={20} fill={"#fff"} />
-                  <Text className="text-xl font-semibold text-white">Save</Text>
-                </View>
-              </TouchableOpacity>
+
+              <SaveButton />
             </View>
-          </SafeAreaView>
+          </TouchableWithoutFeedback>
         </ScrollView>
-      </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 };
 
