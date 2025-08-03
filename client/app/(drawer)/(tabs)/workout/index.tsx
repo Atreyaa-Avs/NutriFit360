@@ -26,12 +26,16 @@ const Workout = () => {
   const [selectedDate, setSelectedDate] = useState(todayISO);
 
   return (
-    <SafeAreaView className="flex-1 bg-[#E5E5E5] -mt-7 px-4">
+    <SafeAreaView
+      edges={["left", "right", "bottom"]}
+      className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 pt-4"
+    >
       <ScrollView
+        contentInsetAdjustmentBehavior="never"
         contentContainerStyle={{
-          paddingBottom: 110,
+          paddingBottom: 100,
         }}
-        showsVerticalScrollIndicator={false}
+        style={{ paddingLeft: 16, paddingRight: 16 }}
       >
         <Text className="pb-3 text-4xl font-semibold tracking-tighter">
           Workout Tracker

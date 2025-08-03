@@ -81,7 +81,7 @@ export default function TabsLayout() {
         <>
           <StatusBar barStyle="dark-content" backgroundColor="#E5E7EB" />
           <View
-            className={`flex-row items-center justify-between w-full px-5 bg-gray-200 ${Platform.OS === "android" ? "pb-8" : "pb-5"}`}
+            className={`flex-row items-center justify-between w-full px-5 bg-gray-200 pb-3`}
             style={{ paddingTop: insets.top + 20 }}
           >
             <View className="flex-row items-center justify-between gap-2">
