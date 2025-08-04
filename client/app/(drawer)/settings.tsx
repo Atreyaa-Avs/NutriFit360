@@ -107,7 +107,7 @@ export default function SettingsScreen() {
         { text: "Cancel", style: "cancel" },
         { text: "Logout", style: "destructive", onPress: () => {
           // Handle logout logic here
-          router.replace("/(auth)/login");
+          // router.replace("/(auth)/login");
         }},
       ]
     );
