@@ -27,16 +27,15 @@ import HeightSvg from "@/assets/svgs/profile/height.svg";
 import HypertensionSvg from "@/assets/svgs/profile/hypertension.svg";
 
 import WeightSvg from "@/assets/svgs/profile/weight.svg";
+import SaveButton from "@/components/Profile/SaveButton";
 import {
   ProfileState,
   titleToKey,
   useProfileStore,
 } from "@/store/useProfileStore";
 import { SvgProps } from "react-native-svg";
-import SaveButton from "@/components/Profile/SaveButton";
 
 const Profile = () => {
-
   return (
     <SafeAreaView
       edges={["left", "right", "bottom"]}
@@ -48,6 +47,7 @@ const Profile = () => {
         style={{ flex: 1 }}
       >
         <ScrollView
+          bounces={false}
           contentContainerStyle={{ paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
           keyboardShouldPersistTaps="handled" // <- important for tap handling

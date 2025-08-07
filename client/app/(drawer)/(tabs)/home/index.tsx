@@ -26,7 +26,7 @@ export default function Index() {
   };
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="never">
+    <ScrollView bounces={false} contentInsetAdjustmentBehavior="never">
       <SafeAreaView
         edges={["left", "right", "bottom"]}
         className={`flex-1 bg-[#E5E5E5] ${Platform.OS === "ios" ? "pb-16" : "pb-24"} pt-4`}

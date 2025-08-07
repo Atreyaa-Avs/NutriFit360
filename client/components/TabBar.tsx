@@ -80,17 +80,17 @@ const TabBar: React.FC<TabBarProps> = ({
   const primaryColor = "#F09E54";
 
   return (
-    <View className={`mx-4`} onLayout={onTabbarLayout}>
+    <View className={``} onLayout={onTabbarLayout}>
       <View
-        className="absolute flex-row justify-between flex-1 w-full px-4 py-2 overflow-hidden bg-white rounded-full bottom-8"
-        style={styles.shadow}
+        className={`absolute flex-row justify-between flex-1 w-full px-4 py-2 overflow-hidden bg-gray-200 bottom-0 pb-7`}
+        
       >
         <Animated.View
+        className={"bg-neutral-500"}
           style={[
             animatedStyle,
             {
               position: "absolute",
-              backgroundColor: "#e5e5e5",
               borderRadius: 999,
               height: 56,
               width: bubbleWidth,
@@ -191,11 +191,5 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 4,
   },
-  shadow: {
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.3,
-    shadowRadius: 10,
-    elevation: 10,
-  },
+  
 });

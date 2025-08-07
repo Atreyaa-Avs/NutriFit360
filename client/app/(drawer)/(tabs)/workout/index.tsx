@@ -31,6 +31,7 @@ const Workout = () => {
       className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 pt-4"
     >
       <ScrollView
+        bounces={false}
         contentInsetAdjustmentBehavior="never"
         contentContainerStyle={{
           paddingBottom: 100,
