@@ -7,7 +7,7 @@ export default function DrawerLayout() {
       screenOptions={{
         headerShown: false,
         overlayColor: "rgba(0,0,0,0.5)",
-        drawerStyle: { width: "70%" },
+        drawerStyle: { width: "80%" },
         drawerType: "front",
       }}
       drawerContent={(props) => <Header {...props} />}
