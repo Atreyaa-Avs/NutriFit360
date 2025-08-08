@@ -52,7 +52,7 @@ const Diet = () => {
   return (
     <SafeAreaView
       edges={["left", "right", "bottom"]}
-      className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 pt-4"
+      className="flex-1 bg-gray-200 min-h-screen pb-32 pt-4"
     >
       <ScrollView
         bounces={false}

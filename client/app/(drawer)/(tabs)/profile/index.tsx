@@ -39,7 +39,7 @@ const Profile = () => {
   return (
     <SafeAreaView
       edges={["left", "right", "bottom"]}
-      className="flex-1 bg-[#E5E5E5] px-4"
+      className="flex-1 bg-gray-200 px-4"
     >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -50,7 +50,7 @@ const Profile = () => {
           bounces={false}
           contentContainerStyle={{ paddingBottom: 120 }}
           showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled" // <- important for tap handling
+          keyboardShouldPersistTaps="handled"
         >
           <TouchableWithoutFeedback
             onPress={Keyboard.dismiss}
