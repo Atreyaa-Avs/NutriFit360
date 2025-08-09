@@ -9,6 +9,7 @@ import FlashlightOff from "@/assets/svgs/diet/flashlight-off.svg";
 import FlashlightOn from "@/assets/svgs/diet/flashlight-on.svg";
 import ZoomButton from "@/components/Diet/AddMeal/ZoomButton";
 import { Camera } from "expo-camera";
+import { GilroyBoldText } from "@/components/Fonts";
 
 const Meal = () => {
   const [flash, setFlash] = useState(false);
@@ -32,9 +33,9 @@ const Meal = () => {
           {/* Foreground content */}
           <View className="z-10 gap-12 mt-14">
             <View className="mt-2">
-              <Text className="text-xl font-bold text-center text-white">
+              <GilroyBoldText className="text-xl text-center text-white">
                 Place the meal inside the box!
-              </Text>
+              </GilroyBoldText>
             </View>
             <View className="realtive z-0 flex-row mx-auto w-80 h-80 rounded-xl border-[5px] border-white bg-transparent" />
             <View className="flex-row items-center justify-between mx-4 mt-5">

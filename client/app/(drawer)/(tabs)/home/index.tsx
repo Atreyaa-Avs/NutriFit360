@@ -1,4 +1,9 @@
 import "@/app/globals.css";
+import {
+  GilroyBoldText,
+  GilroyRegularText,
+  GilroySemiBoldText,
+} from "@/components/Fonts";
 import Stats from "@/components/home/Stats";
 import { sendNotification } from "@/utils/notification";
 import {
@@ -7,6 +12,7 @@ import {
   Platform,
   StatusBar,
   Text,
+  TouchableOpacity,
   View,
   useColorScheme,
 } from "react-native";
@@ -37,15 +43,26 @@ export default function Index() {
         />
         <Header />
         <View className="p-4">
-          <Text className="mb-2 text-xl font-semibold">Today's Summary</Text>
+          <GilroyBoldText className="mb-2 text-xl font-semibold">
+            Today's Summary
+          </GilroyBoldText>
           <View className="p-4 mb-4 bg-white shadow-md rounded-xl">
-            <Text className="text-base">• You've burned 300 kcal</Text>
-            <Text className="text-base">• Completed 40% of your workout</Text>
+            <GilroyRegularText className="text-base">
+              • You've burned 300 kcal
+            </GilroyRegularText>
+            <GilroyRegularText className="text-base">
+              • Completed 40% of your workout
+            </GilroyRegularText>
           </View>
-          <Button
-            title="Show Hydration Alert Now"
+          <TouchableOpacity
+            className="bg-button px-4 py-3"
+            style={{ elevation: 6 }}
             onPress={showNotificationNow}
-          />
+          >
+            <GilroyRegularText className="text-white text-center">
+              Show Hydration Alert Now
+            </GilroyRegularText>
+          </TouchableOpacity>
         </View>
 
         <Stats />
@@ -76,30 +93,34 @@ const Header = () => {
           blurRadius={4}
         /> */}
         <View>
-          <Text className="pl-3 text-4xl font-bold">{greeting}</Text>
-          <Text className="pl-3 text-4xl font-bold">Atreyaa!</Text>
+          <GilroyBoldText className="pl-3 text-4xl">{greeting}</GilroyBoldText>
+
+          <GilroySemiBoldText className="pl-3 text-4xl">
+            Atreyaa!
+          </GilroySemiBoldText>
+
           {greeting === "Good Morning," && (
-            <Text className="pt-2 pl-3 text-xl font-semibold text-neutral-500">
+            <GilroyRegularText className="pt-2 pl-3 text-xl">
               Fuel your body{"\n"} and own the day! 💪
-            </Text>
+            </GilroyRegularText>
           )}
 
           {greeting === "Good Afternoon," && (
-            <Text className="pt-2 pl-3 text-xl font-semibold text-neutral-500">
+            <GilroyRegularText className="pt-2 pl-3 text-xl">
               Keep going,your goals {"\n"}are in reach! 🥗
-            </Text>
+            </GilroyRegularText>
           )}
 
           {greeting === "Good Evening," && (
-            <Text className="pt-2 pl-3 text-xl font-semibold text-neutral-500">
+            <GilroyRegularText className="pt-2 pl-3 text-xl">
               Evening grind!{"\n"}Let's get that sweat on. 🔥
-            </Text>
+            </GilroyRegularText>
           )}
 
           {greeting === "Good Night," && (
-            <Text className="pt-2 pl-3 text-xl font-semibold text-neutral-500">
+            <GilroyRegularText className="pt-2 pl-3 text-xl">
               Rest well, recovery is{"\n"}just as important! 🛌
-            </Text>
+            </GilroyRegularText>
           )}
         </View>
 
@@ -115,12 +136,12 @@ const Header = () => {
           <View className="relative w-full mr-6">
             <Image
               source={require("@/assets/images/greetings/afternoon.jpg")}
-              className="object-cover h-24 mt-14 rounded-full right-10 w-44"
+              className="object-cover h-24 mt-14 rounded-full right-12 w-44"
             />
           </View>
         )}
         {greeting === "Good Evening," && (
-          <View className="relative w-full mr-6 -left-4">
+          <View className="relative w-full mr-6 -left-7">
             <Image
               source={require("@/assets/images/greetings/evening2.jpg")}
               className="object-cover h-24 mr-12 rounded-full mt-7 w-44"

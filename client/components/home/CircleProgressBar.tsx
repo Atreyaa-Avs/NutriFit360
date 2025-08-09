@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Circle } from "react-native-svg";
+import { GilroyRegularText, GilroySemiBoldText } from "../Fonts";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -104,15 +105,19 @@ const CircleProgressBar = ({
       <View style={styles.textContainer}>
         <View className="">
           <View className="mx-auto">
-            {percentage >= 100 && <MedalSvg color={"#FFD700"} width={12} height={12} />}
+            {percentage >= 100 && (
+              <MedalSvg color={"#FFD700"} width={12} height={12} />
+            )}
           </View>
-          <Text className={`${valColor} font-bold text-sm`}>{value}</Text>
-          <Text
+          <GilroySemiBoldText className={`${valColor} text-sm`}>
+            {value}
+          </GilroySemiBoldText>
+          <GilroyRegularText
             className="text-center text-neutral-400"
             style={{ fontSize: 8 }}
           >
             {unit}
-          </Text>
+          </GilroyRegularText>
         </View>
         {showPercentage && (
           <Animated.Text

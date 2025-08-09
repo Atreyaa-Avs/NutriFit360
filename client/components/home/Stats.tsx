@@ -6,6 +6,7 @@ import HeartRate from "./HeartRate";
 import Sleep from "./Sleep";
 import Steps from "./Steps";
 import Activity from "./Activity";
+import { GilroyBoldText } from "../Fonts";
 
 const Stats = () => {
   const [startAnimation, setStartAnimation] = useState<boolean>(false);
@@ -20,7 +21,7 @@ const Stats = () => {
   return (
     <View className="bg-[#e5e5e5] py-2 px-4">
       <View className="mb-4">
-        <Text className="text-4xl font-bold tracking-tighter">Statistics</Text>
+        <GilroyBoldText className="text-4xl tracking-tighter">Statistics</GilroyBoldText>
       </View>
 
       {/* Masonry Columns */}

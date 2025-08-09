@@ -1,6 +1,7 @@
 import ActivityRingWorkout from "@/assets/svgs/workout/AcitivityRingCenter.svg";
 import RecommendationWorkout from "@/assets/svgs/workout/RecommendWorkout.svg";
 import StackCircles from "@/components/Diet/StackCircles";
+import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
 import WorkoutCalendar from "@/components/Workout/WorkoutCalendar";
 import { Link } from "expo-router";
 import React, { useState } from "react";
@@ -38,9 +39,9 @@ const Workout = () => {
         }}
         style={{ paddingLeft: 16, paddingRight: 16 }}
       >
-        <Text className="pb-3 text-4xl font-semibold tracking-tighter">
+        <GilroyBoldText className="pb-3 text-4xl font-semibold tracking-tighter">
           Workout Tracker
-        </Text>
+        </GilroyBoldText>
 
         <View>
           <WorkoutCalendar
@@ -54,9 +55,9 @@ const Workout = () => {
         <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
           <Pressable className="my-4 bg-white/50 rounded-xl p-4 flex-row items-center justify-center gap-2">
             <RecommendationWorkout />
-            <Text className="text-lg font-semibold text-center">
+            <GilroyMediumText className="text-lg tracking-tight font-semibold text-center">
               View Workout Recommendation
-            </Text>
+            </GilroyMediumText>
           </Pressable>
         </Link>
 

@@ -2,12 +2,13 @@ import CaloriesSvg from "@/assets/svgs/home/calories.svg";
 import React from "react";
 import { Text, View } from "react-native";
 import CircleProgressBar from "./CircleProgressBar";
+import { GilroySemiBoldText } from "../Fonts";
 
 const Calories = ({ startAnimation }: { startAnimation: boolean }) => {
   return (
     <View className="p-4">
       <View className="flex flex-row justify-between items-center mb-10">
-        <Text className="text-xl font-semibold tracking-tight">Calories</Text>
+        <GilroySemiBoldText className="text-xl font-semibold tracking-tight">Calories</GilroySemiBoldText>
         <CaloriesSvg width={32} height={32} fill="#41B576" />
       </View>
       <View className="items-center pb-8">

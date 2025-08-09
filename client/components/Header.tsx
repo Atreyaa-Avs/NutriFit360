@@ -7,6 +7,7 @@ import {
 import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Avatar from "@/assets/svgs/avatar.svg";
+import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "./Fonts";
 
 export default function Header(props: DrawerContentComponentProps) {
   const { state, navigation, descriptors, ...rest } = props;
@@ -64,8 +65,10 @@ export default function Header(props: DrawerContentComponentProps) {
           {/* Profile Info */}
           <View className="flex-row items-center justify-between px-4 pb-4">
             <View>
-              <Text className="font-bold text-2xl">Atreyaa AVS</Text>
-              <Text className="text-neutral-400 text-sm">atreyaaavs@gmail.com</Text>
+              <GilroyBoldText className="text-2xl">Atreyaa AVS</GilroyBoldText>
+              <GilroyMediumText className="text-neutral-400 text-sm">
+                atreyaaavs@gmail.com
+              </GilroyMediumText>
             </View>
             <View className="w-[50px] h-[50px] rounded-full overflow-hidden border-[3px] border-primary/90 bg-gray-200">
               <Avatar
@@ -99,6 +102,7 @@ export default function Header(props: DrawerContentComponentProps) {
                 labelStyle={{
                   fontSize: 14,
                   textTransform: "capitalize",
+                  fontFamily: "Gilroy-Bold",
                   color: isDanger ? "#dc2626" : "#1f2937",
                 }}
                 style={isDanger ? { backgroundColor: "#fee2e2" } : {}}
@@ -109,7 +113,9 @@ export default function Header(props: DrawerContentComponentProps) {
 
         {/* Bottom Footer */}
         <View className="pb-2">
-          <Text className="text-center text-base text-neutral-500">v1.0.0</Text>
+          <GilroySemiBoldText className="text-center text-base text-neutral-500">
+            v1.0.0
+          </GilroySemiBoldText>
         </View>
       </View>
     </DrawerContentScrollView>

@@ -4,6 +4,7 @@ import React from "react";
 import { ImageBackground, Text, View } from "react-native";
 import StepsSvg from "@/assets/svgs/home/steps.svg";
 import HeartSvg from "@/assets/svgs/home/heart.svg";
+import { GilroyBoldText, GilroyMediumText, GilroyRegularText } from "../Fonts";
 
 const Banner = () => {
   return (
@@ -31,25 +32,25 @@ const Banner = () => {
           </View>
 
           <View className="flex-1 pt-4 pb-3 pl-4 text-black rounded-2xl">
-            <Text className="px-2 text-3xl font-bold">
+            <GilroyBoldText className="px-2 text-3xl">
               Atreyaa Subramanya AVS
-            </Text>
-            <Text className="px-2 font-medium text-md">
+            </GilroyBoldText>
+            <GilroyMediumText className="px-2 text-md">
               atreyaaavs@gmail.com
-            </Text>
+            </GilroyMediumText>
 
             {/* User Stats */}
             <View className="flex-wrap items-center justify-center flex-1 gap-5 p-2 px-4 mt-4 bg-gray-300 rounded-xl">
-              <View>
-                <Text>Ht: 1.6m</Text>
-                <Text>Wt: 68kg</Text>
-                <Text>Age: 19, M</Text>
-                <Text>BMI: 26.0</Text>
+              <View className="flex-col gap-1">
+                <GilroyRegularText>Ht: 1.6m</GilroyRegularText>
+                <GilroyRegularText>Wt: 68kg</GilroyRegularText>
+                <GilroyRegularText>Age: 19, M</GilroyRegularText>
+                <GilroyRegularText>BMI: 26.0</GilroyRegularText>
               </View>
               <View>
-                <Text>DOB: 11/11/2005</Text>
-                <Text>Blood: O+ve</Text>
-                <Text>Activity: Active</Text>
+                <GilroyRegularText>DOB: 11/11/2005</GilroyRegularText>
+                <GilroyRegularText>Blood: O+ve</GilroyRegularText>
+                <GilroyRegularText>Activity: Active</GilroyRegularText>
                 {/* <Text>📍 BLR, India</Text> */}
               </View>
             </View>

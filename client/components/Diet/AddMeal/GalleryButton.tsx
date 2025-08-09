@@ -1,5 +1,6 @@
 import GallerySvg from "@/assets/svgs/diet/gallery.svg";
 import ImageModal from "@/components/Diet/AddMeal/ImageModal";
+import { GilroyMediumText } from "@/components/Fonts";
 import { openImageGallery } from "@/utils/imagePicker";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -23,7 +24,7 @@ const GalleryButton = () => {
     >
       <Pressable onPress={handleOpenGallery} className="items-center gap-1">
         <GallerySvg width={24} height={24} color={"#000"} />
-        <Text>Gallery</Text>
+        <GilroyMediumText>Gallery</GilroyMediumText>
       </Pressable>
 
       <ImageModal

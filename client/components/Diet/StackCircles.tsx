@@ -8,6 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Circle, SvgProps } from "react-native-svg";
+import { CoolJazzText, GilroyBoldText, GilroyMediumText } from "../Fonts";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -131,7 +132,7 @@ const StackCircles = ({
       </View>
 
       <View className="">
-        <Text className="mt-1 text-2xl font-extrabold underline">{title}</Text>
+        <GilroyBoldText className="mt-1 text-3xl underline">{title}</GilroyBoldText>
         <View className="flex my-auto mt-5">
           {/* {data.map((ring, i) => (
             <View className="py-1" key={i}>
@@ -197,8 +198,8 @@ const InfoComponent = ({
             className="w-3 h-3 rounded-full"
             style={{ backgroundColor: strokeColor }}
           ></View>
-          <Text className="text-sm font-semibold">{title}:</Text>
-          <Text>{percentage}%</Text>
+          <CoolJazzText className="text-sm font-semibold">{title}:</CoolJazzText>
+          <CoolJazzText>{percentage}%</CoolJazzText>
         </View>
       </View>
       <View
@@ -210,12 +211,12 @@ const InfoComponent = ({
           </View>
         )}
         <Text>
-          <Text className="text-xl font-extrabold">{value ?? 0}</Text>
-          <Text className="text-neutral-500">
+          <CoolJazzText className="text-xl">{value ?? 0}</CoolJazzText>
+          <CoolJazzText className="text-neutral-500">
             {" "}
             / {target ?? 0}
             {unit}
-          </Text>
+          </CoolJazzText>
         </Text>
       </View>
     </View>

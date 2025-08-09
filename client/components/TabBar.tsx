@@ -14,10 +14,14 @@ import Animated, {
   withSpring,
 } from "react-native-reanimated";
 import { SvgProps } from "react-native-svg";
+import { GilroyRegularText, GilroySemiBoldText } from "./Fonts";
 
 // Types
 type TabBarProps = BottomTabBarProps & {
-  tabMetaMap: Record<string, { icon: React.FC<SvgProps>; strokeWidth?: number }>;
+  tabMetaMap: Record<
+    string,
+    { icon: React.FC<SvgProps>; strokeWidth?: number }
+  >;
   isTabBarVisible?: boolean;
 };
 
@@ -45,7 +49,10 @@ const TabBar: React.FC<TabBarProps> = ({
   const tabPositionX = useSharedValue(buttonWidth * state.index + bubbleOffset);
 
   const calculateTabX = (idx: number) =>
-    buttonWidth * idx + bubbleOffset + 4 * state.routes.length - idx * state.routes.length;
+    buttonWidth * idx +
+    bubbleOffset +
+    4 * state.routes.length -
+    idx * state.routes.length;
 
   const onTabbarLayout = (e: LayoutChangeEvent) => {
     setDimensions({
@@ -83,10 +90,9 @@ const TabBar: React.FC<TabBarProps> = ({
     <View className={``} onLayout={onTabbarLayout}>
       <View
         className={`absolute flex-row justify-between flex-1 w-full px-4 py-2 overflow-hidden bg-gray-200 bottom-0 pb-7`}
-        
       >
         <Animated.View
-        className={"bg-neutral-500"}
+          className={"bg-neutral-500"}
           style={[
             animatedStyle,
             {
@@ -105,13 +111,17 @@ const TabBar: React.FC<TabBarProps> = ({
           const label =
             typeof options.tabBarLabel === "string"
               ? options.tabBarLabel
-              : options.title ?? route.name;
+              : (options.title ?? route.name);
 
           const isFocused = state.index === index;
           const scale = scaleValues[index];
 
           const animatedIconStyle = useAnimatedStyle(() => {
-            const scaleValue = interpolate(scale.value, [0, 0.5, 1], [1, 0.8, 1.2]);
+            const scaleValue = interpolate(
+              scale.value,
+              [0, 0.5, 1],
+              [1, 0.8, 1.2]
+            );
             return { transform: [{ scale: scaleValue }] };
           });
 
@@ -140,7 +150,10 @@ const TabBar: React.FC<TabBarProps> = ({
           const strokeWidth = meta?.strokeWidth ?? 1;
 
           return (
-            <View key={route.key} className="items-center justify-center flex-1">
+            <View
+              key={route.key}
+              className="items-center justify-center flex-1"
+            >
               <TouchableOpacity
                 style={styles.tabItem}
                 accessibilityRole="button"
@@ -170,9 +183,12 @@ const TabBar: React.FC<TabBarProps> = ({
                   </Animated.View>
                 )}
                 {!isFocused && (
-                  <Text style={{ fontSize: 10 }} className="-mt-3 text-neutral-500">
+                  <GilroySemiBoldText
+                    style={{ fontSize: 10 }}
+                    className="-mt-3 text-neutral-500"
+                  >
                     {label}
-                  </Text>
+                  </GilroySemiBoldText>
                 )}
               </TouchableOpacity>
             </View>
@@ -191,5 +207,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 4,
   },
-  
 });
