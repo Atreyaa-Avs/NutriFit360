@@ -34,7 +34,12 @@ import {
   useProfileStore,
 } from "@/store/useProfileStore";
 import { SvgProps } from "react-native-svg";
-import { GilroyBoldText, GilroyMediumText, GilroyRegularText, GilroySemiBoldText } from "@/components/Fonts";
+import {
+  GilroyBoldText,
+  GilroyMediumText,
+  GilroyRegularText,
+  GilroySemiBoldText,
+} from "@/components/Fonts";
 
 const Profile = () => {
   return (
@@ -156,7 +161,7 @@ const Card = ({ title, Icon, unit, defaultVal }: CardProps) => {
     <View className="w-[48%] px-2 py-2 bg-white/50 rounded-xl">
       <View className="flex-row items-center gap-3 pt-1 pl-2">
         <Icon width={24} height={24} />
-        <GilroyMediumText>{title}</GilroyMediumText>
+        <GilroySemiBoldText>{title}</GilroySemiBoldText>
       </View>
       <View className="flex-row items-end justify-between px-5 mt-2 ml-4">
         <TextInput
@@ -164,14 +169,17 @@ const Card = ({ title, Icon, unit, defaultVal }: CardProps) => {
           onChangeText={(text) =>
             setField(key, text === "" ? 0 : parseFloat(text))
           }
+          style={{
+            fontFamily: "Gilroy-Medium",
+          }}
           keyboardType="numeric"
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
           className={`text-2xl border-b-2 ${
             isFocused ? "border-primary" : "border-gray-300"
-          } w-16 text-center p-0 h-8`}
+          } w-16 text-center p-0 h-8 ${Platform.OS === "ios" && "pb-2"}`}
         />
-        <Text className="text-xl">{unit}</Text>
+        <GilroyMediumText className="text-xl">{unit}</GilroyMediumText>
       </View>
     </View>
   );
@@ -197,7 +205,7 @@ const DropDownCard = ({ title, Icon, arrVals }: CardProps) => {
     <View className="w-[48%] px-2 py-2 bg-white/50 rounded-xl">
       <View className="flex-row items-center gap-3 pt-1 pl-2">
         <Icon width={24} height={24} />
-        <GilroyMediumText>{title}</GilroyMediumText>
+        <GilroySemiBoldText>{title}</GilroySemiBoldText>
       </View>
 
       <View className="pl-2">
@@ -223,7 +231,9 @@ const DropDownCard = ({ title, Icon, arrVals }: CardProps) => {
       >
         <View className="flex-1 justify-center bg-black/50">
           <View className="bg-white mx-6 rounded-lg p-4">
-            <GilroySemiBoldText className="text-lg mb-4">Select {title}</GilroySemiBoldText>
+            <GilroySemiBoldText className="text-lg mb-4">
+              Select {title}
+            </GilroySemiBoldText>
             <FlatList
               data={arrVals ?? []}
               keyExtractor={(item, index) => index.toString()}
@@ -242,7 +252,9 @@ const DropDownCard = ({ title, Icon, arrVals }: CardProps) => {
               className="mt-4 p-3 bg-gray-300 rounded-md"
               onPress={() => setModalVisible(false)}
             >
-              <GilroyMediumText className="text-center">Cancel</GilroyMediumText>
+              <GilroyMediumText className="text-center">
+                Cancel
+              </GilroyMediumText>
             </TouchableOpacity>
           </View>
         </View>
@@ -268,7 +280,7 @@ const CheckboxCard = ({ title, Icon, arrVals }: CardProps) => {
       {/* Label */}
       <View className="flex-row items-center gap-3 pt-1 pl-2">
         <Icon width={24} height={24} />
-        <GilroyMediumText>{title}</GilroyMediumText>
+        <GilroySemiBoldText>{title}</GilroySemiBoldText>
       </View>
 
       {/* Selected Value Button */}
@@ -277,12 +289,12 @@ const CheckboxCard = ({ title, Icon, arrVals }: CardProps) => {
           className="px-2 -ml-2 mt-2 border border-gray-300 rounded-md py-2"
           onPress={() => setModalVisible(true)}
         >
-          <Text>
+          <GilroyMediumText>
             {selectedValue
               ? selectedValue.toString().charAt(0).toUpperCase() +
                 selectedValue.toString().slice(1)
               : "Select"}
-          </Text>
+          </GilroyMediumText>
         </TouchableOpacity>
       </View>
 
@@ -295,7 +307,9 @@ const CheckboxCard = ({ title, Icon, arrVals }: CardProps) => {
       >
         <View className="flex-1 justify-center bg-black/50">
           <View className="bg-white mx-6 rounded-lg p-4">
-            <GilroySemiBoldText className="text-lg mb-4">Select {title}</GilroySemiBoldText>
+            <GilroySemiBoldText className="text-lg mb-4">
+              Select {title}
+            </GilroySemiBoldText>
 
             <FlatList
               data={arrVals}
@@ -316,7 +330,9 @@ const CheckboxCard = ({ title, Icon, arrVals }: CardProps) => {
               className="mt-4 p-3 bg-gray-300 rounded-md"
               onPress={() => setModalVisible(false)}
             >
-              <GilroyRegularText className="text-center">Cancel</GilroyRegularText>
+              <GilroyRegularText className="text-center">
+                Cancel
+              </GilroyRegularText>
             </TouchableOpacity>
           </View>
         </View>

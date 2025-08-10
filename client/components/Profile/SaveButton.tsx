@@ -4,6 +4,7 @@ import { mapProfileToRequestBody } from "@/utils/mapProfileToRequestBody";
 import * as LocalAuthentication from "expo-local-authentication";
 import React from "react";
 import { Alert, Text, TouchableOpacity, View } from "react-native";
+import { GilroyBoldText } from "../Fonts";
 
 const SaveButton = () => {
   const handleSave = async () => {
@@ -45,7 +46,7 @@ const SaveButton = () => {
       <TouchableOpacity onPress={handleSave}>
         <View className="flex-row items-center justify-center gap-3 p-3 mt-6 bg-blue-500 rounded-xl">
           <SaveSvg width={20} height={20} fill={"#fff"} />
-          <Text className="text-xl font-semibold text-white">Save</Text>
+          <GilroyBoldText className="text-xl font-semibold text-white">Save</GilroyBoldText>
         </View>
       </TouchableOpacity>
     </View>

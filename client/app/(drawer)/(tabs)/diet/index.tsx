@@ -73,7 +73,9 @@ const Diet = () => {
             setSelectedDate={setSelectedDate}
           />
         </View>
-        <Text>Selected Date: {formatDateToDMY(selectedDate)}</Text>
+        <GilroyMediumText className="pt-3">
+          Selected Date: {formatDateToDMY(selectedDate)}
+        </GilroyMediumText>
         <View>
           {Data[formatDateToDMY(selectedDate)]?.breakfast?.map(
             (item: MealItem, index: number) => (
@@ -87,7 +89,7 @@ const Diet = () => {
             )
           )}
         </View>
-        <Text>{Data["06-07-2025"].breakfast[0].name}</Text>
+        <GilroyBoldText className="mt-3">{Data["06-07-2025"].breakfast[0].name}</GilroyBoldText>
         <View className="flex-row w-full gap-4">
           <View className="flex-1">
             <Pressable
@@ -102,7 +104,7 @@ const Diet = () => {
         </View>
         <View>
           <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
-            <Pressable className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
+            <Pressable className="flex-row items-center justify-center gap-2 p-2 py-4 mb-4 bg-white/50 rounded-xl">
               <RecommendationRecipeSvg />
               <GilroyMediumText className="text-lg tracking-tight text-center">
                 View Diet Recommendation
@@ -115,7 +117,7 @@ const Diet = () => {
           Icon={ActivityRingDiet}
           title={"Nutrition"}
           start={true}
-          scale={0.8}
+          scale={0.9}
           unit="g"
           data={[
             {
@@ -147,7 +149,6 @@ const Diet = () => {
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           className="gap-2 mt-4"
         >
-
           <Pressable
             android_ripple={{ color: "rgba(0,0,0,0.1)", borderless: false }}
             className="bg-button py-4 px-6 rounded-xl"
@@ -158,7 +159,9 @@ const Diet = () => {
               Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
             }}
           >
-            <GilroyBoldText className="text-white">Haptic Impact</GilroyBoldText>
+            <GilroyBoldText className="text-white">
+              Haptic Impact
+            </GilroyBoldText>
           </Pressable>
 
           <Pressable
@@ -173,7 +176,9 @@ const Diet = () => {
               )
             }
           >
-            <GilroyBoldText className="text-white">Haptic Success</GilroyBoldText>
+            <GilroyBoldText className="text-white">
+              Haptic Success
+            </GilroyBoldText>
           </Pressable>
 
           <Pressable
@@ -184,7 +189,9 @@ const Diet = () => {
             ]}
             onPress={() => Haptics.selectionAsync()}
           >
-            <GilroyBoldText className="text-white">Haptic Selection</GilroyBoldText>
+            <GilroyBoldText className="text-white">
+              Haptic Selection
+            </GilroyBoldText>
           </Pressable>
         </View>
       </ScrollView>

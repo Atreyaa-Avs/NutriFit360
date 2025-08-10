@@ -110,7 +110,7 @@ export default function TabsLayout() {
                 >
                   360
                 </Text> */}
-                <HeaderLogo width={120} height={40}/>
+                <HeaderLogo width={120} height={40} />
               </View>
             </View>
 
@@ -132,6 +132,7 @@ export default function TabsLayout() {
       <Tabs
         screenOptions={{
           headerShown: false,
+          lazy: false,
         }}
         tabBar={(props) =>
           tabBarVisible ? (

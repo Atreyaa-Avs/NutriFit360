@@ -4,14 +4,19 @@ import React from "react";
 import { ImageBackground, Text, View } from "react-native";
 import StepsSvg from "@/assets/svgs/home/steps.svg";
 import HeartSvg from "@/assets/svgs/home/heart.svg";
-import { GilroyBoldText, GilroyMediumText, GilroyRegularText } from "../Fonts";
+import {
+  GilroyBoldText,
+  GilroyMediumText,
+  GilroyRegularText,
+  GilroySemiBoldText,
+} from "../Fonts";
 
 const Banner = () => {
   return (
     <View className="mt-3">
       <ImageBackground
         source={require("@/assets/images/profile/profilebanner.jpg")}
-        style={{ width: "100%", height: 230 }}
+        style={{ width: "100%", height: 250 }}
         imageStyle={{
           borderTopLeftRadius: 16,
           borderTopRightRadius: 16,
@@ -42,15 +47,29 @@ const Banner = () => {
             {/* User Stats */}
             <View className="flex-wrap items-center justify-center flex-1 gap-5 p-2 px-4 mt-4 bg-gray-300 rounded-xl">
               <View className="flex-col gap-1">
-                <GilroyRegularText>Ht: 1.6m</GilroyRegularText>
-                <GilroyRegularText>Wt: 68kg</GilroyRegularText>
-                <GilroyRegularText>Age: 19, M</GilroyRegularText>
-                <GilroyRegularText>BMI: 26.0</GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>Ht:</GilroySemiBoldText> 1.6m
+                </GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>Wt:</GilroySemiBoldText> 68kg
+                </GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>Age:</GilroySemiBoldText> 19, M
+                </GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>BMI:</GilroySemiBoldText> 26.0
+                </GilroyRegularText>
               </View>
               <View>
-                <GilroyRegularText>DOB: 11/11/2005</GilroyRegularText>
-                <GilroyRegularText>Blood: O+ve</GilroyRegularText>
-                <GilroyRegularText>Activity: Active</GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>DOB:</GilroySemiBoldText> 11/11/2005
+                </GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>Blood:</GilroySemiBoldText> O+ve
+                </GilroyRegularText>
+                <GilroyRegularText>
+                  <GilroySemiBoldText>Activity:</GilroySemiBoldText> Active
+                </GilroyRegularText>
                 {/* <Text>📍 BLR, India</Text> */}
               </View>
             </View>

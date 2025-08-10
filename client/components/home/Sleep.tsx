@@ -13,7 +13,7 @@ const Sleep = ({ startAnimation }: { startAnimation: boolean }) => {
         <MoonSleepSvg width={32} height={32} fill="#FFA445" />
       </View>
       <View className="flex-row items-end gap-2">
-        <CoolJazzText className="text-3xl text-[#FFA445]">7.40</CoolJazzText>
+        <CoolJazzText className="text-3xl text-[#FFA445]">7.50</CoolJazzText>
         <CoolJazzText className="text-base text-neutral-400">Hours</CoolJazzText>
       </View>
     </View>

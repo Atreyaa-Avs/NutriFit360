@@ -9,6 +9,7 @@ import Animated, {
 } from "react-native-reanimated";
 import Svg, { Circle, SvgProps } from "react-native-svg";
 import { CoolJazzText, GilroyBoldText, GilroyMediumText } from "../Fonts";
+import { Rings } from "../Rings";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 
@@ -96,7 +97,7 @@ const StackCircles = ({
         ]}
         className="mt-20 -mr-4"
       >
-        <Svg
+        {/* <Svg
           width={circleWidth}
           height={circleWidth}
           viewBox={`0 0 ${viewBoxSize} ${viewBoxSize}`}
@@ -128,7 +129,8 @@ const StackCircles = ({
         </Svg>
         <View style={styles.centerText}>
           <Icon width={40} height={40} />
-        </View>
+        </View> */}
+        <Rings />
       </View>
 
       <View className="">

@@ -7,6 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import { CoolJazzText, GilroyRegularText, GilroySemiBoldText } from "../Fonts";
 
 interface CalendarProps {
   selectedDate: string;
@@ -65,17 +66,18 @@ const WorkoutCalendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
   return (
     <View>
       <View className="flex-row items-center justify-between px-4 py-2 mb-2 rounded-lg bg-primary">
-          <Text className="text-base font-bold text-white">Calendar</Text>
-          <Text className="flex-1 text-sm text-center text-white">
-            {isToday(selectedDate) ? "Today" : formatDate(selectedDate)}
-          </Text>
+        <GilroySemiBoldText className="text-base text-white">
+          Calendar
+        </GilroySemiBoldText>
+        <GilroyRegularText className="flex-1 text-sm text-center text-white">
+          {isToday(selectedDate) ? "Today" : formatDate(selectedDate)}
+        </GilroyRegularText>
         <TouchableOpacity
           onPress={toggleCalendar}
           className="px-4 py-1 bg-gray-200 rounded-xl"
         >
-
           <Animated.View style={arrowAnimatedStyle}>
-            <Text className="text-lg text-black">{">"}</Text>
+            <CoolJazzText className="text-lg text-black">{">"}</CoolJazzText>
           </Animated.View>
         </TouchableOpacity>
       </View>
@@ -104,10 +106,15 @@ const WorkoutCalendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
                 },
                 text: {
                   color: "white",
-                  fontWeight: "bold",
+                  fontFamily: "Gilroy-SemiBold",
                 },
               },
             },
+          }}
+          theme={{
+            textDayFontFamily: "Gilroy-SemiBold", // all days (numbers)
+            textMonthFontFamily: "Gilroy-SemiBold", // month title
+            textDayHeaderFontFamily: "Gilroy-SemiBold", // day names (Mon, Tue...)
           }}
         />
       </Animated.View>
