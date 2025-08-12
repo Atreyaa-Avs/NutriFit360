@@ -77,7 +77,7 @@ const Header = () => {
 
     if (hour >= 6 && hour < 12) return "Good Morning,";
     if (hour >= 12 && hour < 15) return "Good Afternoon,";
-    if (hour >= 15 && hour <= 22) return "Good Evening,";
+    if (hour >= 15 && hour <= 21) return "Good Evening,";
     return "Good Night,";
   };
 
@@ -128,7 +128,7 @@ const Header = () => {
           <View className="relative w-full mr-6">
             <Image
               source={require("@/assets/images/greetings/morning.jpg")}
-              className="object-cover h-24 mr-12 rounded-full mt-7 w-44"
+              className="object-cover h-24 mr-14 rounded-full mt-10 w-44 right-5"
             />
           </View>
         )}
@@ -141,7 +141,7 @@ const Header = () => {
           </View>
         )}
         {greeting === "Good Evening," && (
-          <View className="relative w-full mr-6 -left-7">
+          <View className="relative w-full mr-6 -left-8">
             <Image
               source={require("@/assets/images/greetings/evening2.jpg")}
               className="object-cover h-24 mr-12 rounded-full mt-7 w-44"

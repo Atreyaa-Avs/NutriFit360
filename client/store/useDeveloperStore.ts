@@ -9,6 +9,7 @@ export type DeveloperState = {
 };
 
 export const useDeveloperStore = create<DeveloperState>((set) => ({
-  IP: "192.168.56.1",
+  // IP: "192.168.56.1",
+  IP: "127.0.0.1",
   setField: (field, value) => set((state) => ({ ...state, [field]: value })),
 }));

@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const fetchResponse = async (IP: string) => {
-  const response = await axios.post(`http://${IP}:8080/`, {
+  const response = await axios.get(`http://${IP}:8080/`, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -15,5 +15,10 @@ export const useCheckAPI = (IP: string, enabled: boolean = false) => {
     queryKey: [`API Status of ${IP}`],
     queryFn: () => fetchResponse(IP),
     enabled,
+    retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnReconnect: false,
+    refetchInterval: false,
+    staleTime: Infinity,
   });
 };

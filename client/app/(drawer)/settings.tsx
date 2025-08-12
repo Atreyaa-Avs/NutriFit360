@@ -1,8 +1,6 @@
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import {
-  BackHandler,
-  Platform,
   Text,
   TouchableOpacity,
   View,
@@ -12,7 +10,6 @@ import {
   StatusBar,
   useColorScheme,
   TextInput,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
 } from "react-native";
@@ -22,6 +19,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { Animated } from "react-native";
 import { useEffect, useRef } from "react";
 import PingAPISettings from "@/components/api/PingAPISettings";
+import { useDeveloperStore } from "@/store/useDeveloperStore";
 
 interface SettingItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -94,9 +92,10 @@ const SettingItem = ({
 export default function SettingsScreen() {
   const router = useRouter();
   const theme = useColorScheme();
-
+  const { IP, setField } = useDeveloperStore();
   const [showIPInput, setShowIPInput] = useState(false);
-  const [ipAddress, setIpAddress] = useState("");
+  const [tempIP, setTempIP] = useState(IP); // used only for editing
+  const [checkAPI, setCheckAPI] = useState(false);
 
   // State for toggles
   const [notifications, setNotifications] = useState(true);
@@ -143,6 +142,19 @@ export default function SettingsScreen() {
         },
       ]
     );
+  };
+
+  const handleIPAddressSave = () => {
+    const ipPattern =
+      /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+
+    if (!ipPattern.test(tempIP)) {
+      console.warn("Invalid IP address");
+      return;
+    }
+
+    setField("IP", tempIP);
+    setCheckAPI(true);
   };
 
   const fadeAnim = useRef(new Animated.Value(0)).current;
@@ -373,18 +385,23 @@ export default function SettingsScreen() {
                 <View className="flex-row justify-between items-center mb-2">
                   <Text className="text-gray-800">Enter Local IP Address:</Text>
 
-                  <TouchableOpacity className="bg-primary px-4 py-1.5 rounded-xl active:opacity-80">
+                  <TouchableOpacity
+                    onPress={handleIPAddressSave}
+                    className="bg-primary px-4 py-1.5 rounded-xl active:opacity-80"
+                  >
                     <Text className="text-white font-medium text-sm">Save</Text>
                   </TouchableOpacity>
                 </View>
+
                 <TextInput
                   placeholder="Enter backend IP address"
-                  value={ipAddress}
-                  onChangeText={setIpAddress}
+                  value={tempIP}
+                  onChangeText={setTempIP}
                   className="border border-gray-900 rounded px-4 py-2 text-gray-900"
                   keyboardType="numeric"
                 />
-                <PingAPISettings ipAddress={ipAddress}/>
+
+                <PingAPISettings enabled={checkAPI} />
               </Animated.View>
             )}
           </View>

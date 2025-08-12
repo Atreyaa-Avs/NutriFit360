@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import { SplashScreen, Stack } from "expo-router";
 import { useEffect } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { Text as RNText, TextProps } from "react-native";
 
 const queryClient = new QueryClient();
 
@@ -34,6 +35,12 @@ export default function RootLayout() {
     // Keep showing the splash until fonts are ready
     return null;
   }
+
+// Custom Text component to apply default font
+
+const AppText: React.FC<TextProps> = (props) => (
+  <RNText {...props} style={[props.style, { fontFamily: "Gilroy-Regular" }]} />
+);
 
   return (
     <SafeAreaProvider>
