@@ -8,7 +8,7 @@ An AI-powered Diet and Fitness mobile application to help users stay healthy, tr
 
 ```
 NutriFit360/
-├── client/       # React Native app (Expo)
+├── client/       # React Native app (Expo) 
 ├── server/       # FastAPI backend
 ├── .gitignore
 └── README.md
