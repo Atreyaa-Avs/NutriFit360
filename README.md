@@ -18,7 +18,7 @@ NutriFit360/
 
 ## Features
 
-### Mobile App (client)
+### Mobile App (client) 
 - Personalized diet tracking
 - Fitness activity logging
 - Daily nutrition and calorie summary
