@@ -1,13 +1,10 @@
 import ActivityRingWorkout from "@/assets/svgs/workout/AcitivityRingCenter.svg";
 import RecommendationWorkout from "@/assets/svgs/workout/RecommendWorkout.svg";
-import BottomSheetComponent from "@/components/BottomSheet";
 import StackCircles from "@/components/Diet/StackCircles";
-import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
-import { Rings } from "@/components/Rings";
 import WorkoutCalendar from "@/components/Workout/WorkoutCalendar";
 import { Link } from "expo-router";
-import React, { useRef, useState } from "react";
-import { Dimensions, Pressable, Text, TouchableOpacity, useWindowDimensions, View } from "react-native";
+import React, { useState } from "react";
+import { Pressable, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 
@@ -27,12 +24,11 @@ const getLocalISODate = () => {
 const Workout = () => {
   const todayISO = getLocalISODate();
   const [selectedDate, setSelectedDate] = useState(todayISO);
-  const sheetRef = useRef<{ open: () => void; close: () => void }>(null);
 
   return (
     <SafeAreaView
       edges={["left", "right", "bottom"]}
-      className="flex-1 bg-gray-200 min-h-screen pb-32 pt-4"
+      className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 pt-4"
     >
       <ScrollView
         bounces={false}
@@ -42,9 +38,9 @@ const Workout = () => {
         }}
         style={{ paddingLeft: 16, paddingRight: 16 }}
       >
-        <GilroyBoldText className="pb-3 text-4xl font-semibold tracking-tighter">
+        <Text className="pb-3 text-4xl font-semibold tracking-tighter">
           Workout Tracker
-        </GilroyBoldText>
+        </Text>
 
         <View>
           <WorkoutCalendar
@@ -53,14 +49,14 @@ const Workout = () => {
           />
         </View>
 
-        <GilroyMediumText className="pt-3">Selected Date: {formatDateToDMY(selectedDate)}</GilroyMediumText>
+        <Text>Selected Date: {formatDateToDMY(selectedDate)}</Text>
 
         <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
           <Pressable className="my-4 bg-white/50 rounded-xl p-4 flex-row items-center justify-center gap-2">
             <RecommendationWorkout />
-            <GilroyMediumText className="text-lg tracking-tight font-semibold text-center">
+            <Text className="text-lg font-semibold text-center">
               View Workout Recommendation
-            </GilroyMediumText>
+            </Text>
           </Pressable>
         </Link>
 
@@ -95,22 +91,6 @@ const Workout = () => {
           ]}
           gap={1}
         />
-        <TouchableOpacity
-          onPress={() => sheetRef.current?.open()}
-          style={{
-            backgroundColor: "#2296F3",
-            paddingHorizontal: 20,
-            paddingVertical: 12,
-            borderRadius: 6,
-            alignSelf: "center",
-            marginTop: 20,
-          }}
-        >
-          <GilroyBoldText style={{ color: "#fff" }}>Wheel Picker</GilroyBoldText>
-        </TouchableOpacity>
-
-        {/* Sheet lives at bottom of the DOM, not floating */}
-        <BottomSheetComponent ref={sheetRef} />
       </ScrollView>
     </SafeAreaView>
   );

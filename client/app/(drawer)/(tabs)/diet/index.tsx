@@ -10,7 +10,6 @@ import React, { useState } from "react";
 import { Button, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import rawData from "./DietDemo.json";
-import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
 
 // interface DietIndexProps {
 //   selectedDate: Array<String>[]
@@ -53,7 +52,7 @@ const Diet = () => {
   return (
     <SafeAreaView
       edges={["left", "right", "bottom"]}
-      className="flex-1 bg-gray-200 min-h-screen pb-32 pt-4"
+      className="flex-1 bg-[#E5E5E5] min-h-screen pb-32 pt-4"
     >
       <ScrollView
         bounces={false}
@@ -63,9 +62,9 @@ const Diet = () => {
         }}
         style={{ paddingLeft: 16, paddingRight: 16 }}
       >
-        <GilroyBoldText className={`pb-3 text-4xl tracking-tighter`}>
+        <Text className={`pb-3 text-4xl font-semibold tracking-tighter`}>
           Diet Tracker
-        </GilroyBoldText>
+        </Text>
         <View>{/* <Calendar /> */}</View>
         <View className="">
           <DietCalendar
@@ -73,9 +72,7 @@ const Diet = () => {
             setSelectedDate={setSelectedDate}
           />
         </View>
-        <GilroyMediumText className="pt-3">
-          Selected Date: {formatDateToDMY(selectedDate)}
-        </GilroyMediumText>
+        <Text>Selected Date: {formatDateToDMY(selectedDate)}</Text>
         <View>
           {Data[formatDateToDMY(selectedDate)]?.breakfast?.map(
             (item: MealItem, index: number) => (
@@ -89,7 +86,7 @@ const Diet = () => {
             )
           )}
         </View>
-        <GilroyBoldText className="mt-3">{Data["06-07-2025"].breakfast[0].name}</GilroyBoldText>
+        <Text>{Data["06-07-2025"].breakfast[0].name}</Text>
         <View className="flex-row w-full gap-4">
           <View className="flex-1">
             <Pressable
@@ -104,11 +101,11 @@ const Diet = () => {
         </View>
         <View>
           <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
-            <Pressable className="flex-row items-center justify-center gap-2 p-2 py-4 mb-4 bg-white/50 rounded-xl">
+            <Pressable className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
               <RecommendationRecipeSvg />
-              <GilroyMediumText className="text-lg tracking-tight text-center">
+              <Text className="text-lg font-semibold text-center">
                 View Diet Recommendation
-              </GilroyMediumText>
+              </Text>
             </Pressable>
           </Link>
         </View>
@@ -117,7 +114,7 @@ const Diet = () => {
           Icon={ActivityRingDiet}
           title={"Nutrition"}
           start={true}
-          scale={0.9}
+          scale={0.8}
           unit="g"
           data={[
             {
@@ -149,50 +146,24 @@ const Diet = () => {
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           className="gap-2 mt-4"
         >
-          <Pressable
-            android_ripple={{ color: "rgba(0,0,0,0.1)", borderless: false }}
-            className="bg-button py-4 px-6 rounded-xl"
-            style={({ pressed }) => [
-              pressed && { opacity: 0.8 }, // iOS visual feedback
-            ]}
-            onPress={() => {
-              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid);
-            }}
-          >
-            <GilroyBoldText className="text-white">
-              Haptic Impact
-            </GilroyBoldText>
-          </Pressable>
-
-          <Pressable
-            android_ripple={{ color: "rgba(0,0,0,0.1)", borderless: false }}
-            className="bg-button py-4 px-6 rounded-xl"
-            style={({ pressed }) => [
-              pressed && { opacity: 0.8 }, // iOS visual feedback
-            ]}
+          <Button
+            title="Haptic Impact"
+            onPress={() =>
+              Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Rigid)
+            }
+          />
+          <Button
+            title="Haptic Success"
             onPress={() =>
               Haptics.notificationAsync(
                 Haptics.NotificationFeedbackType.Success
               )
             }
-          >
-            <GilroyBoldText className="text-white">
-              Haptic Success
-            </GilroyBoldText>
-          </Pressable>
-
-          <Pressable
-            android_ripple={{ color: "rgba(0,0,0,0.1)", borderless: false }}
-            className="bg-button py-4 px-6 rounded-xl"
-            style={({ pressed }) => [
-              pressed && { opacity: 0.8 }, // iOS visual feedback
-            ]}
+          />
+          <Button
+            title="Haptic Selection"
             onPress={() => Haptics.selectionAsync()}
-          >
-            <GilroyBoldText className="text-white">
-              Haptic Selection
-            </GilroyBoldText>
-          </Pressable>
+          />
         </View>
       </ScrollView>
     </SafeAreaView>

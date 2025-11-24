@@ -1,4 +1,5 @@
 import { Drawer } from "expo-router/drawer";
+import { Slot } from "expo-router";
 import Header from "@/components/Header";
 
 export default function DrawerLayout() {
@@ -11,6 +12,8 @@ export default function DrawerLayout() {
         drawerType: "front",
       }}
       drawerContent={(props) => <Header {...props} />}
-    />
+    >
+      <Slot />
+    </Drawer>
   );
 }

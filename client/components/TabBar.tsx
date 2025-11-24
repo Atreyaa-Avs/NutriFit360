@@ -68,8 +68,8 @@ const TabBar: React.FC<TabBarProps> = ({
   useEffect(() => {
     scaleValues.forEach((scale, idx) => {
       scale.value = withSpring(state.index === idx ? 1 : 0, {
-        damping: 25,
-        stiffness: 100,
+        damping: 15,
+        stiffness: 60,
       });
     });
   }, [state.index]);
@@ -127,8 +127,8 @@ const TabBar: React.FC<TabBarProps> = ({
 
           const onPress = () => {
             tabPositionX.value = withSpring(calculateTabX(index), {
-              damping: 12,
-              stiffness: 100,
+              damping: 40,
+              stiffness: 250,
             });
 
             scale.value = withSpring(1);
