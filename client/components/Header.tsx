@@ -1,4 +1,4 @@
-import Logo from "@/assets/svgs/logo/trans-logo2.svg";
+import Logo from "@/assets/svgs/Header_Logo.svg";
 import {
   DrawerContentComponentProps,
   DrawerContentScrollView,
@@ -47,8 +47,8 @@ export default function Header(props: DrawerContentComponentProps) {
           {/* Header */}
           <View className="flex-row items-center justify-between py-2 mt-2">
             {/* Left side: Logo */}
-            <View className="flex-row items-end space-x-2">
-              <Logo height={64} width={64} />
+            <View className="flex-row items-end space-x-2 w-32 pl-1">
+              <Logo height={64} width={128} />
             </View>
 
             {/* Right side: Notification and Settings icons */}
