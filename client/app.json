@@ -37,6 +37,7 @@
     },
     "plugins": [
       "expo-router",
+      "expo-health-connect",
       "expo-camera",
       [
         "expo-splash-screen",
@@ -61,7 +62,18 @@
           "isAccessMediaLocationEnabled": true
         }
       ],
-      "expo-font"
+      "expo-font",
+      "react-native-health-connect",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "minSdkVersion": 24
+          }
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true
