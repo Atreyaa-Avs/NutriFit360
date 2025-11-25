@@ -45,6 +45,7 @@
     "plugins": [
       "expo-router",
       "expo-camera",
+      "expo-health-connect",
       [
         "expo-splash-screen",
         {
@@ -74,9 +75,9 @@
         "expo-build-properties",
         {
           "android": {
-            "compileSdkVersion": 34,
-            "targetSdkVersion": 34,
-            "minSdkVersion": 24
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "minSdkVersion": 26
           }
         }
       ]
