@@ -25,7 +25,14 @@
         "READ_MEDIA_IMAGES",
         "WRITE_EXTERNAL_STORAGE",
         "CAMERA",
-        "RECORD_AUDIO"
+        "RECORD_AUDIO",
+        "android.permission.health.READ_STEPS",
+        "android.permission.health.READ_TOTAL_CALORIES_BURNED",
+        "android.permission.health.READ_HEART_RATE",
+        "anderoid.permission.health.READ_BLOOD_PRESSURE",
+        "android.permission.health.READ_HYDRATION",
+        "android.permission.health.READ_SPEED",
+        "android.permission.health.READ_DISTANCE"
       ],
       "package": "com.anonymous.NutriFit360",
       "jsEngine": "hermes"
@@ -37,7 +44,6 @@
     },
     "plugins": [
       "expo-router",
-      "expo-health-connect",
       "expo-camera",
       [
         "expo-splash-screen",

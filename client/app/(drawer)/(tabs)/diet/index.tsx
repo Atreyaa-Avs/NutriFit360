@@ -10,6 +10,7 @@ import React, { useState } from "react";
 import { Button, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import rawData from "./DietDemo.json";
+import { GilroyBoldText } from "@/components/Fonts";
 
 // interface DietIndexProps {
 //   selectedDate: Array<String>[]
@@ -62,9 +63,9 @@ const Diet = () => {
         }}
         style={{ paddingLeft: 16, paddingRight: 16 }}
       >
-        <Text className={`pb-3 text-4xl font-semibold tracking-tighter`}>
+        <GilroyBoldText className={`pb-3 text-4xl font-semibold tracking-tighter`}>
           Diet Tracker
-        </Text>
+        </GilroyBoldText>
         <View>{/* <Calendar /> */}</View>
         <View className="">
           <DietCalendar

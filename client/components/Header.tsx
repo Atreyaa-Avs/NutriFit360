@@ -8,6 +8,7 @@ import { Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Avatar from "@/assets/svgs/avatar.svg";
 import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "./Fonts";
+import HealthConnectSvg from "@/assets/svgs/Health_Connect.svg";
 
 export default function Header(props: DrawerContentComponentProps) {
   const { state, navigation, descriptors, ...rest } = props;
@@ -34,8 +35,10 @@ export default function Header(props: DrawerContentComponentProps) {
         return "settings-outline";
       case "logout":
         return "log-out-outline";
+      case "healthConnect":
+        return "HEALTH_SVG"; // custom flag
       default:
-        return "ellipse-outline";
+        return "home-outline";
     }
   };
 
@@ -92,13 +95,23 @@ export default function Header(props: DrawerContentComponentProps) {
                 }
                 focused={isFocused}
                 onPress={() => navigation.navigate(route.name)}
-                icon={({ size, color }) => (
-                  <Ionicons
-                    name={iconName}
-                    size={size}
-                    color={isDanger ? "#dc2626" : color}
-                  />
-                )}
+                icon={({ size, color }) => {
+                  const label =
+                    descriptors[route.key]?.options?.drawerLabel ?? route.name;
+                  const iconName = getIconForRoute(route.name);
+
+                  if (iconName === "HEALTH_SVG") {
+                    return <HealthConnectSvg width={size} height={size} />;
+                  }
+
+                  return (
+                    <Ionicons
+                      name={iconName}
+                      size={size}
+                      color={isDanger ? "#dc2626" : color}
+                    />
+                  );
+                }}
                 labelStyle={{
                   fontSize: 14,
                   textTransform: "capitalize",

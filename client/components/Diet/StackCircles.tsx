@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Circle, SvgProps } from "react-native-svg";
-import { CoolJazzText, GilroyBoldText, GilroyMediumText } from "../Fonts";
+import { GilroyRegularText, GilroyBoldText, GilroyMediumText } from "../Fonts";
 import { Rings } from "../Rings";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -200,8 +200,8 @@ const InfoComponent = ({
             className="w-3 h-3 rounded-full"
             style={{ backgroundColor: strokeColor }}
           ></View>
-          <CoolJazzText className="text-sm font-semibold">{title}:</CoolJazzText>
-          <CoolJazzText>{percentage}%</CoolJazzText>
+          <GilroyRegularText className="text-sm font-semibold">{title}:</GilroyRegularText>
+          <GilroyRegularText>{percentage}%</GilroyRegularText>
         </View>
       </View>
       <View
@@ -213,12 +213,12 @@ const InfoComponent = ({
           </View>
         )}
         <Text>
-          <CoolJazzText className="text-xl">{value ?? 0}</CoolJazzText>
-          <CoolJazzText className="text-neutral-500">
+          <GilroyRegularText className="text-xl">{value ?? 0}</GilroyRegularText>
+          <GilroyRegularText className="text-neutral-500">
             {" "}
             / {target ?? 0}
             {unit}
-          </CoolJazzText>
+          </GilroyRegularText>
         </Text>
       </View>
     </View>
