@@ -50,7 +50,9 @@ const Progress = () => {
           />
         </View>
 
-        <GilroyMediumText className="mb-4">Selected Date: {formatDateToDMY(selectedDate)}</GilroyMediumText>
+        <GilroyMediumText className="mb-4">
+          Selected Date: {formatDateToDMY(selectedDate)}
+        </GilroyMediumText>
 
         <StackCircles
           Icon={ActivityRingWorkout}
@@ -83,6 +85,7 @@ const Progress = () => {
           ]}
           gap={1}
         />
+        {/* <Lottie /> */}
       </ScrollView>
     </SafeAreaView>
   );

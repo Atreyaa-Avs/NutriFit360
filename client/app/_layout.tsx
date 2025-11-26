@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack, useRouter } from "expo-router";
+import { Stack, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import {
@@ -8,19 +8,20 @@ import {
   TextProps,
   View,
   ActivityIndicator,
-  Text,
 } from "react-native";
 import { ShareIntentProvider, useShareIntentContext } from "expo-share-intent";
 import * as FileSystem from "expo-file-system/legacy";
 import { GilroySemiBoldText } from "@/components/Fonts";
+import AnimatedSplashScreen from "@/components/AnimatedSplashScreen";
+import * as SplashScreen from "expo-splash-screen";
 
+SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
-// Keep splash screen visible until fonts are loaded
-SplashScreen.preventAutoHideAsync();
-
 export default function RootLayout() {
+  const [appReady, setAppReady] = useState(false);
+
   const [fontsLoaded] = useFonts({
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
     "Gilroy-Regular": require("@/assets/fonts/Gilroy-Regular.ttf"),
@@ -32,25 +33,23 @@ export default function RootLayout() {
   });
 
   useEffect(() => {
-    let isMounted = true;
-    if (fontsLoaded && isMounted) {
-      SplashScreen.hideAsync();
+    if (fontsLoaded) {
+      // Simulate any preload work
+      setTimeout(async () => {
+        setAppReady(true);
+        await SplashScreen.hideAsync();
+      }, 2500);
     }
-    return () => {
-      isMounted = false;
-    };
   }, [fontsLoaded]);
 
-  if (!fontsLoaded) {
-    return null;
+  // 🚀 Show animated splash until fonts + appReady
+  if (!fontsLoaded || !appReady) {
+    return <AnimatedSplashScreen />;
   }
 
-  // Custom Text component to apply default font
+  // Default font wrapper
   const AppText: React.FC<TextProps> = (props) => (
-    <RNText
-      {...props}
-      style={[props.style, { fontFamily: "Gilroy-Regular" }]}
-    />
+    <RNText {...props} style={[props.style, { fontFamily: "Gilroy-Regular" }]} />
   );
 
   return (
@@ -64,7 +63,9 @@ export default function RootLayout() {
   );
 }
 
-// Hook inside the provider
+// ---------------------------------------------
+// INNER NAVIGATOR
+// ---------------------------------------------
 function InnerNavigator() {
   const router = useRouter();
   const { hasShareIntent, shareIntent } = useShareIntentContext();
@@ -89,7 +90,9 @@ function InnerNavigator() {
         });
 
         router.push(
-          `/(drawer)/(tabs)/diet/AnalyzeRecipe?imageBase64=${encodeURIComponent(base64)}`
+          `/(drawer)/(tabs)/diet/AnalyzeRecipe?imageBase64=${encodeURIComponent(
+            base64
+          )}`
         );
       } catch (e) {
         console.error("Failed to process share intent:", e);
@@ -103,7 +106,7 @@ function InnerNavigator() {
 
   return (
     <>
-      {/* Small Loading Overlay */}
+      {/* Loading Overlay for shared file */}
       {processingShare && (
         <View
           className="flex-row"
@@ -115,7 +118,7 @@ function InnerNavigator() {
             bottom: 0,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "rgba(0,0,0,0.15)", // light dim
+            backgroundColor: "rgba(0,0,0,0.15)",
             zIndex: 999,
           }}
         >
