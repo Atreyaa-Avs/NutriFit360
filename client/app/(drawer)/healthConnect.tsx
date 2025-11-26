@@ -25,6 +25,7 @@ import ExchangeSvg from "@/assets/svgs/arrow-down-up.svg";
 import LogoSvg from "@/assets/svgs/logo/trans-logo-health.svg";
 
 import {
+  initialize,
   getSdkStatus,
   SdkAvailabilityStatus,
   requestPermission,
@@ -115,33 +116,35 @@ const HealthConnect = () => {
   //   };
   const requestPermissions = () => {
     requestPermission([
-        {
-          accessType: "read",
-          recordType: "Steps",
-        },
-        {
-          accessType: "read",
-          recordType: "Distance",
-        },
-        {
-          accessType: "read",
-          recordType: "ActiveCaloriesBurned",
-        },
-        {
-          accessType: "read",
-          recordType: "TotalCaloriesBurned",
-        },
-        {
-          accessType: "read",
-          recordType: "HeartRate",
-        },
-        {
-          accessType: "read",
-          recordType: "Hydration",
-        },
-      ]).then((permissions) => {
+      {
+        accessType: "read",
+        recordType: "Steps",
+      },
+      {
+        accessType: "read",
+        recordType: "Distance",
+      },
+      {
+        accessType: "read",
+        recordType: "ActiveCaloriesBurned",
+      },
+      {
+        accessType: "read",
+        recordType: "TotalCaloriesBurned",
+      },
+      {
+        accessType: "read",
+        recordType: "HeartRate",
+      },
+      {
+        accessType: "read",
+        recordType: "Hydration",
+      },
+    ]).then((permissions) => {
       console.log("Granted permissions ", { permissions });
       checkGrantedPermissions();
+    }).catch((err) => {
+      console.log("Error requesting permissions:", err);
     });
   };
 
@@ -201,8 +204,14 @@ const HealthConnect = () => {
       }
     };
 
+    const initializeHealthConnect = async () => {
+      const isInitialized = await initialize();
+      console.log({ isInitialized });
+    };
+
     checkAvailability();
     checkGrantedPermissions();
+    initializeHealthConnect();
   }, []);
 
   // Fetch steps when date changes

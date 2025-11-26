@@ -39,6 +39,7 @@
     "expo-media-library": "~18.2.0",
     "expo-notifications": "~0.32.13",
     "expo-router": "~6.0.15",
+    "expo-share-intent": "^5.1.0",
     "expo-splash-screen": "~31.0.11",
     "expo-status-bar": "~3.0.8",
     "expo-symbols": "~1.0.7",

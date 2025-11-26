@@ -37,7 +37,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
     setLoading(true);
     try {
       const base64 = await FileSystem.readAsStringAsync(imageUri!, {
-        encoding: FileSystem.EncodingType.Base64,
+        encoding: "base64",
       });
 
       onClose();
