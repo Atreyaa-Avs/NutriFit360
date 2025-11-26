@@ -8,7 +8,6 @@
     "scheme": "nutrifit360",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-
     "ios": {
       "supportsTablet": true,
       "jsEngine": "hermes",
@@ -16,7 +15,6 @@
         "NSFaceIDUsageDescripion": "We use Face ID to verify your identity before saving profile data."
       }
     },
-
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
@@ -40,25 +38,27 @@
       "package": "com.anonymous.NutriFit360",
       "jsEngine": "hermes"
     },
-
     "web": {
       "bundler": "metro",
       "output": "static",
       "favicon": "./assets/images/favicon.png"
     },
-
     "plugins": [
       "expo-router",
       "expo-camera",
       "expo-health-connect",
-
       [
         "expo-share-intent",
         {
-          "shareTypes": ["image/*"]
+          "iosActivationRules": {
+            "NSExtensionActivationSupportsWebURLWithMaxCount": 1,
+            "NSExtensionActivationSupportsWebPageWithMaxCount": 1,
+            "NSExtensionActivationSupportsImageWithMaxCount": 1,
+            "NSExtensionActivationSupportsMovieWithMaxCount": 1
+          },
+          "androidIntentFilters": ["text/*", "image/*"]
         }
       ],
-
       [
         "expo-splash-screen",
         {
@@ -95,11 +95,9 @@
         }
       ]
     ],
-
     "experiments": {
       "typedRoutes": true
     },
-
     "extra": {
       "router": {},
       "eas": {
