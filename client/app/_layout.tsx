@@ -60,6 +60,13 @@ export default function RootLayout() {
         id: "2",
         params: { href: "/(drawer)/(tabs)/progress" },
       },
+      {
+        title: "Notification Timeline",
+        subtitle: "Go to Notification Timeline",
+        icon: "notification_icon",
+        id: "3",
+        params: { href: "/(drawer)/notificationTimeline" },
+      }
     ]);
   }, []);
 

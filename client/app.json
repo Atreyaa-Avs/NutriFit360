@@ -114,6 +114,10 @@
             "progress_icon": {
               "foregroundImage": "./assets/images/quickActions/progress.png",
               "backgroundColor": "#f09e54"
+            },
+            "notification_icon": {
+              "foregroundImage": "./assets/images/quickActions/notification.png",
+              "backgroundColor": "#f09e54"
             }
           }
         }
