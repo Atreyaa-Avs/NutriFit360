@@ -40,7 +40,7 @@ export default function RootLayout() {
   useEffect(() => {
     QuickActions.setItems([
       {
-        title: "Log a meal",
+        title: "Diet",
         subtitle: "Log a meal to your diet",
         icon: "diet_icon",
         id: "0",
