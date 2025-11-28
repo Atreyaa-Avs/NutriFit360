@@ -98,6 +98,25 @@
             "minSdkVersion": 26
           }
         }
+      ],
+      [
+        "expo-quick-actions",
+        {
+          "androidIcons": {
+            "diet_icon": {
+              "foregroundImage": "./assets/images/quickActions/diet.png",
+              "backgroundColor": "#f09e54"
+            },
+            "workout_icon": {
+              "foregroundImage": "./assets/images/quickActions/workout.png",
+              "backgroundColor": "#f09e54"
+            },
+            "progress_icon": {
+              "foregroundImage": "./assets/images/quickActions/progress.png",
+              "backgroundColor": "#f09e54"
+            }
+          }
+        }
       ]
     ],
     "experiments": {

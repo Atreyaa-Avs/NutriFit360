@@ -8,7 +8,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import Svg, { Circle, SvgProps } from "react-native-svg";
-import { GilroyRegularText, GilroyBoldText, GilroyMediumText } from "../Fonts";
+import { GilroyRegularText, GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "../Fonts";
 import { Rings } from "../Rings";
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
@@ -200,8 +200,8 @@ const InfoComponent = ({
             className="w-3 h-3 rounded-full"
             style={{ backgroundColor: strokeColor }}
           ></View>
-          <GilroyRegularText className="text-sm font-semibold">{title}:</GilroyRegularText>
-          <GilroyRegularText>{percentage}%</GilroyRegularText>
+          <GilroyBoldText className="mt-[3px] text-sm font-semibold">{title}:</GilroyBoldText>
+          <GilroySemiBoldText className="text-gray-700">{percentage}%</GilroySemiBoldText>
         </View>
       </View>
       <View
@@ -213,12 +213,12 @@ const InfoComponent = ({
           </View>
         )}
         <Text>
-          <GilroyRegularText className="text-xl">{value ?? 0}</GilroyRegularText>
-          <GilroyRegularText className="text-neutral-500">
+          <GilroyBoldText className="text-xl">{value ?? 0}</GilroyBoldText>
+          <GilroySemiBoldText className="text-neutral-500">
             {" "}
             / {target ?? 0}
             {unit}
-          </GilroyRegularText>
+          </GilroySemiBoldText>
         </Text>
       </View>
     </View>

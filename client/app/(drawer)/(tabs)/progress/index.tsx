@@ -4,10 +4,13 @@ import StackCircles from "@/components/Diet/StackCircles";
 import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
 import WorkoutCalendar from "@/components/Workout/WorkoutCalendar";
 import { Link } from "expo-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import Charts from "./Charts";
+import GradientLineChart from "./GradientLineChart";
+import MultiLineChart from "./MultiLineChart";
 
 const formatDateToDMY = (isoDate: string) => {
   const [year, month, day] = isoDate.split("-");
@@ -25,6 +28,13 @@ const getLocalISODate = () => {
 const Progress = () => {
   const todayISO = getLocalISODate();
   const [selectedDate, setSelectedDate] = useState(todayISO);
+  const [chartsReady, setChartsReady] = useState(false);
+
+  useEffect(() => {
+    // Defer rendering of charts to next frame
+    const id = setTimeout(() => setChartsReady(true), 0);
+    return () => clearTimeout(id);
+  }, []);
 
   return (
     <SafeAreaView
@@ -34,6 +44,8 @@ const Progress = () => {
       <ScrollView
         bounces={false}
         contentInsetAdjustmentBehavior="never"
+        removeClippedSubviews={true}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 100,
         }}
@@ -85,7 +97,13 @@ const Progress = () => {
           ]}
           gap={1}
         />
-        {/* <Lottie /> */}
+        {chartsReady && (
+          <>
+            <Charts />
+            <GradientLineChart />
+            <MultiLineChart />
+          </>
+        )}
       </ScrollView>
     </SafeAreaView>
   );

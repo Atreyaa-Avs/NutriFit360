@@ -25,7 +25,8 @@ export default function Index() {
     await sendNotification({
       content: {
         title: "💧 Stay Hydrated!, Atreyaa",
-        body: "Drink a glass of water now.",
+        body: "Drink a glass of water now",
+        categoryIdentifier: "water_reminder", // ⭐ Required
       },
     });
   };
@@ -88,11 +89,9 @@ const Header = () => {
         /> */}
         <View>
           <GilroyBoldText className="pl-3 text-4xl">
-            {greeting}
+            {greeting}&nbsp;
           </GilroyBoldText>
-          <GilroyBoldText className="pl-3 text-4xl">
-            Atreyaa!
-          </GilroyBoldText>
+          <GilroyBoldText className="pl-3 text-4xl">Atreyaa!</GilroyBoldText>
           {greeting === "Good Morning," && (
             <GilroyRegularText className="pt-2 pl-3 text-xl text-neutral-500">
               Fuel your body{"\n"} and own the day! 💪
@@ -122,7 +121,7 @@ const Header = () => {
           <View className="relative w-full mr-6">
             <Image
               source={require("@/assets/images/greetings/morning.jpg")}
-              className="object-cover h-24 mr-12 right-6 top-4 rounded-full mt-7 w-44"
+              className="object-cover h-24 mr-12 rounded-full right-6 top-4 mt-7 w-44"
             />
           </View>
         )}
@@ -130,7 +129,7 @@ const Header = () => {
           <View className="relative w-full mr-6">
             <Image
               source={require("@/assets/images/greetings/afternoon.jpg")}
-              className="object-cover h-24 mt-14 rounded-full right-12 w-44"
+              className="object-cover h-24 rounded-full mt-14 right-12 w-44"
             />
           </View>
         )}

@@ -115,7 +115,7 @@ const Diet = () => {
           Icon={ActivityRingDiet}
           title={"Nutrition"}
           start={true}
-          scale={0.8}
+          scale={0.9}
           unit="g"
           data={[
             {

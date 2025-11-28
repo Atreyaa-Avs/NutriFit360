@@ -7,12 +7,12 @@ import {
   TouchableWithoutFeedback,
   ActivityIndicator,
   useColorScheme,
+  ScrollView,
 } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
-import { ScrollView } from "react-native-gesture-handler";
 
 import {
   GilroyBoldText,
@@ -25,51 +25,44 @@ import ExchangeSvg from "@/assets/svgs/arrow-down-up.svg";
 import LogoSvg from "@/assets/svgs/logo/trans-logo-health.svg";
 
 import {
-  initialize,
-  getSdkStatus,
-  SdkAvailabilityStatus,
-  requestPermission,
-  getGrantedPermissions,
-  readRecords,
-} from "react-native-health-connect";
-
-type AllowedRecordTypes =
-  | "Steps"
-  | "Distance"
-  | "ActiveCaloriesBurned"
-  | "TotalCaloriesBurned"
-  | "HeartRate"
-  | "SleepSession"
-  | "BackgroundAccessPermission"; // must be literal
+  initHealthConnect,
+  checkHealthConnectAvailability,
+  askHealthPermissions,
+  fetchGrantedPermissions,
+  getStepsForDate,
+  getStepsForLastNDays,
+} from "@/utils/healthConnect";
 
 const HealthConnect = () => {
   const router = useRouter();
   const theme = useColorScheme();
 
-  const [availability, setAvailability] = useState<string>("");
+  const [availability, setAvailability] = useState("");
   const [grantedPermissions, setGrantedPermissions] = useState<string[]>([]);
-
   const [selectedDate, setSelectedDate] = useState(new Date());
-  const [steps, setSteps] = useState<number>(0);
+  const [steps, setSteps] = useState(0);
   const [loadingSteps, setLoadingSteps] = useState(false);
+  const [last7DaysSteps, setLast7DaysSteps] = useState<
+    { date: string; steps: number }[]
+  >([]);
+  const [loadingLast7Days, setLoadingLast7Days] = useState(false);
 
   const handleBack = () => {
-    if (router.canGoBack()) {
-      router.back();
-    } else {
-      router.replace("/(drawer)/(tabs)/home");
-    }
+    if (router.canGoBack()) router.back();
+    else router.replace("/(drawer)/(tabs)/home");
   };
 
-  // Prevent showing future dates
+  /** ---------- DATE CONTROLS ---------- */
   const goToNextDay = () => {
     const next = new Date(selectedDate);
     next.setDate(next.getDate() + 1);
 
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const tomorrow = new Date();
+    tomorrow.setHours(0, 0, 0, 0);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
-    if (next > today) return; // prevent moving into future
+    if (next > tomorrow) return;
+
     setSelectedDate(next);
   };
 
@@ -79,148 +72,76 @@ const HealthConnect = () => {
     setSelectedDate(prev);
   };
 
-  const formatDate = (date: Date) => date.toDateString();
-
-  // Request permissions
-  //   const requestPermissions = async () => {
-  //     const permissions = [
-  //       {
-  //         accessType: "read",
-  //         recordType: "Steps",
-  //       },
-  //       {
-  //         accessType: "read",
-  //         recordType: "Distance",
-  //       },
-  //       {
-  //         accessType: "read",
-  //         recordType: "ActiveCaloriesBurned",
-  //       },
-  //       {
-  //         accessType: "read",
-  //         recordType: "TotalCaloriesBurned",
-  //       },
-  //       {
-  //         accessType: "read",
-  //         recordType: "HeartRate",
-  //       },
-  //       {
-  //         accessType: "read",
-  //         recordType: "Hydration",
-  //       },
-  //     ];
-
-  //     const granted = await requestPermission(permissions);
-
-  //     console.log("Granted permissions:", granted);
-  //   };
-  const requestPermissions = () => {
-    requestPermission([
-      {
-        accessType: "read",
-        recordType: "Steps",
-      },
-      {
-        accessType: "read",
-        recordType: "Distance",
-      },
-      {
-        accessType: "read",
-        recordType: "ActiveCaloriesBurned",
-      },
-      {
-        accessType: "read",
-        recordType: "TotalCaloriesBurned",
-      },
-      {
-        accessType: "read",
-        recordType: "HeartRate",
-      },
-      {
-        accessType: "read",
-        recordType: "Hydration",
-      },
-    ]).then((permissions) => {
-      console.log("Granted permissions ", { permissions });
-      checkGrantedPermissions();
-    }).catch((err) => {
-      console.log("Error requesting permissions:", err);
+  const formatDate = (date: Date) => {
+    return date.toLocaleDateString("en-US", {
+      weekday: "long",
+      day: "numeric",
+      month: "short",
+      year: "numeric",
     });
   };
 
-  // Get granted permissions
-  const checkGrantedPermissions = async () => {
-    const permissions = await getGrantedPermissions();
-    setGrantedPermissions(permissions.map((p) => p.recordType));
+  /** ---------- PERMISSIONS ---------- */
+  const handlePermissionRequest = async () => {
+    const granted = await askHealthPermissions();
+    console.log("PERMISSIONS GRANTED:", granted);
+    loadGrantedPermissions();
+    loadSteps(); // reload today’s steps after permissions
+    loadLast7Days();
   };
 
-  // Fetch steps for chosen date
-  const fetchStepsForDate = async () => {
+  const loadGrantedPermissions = async () => {
+    const perms = await fetchGrantedPermissions();
+    setGrantedPermissions(perms);
+  };
+
+  /** ---------- LOAD STEPS ---------- */
+  const loadSteps = async () => {
     setLoadingSteps(true);
-
     try {
-      const startOfDay = new Date(selectedDate);
-      startOfDay.setHours(0, 0, 0, 0);
-
-      const endOfDay = new Date(selectedDate);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      const stepsResult = await readRecords("Steps", {
-        timeRangeFilter: {
-          operator: "between",
-          startTime: startOfDay.toISOString(),
-          endTime: endOfDay.toISOString(),
-        },
-      });
-
-      let total = 0;
-      const records = Array.isArray((stepsResult as any).records)
-        ? (stepsResult as any).records
-        : [];
-
-      records.forEach((record: any) => {
-        total += record.count ?? 0;
-      });
-
+      const total = await getStepsForDate(selectedDate);
       setSteps(total);
     } catch (err) {
-      console.log("Error reading steps:", err);
-    } finally {
-      setLoadingSteps(false);
+      console.log("Error fetching steps →", err);
     }
+    setLoadingSteps(false);
   };
 
-  // Initial checks
+  const loadLast7Days = async () => {
+    setLoadingLast7Days(true);
+    try {
+      const data = await getStepsForLastNDays(7);
+      setLast7DaysSteps(data);
+    } catch (err) {
+      console.log("Error loading last 7 days →", err);
+    }
+    setLoadingLast7Days(false);
+  };
+
+  /** ---------- INIT ---------- */
   useEffect(() => {
-    const checkAvailability = async () => {
-      const status = await getSdkStatus();
-
-      if (status === SdkAvailabilityStatus.SDK_AVAILABLE) {
-        setAvailability("Available");
-      } else if (status === SdkAvailabilityStatus.SDK_UNAVAILABLE) {
-        setAvailability("Not Installed");
-      } else {
-        setAvailability("Update Required");
-      }
+    const init = async () => {
+      await initHealthConnect();
+      const av = await checkHealthConnectAvailability();
+      setAvailability(av);
+      await loadGrantedPermissions();
+      await loadSteps();
+      await loadLast7Days();
     };
-
-    const initializeHealthConnect = async () => {
-      const isInitialized = await initialize();
-      console.log({ isInitialized });
-    };
-
-    checkAvailability();
-    checkGrantedPermissions();
-    initializeHealthConnect();
+    init();
   }, []);
 
-  // Fetch steps when date changes
+  /** ---------- REFRESH TODAY'S STEPS ON DATE CHANGE ---------- */
   useEffect(() => {
-    fetchStepsForDate();
+    loadSteps();
   }, [selectedDate]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    <ScrollView
+      className="flex-1"
+      showsVerticalScrollIndicator={false}
+      keyboardShouldPersistTaps="handled"
+    >
       <SafeAreaView className="flex-1 bg-[#E5E5E5]">
         <StatusBar
           barStyle={"dark-content"}
@@ -232,40 +153,34 @@ const HealthConnect = () => {
           <TouchableOpacity onPress={handleBack} className="p-2">
             <Ionicons name="arrow-back" size={24} color="#374151" />
           </TouchableOpacity>
-          <GilroyBoldText className="text-xl text-gray-900 mt-2">
+          <GilroyBoldText className="mt-2 text-xl text-gray-900">
             Health Connect
           </GilroyBoldText>
           <View className="w-10" />
         </View>
 
-        <ScrollView
-          className="flex-1 p-4"
-          showsVerticalScrollIndicator={false}
-          keyboardShouldPersistTaps="handled"
-        >
+        <View className="p-4">
           {/* Logos */}
-          <View className="flex-1 items-center mt-3">
+          <View className="items-center flex-1 mt-3">
             <View className="flex-row gap-3">
               <HealthConnectSvg width={64} height={64} />
               <ExchangeSvg width={24} height={64} />
               <LogoSvg width={64} height={64} />
             </View>
-
-            <GilroyBoldText className="text-3xl my-4">
+            <GilroyBoldText className="my-4 text-3xl">
               Sync with Health Connect
             </GilroyBoldText>
-
-            <GilroyRegularText className="text-sm text-neutral-500 text-center">
+            <GilroyRegularText className="text-sm text-center text-neutral-500">
               Your data, your control. Check what NutriFit360 syncs from Google
               Health Connect.
             </GilroyRegularText>
           </View>
 
           {/* Sync Button */}
-          <View className="flex-1 items-center w-fit">
+          <View className="items-center flex-1 w-fit">
             <TouchableOpacity
-              onPress={requestPermissions}
-              className="bg-gray-300 mt-6 px-4 py-3 rounded-xl w-full items-center"
+              onPress={handlePermissionRequest}
+              className="items-center w-full px-4 py-3 mt-6 bg-gray-300 rounded-xl"
             >
               <GilroyBoldText className="tracking-tight">
                 Sync with Health Connect Now
@@ -274,7 +189,7 @@ const HealthConnect = () => {
           </View>
 
           {/* Availability */}
-          <View className="bg-white p-4 rounded-xl mt-4">
+          <View className="p-4 mt-4 bg-white rounded-xl">
             <GilroySemiBoldText>
               Availability:{" "}
               <GilroyRegularText>{availability}</GilroyRegularText>
@@ -282,64 +197,144 @@ const HealthConnect = () => {
           </View>
 
           {/* Granted Permissions */}
-          <View className="bg-white p-4 rounded-xl mt-4">
+          <View className="p-4 mt-4 bg-white rounded-xl">
             <GilroySemiBoldText>Granted Permissions:</GilroySemiBoldText>
-
             {grantedPermissions.length === 0 ? (
-              <GilroyRegularText className="text-gray-500 mt-2">
+              <GilroyRegularText className="mt-2 text-gray-500">
                 No permissions granted yet.
               </GilroyRegularText>
             ) : (
               grantedPermissions.map((p, index) => (
-                <GilroyRegularText key={index} className="text-gray-700 mt-1">
+                <GilroyRegularText key={index} className="mt-1 text-gray-700">
                   • {p}
                 </GilroyRegularText>
               ))
             )}
           </View>
 
-          {/* Steps */}
-          <View className="bg-white p-4 rounded-xl mt-4">
-            <GilroySemiBoldText className="mb-2">Steps</GilroySemiBoldText>
-
-            {/* Date Navigation */}
-            <View className="flex-row justify-between items-center mb-3">
+          {/* Steps Section */}
+          <View className="p-4 mt-4 bg-gray-300 rounded-xl">
+            <View className="flex-row items-center justify-between p-2 bg-white rounded-xl">
               <TouchableOpacity onPress={goToPreviousDay}>
                 <Ionicons name="chevron-back" size={28} color="#333" />
               </TouchableOpacity>
-
-              <GilroyRegularText className="text-base">
-                {formatDate(selectedDate)}
-              </GilroyRegularText>
-
+              <View className="flex-row items-center gap-1">
+                <GilroySemiBoldText className="text-xl">
+                  {formatDate(selectedDate).split(" ")[0]}
+                </GilroySemiBoldText>
+                <GilroyRegularText className="text-base text-gray-500">
+                  {formatDate(selectedDate).split(",").slice(1).join(",")}
+                </GilroyRegularText>
+              </View>
               <TouchableOpacity onPress={goToNextDay}>
                 <Ionicons name="chevron-forward" size={28} color="#333" />
               </TouchableOpacity>
             </View>
 
-            {/* Steps Count */}
-            {loadingSteps ? (
-              <ActivityIndicator size="large" />
-            ) : (
-              <GilroyBoldText className="text-3xl text-center">
-                {steps} steps
-              </GilroyBoldText>
-            )}
+            <HealthStepsSection
+              steps={steps}
+              loadingSteps={loadingSteps}
+              last7DaysSteps={last7DaysSteps}
+              loadingLast7Days={loadingLast7Days}
+            />
+            <HealthStepsSection
+              steps={steps}
+              loadingSteps={loadingSteps}
+              last7DaysSteps={last7DaysSteps}
+              loadingLast7Days={loadingLast7Days}
+            />
+            <HealthStepsSection
+              steps={steps}
+              loadingSteps={loadingSteps}
+              last7DaysSteps={last7DaysSteps}
+              loadingLast7Days={loadingLast7Days}
+            />
           </View>
 
-          {/* App Info */}
-          <View className="items-center py-6 w-full">
+          {/* Footer */}
+          <View className="items-center w-full mt-10">
             <GilroyBoldText className="text-sm text-gray-500">
               NutriFit360
             </GilroyBoldText>
-            <GilroySemiBoldText className="text-xs text-gray-400 mt-1">
+            <GilroySemiBoldText className="mt-1 text-xs text-gray-400">
               Your complete fitness companion app.
             </GilroySemiBoldText>
           </View>
-        </ScrollView>
+        </View>
       </SafeAreaView>
-    </TouchableWithoutFeedback>
+    </ScrollView>
   );
 };
 
 export default HealthConnect;
+
+type HealthStepsSectionProps = {
+  steps: number;
+  loadingSteps: boolean;
+  last7DaysSteps: { date: string; steps: number }[];
+  loadingLast7Days: boolean;
+};
+
+const HealthStepsSection = ({
+  steps,
+  loadingSteps,
+  last7DaysSteps,
+  loadingLast7Days,
+}: HealthStepsSectionProps) => {
+  return (
+    <View className="p-4 mt-4 bg-white rounded-xl">
+      <GilroySemiBoldText className="mb-2">Steps:</GilroySemiBoldText>
+
+      {loadingSteps ? (
+        <ActivityIndicator size="large" />
+      ) : (
+        <View className="flex-col gap-2">
+          <GilroyBoldText className="text-3xl text-center">
+            {steps} steps
+          </GilroyBoldText>
+
+          {/* Last 7 Days Section */}
+          {loadingLast7Days ? (
+            <ActivityIndicator size="small" className="mt-4" />
+          ) : (
+            last7DaysSteps.length > 0 && (
+              <View className="flex-col items-center mt-4">
+                <GilroySemiBoldText className="mb-3 text-center">
+                  Steps in the Last 7 Days
+                </GilroySemiBoldText>
+
+                {/* TABLE */}
+                <View className="p-2 bg-gray-100 rounded-lg">
+                  {/* Header Row */}
+                  <View className="flex-row justify-between px-1 pb-2 border-b border-gray-300">
+                    <GilroySemiBoldText className="flex-1 text-left">
+                      Date
+                    </GilroySemiBoldText>
+                    <GilroySemiBoldText className="flex-1 text-right">
+                      Steps
+                    </GilroySemiBoldText>
+                  </View>
+
+                  {/* Data Rows */}
+                  {last7DaysSteps.map((entry, index) => (
+                    <View
+                      key={index}
+                      className="flex-row justify-between px-1 py-1 border-b border-gray-200 last:border-b-0"
+                    >
+                      <GilroyRegularText className="flex-1 text-left">
+                        {entry.date}
+                      </GilroyRegularText>
+                      <GilroyRegularText className="flex-1 text-right">
+                        {entry.steps}
+                      </GilroyRegularText>
+                    </View>
+                  ))}
+                </View>
+              </View>
+            )
+          )}
+        </View>
+      )}
+    </View>
+  );
+};

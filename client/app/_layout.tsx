@@ -14,8 +14,11 @@ import * as FileSystem from "expo-file-system/legacy";
 import { GilroySemiBoldText } from "@/components/Fonts";
 import AnimatedSplashScreen from "@/components/AnimatedSplashScreen";
 import * as SplashScreen from "expo-splash-screen";
+import { registerNotificationCategories } from "@/utils/notification";
+import * as QuickActions from "expo-quick-actions";
+import { useQuickActionRouting } from "expo-quick-actions/router";
 
-SplashScreen.preventAutoHideAsync();
+// SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
@@ -31,6 +34,57 @@ export default function RootLayout() {
     "Gilroy-UltraLight": require("@/assets/fonts/Gilroy-UltraLight.ttf"),
     "Cool-Jazz": require("@/assets/fonts/CoolJazz.ttf"),
   });
+
+  useQuickActionRouting();
+
+  useEffect(() => {
+    QuickActions.setItems([
+      {
+        title: "Log a meal",
+        subtitle: "Log a meal to your diet",
+        icon: "diet_icon",
+        id: "0",
+        params: { href: "/(drawer)/(tabs)/diet" },
+      },
+      {
+        title: "Workout",
+        subtitle: "Go to Workout",
+        icon: "workout_icon",
+        id: "1",
+        params: { href: "/(drawer)/(tabs)/workout" },
+      },
+      {
+        title: "Progress",
+        subtitle: "Go to Progress",
+        icon: "progress_icon",
+        id: "2",
+        params: { href: "/(drawer)/(tabs)/progress" },
+      },
+    ]);
+  }, []);
+
+  useEffect(() => {
+    registerNotificationCategories([
+      {
+        id: "water_reminder",
+        actions: [
+          {
+            identifier: "DONE",
+            buttonTitle: "Done",
+          },
+          {
+            identifier: "SNOOZE",
+            buttonTitle: "Snooze",
+            options: { opensAppToForeground: false },
+          },
+          {
+            identifier: "DISMISS",
+            buttonTitle: "Dismiss",
+          },
+        ],
+      },
+    ]);
+  }, []);
 
   useEffect(() => {
     if (fontsLoaded) {
@@ -49,7 +103,10 @@ export default function RootLayout() {
 
   // Default font wrapper
   const AppText: React.FC<TextProps> = (props) => (
-    <RNText {...props} style={[props.style, { fontFamily: "Gilroy-Regular" }]} />
+    <RNText
+      {...props}
+      style={[props.style, { fontFamily: "Gilroy-Regular" }]}
+    />
   );
 
   return (
@@ -105,8 +162,7 @@ function InnerNavigator() {
   }, [hasShareIntent]);
 
   return (
-    <>
-      {/* Loading Overlay for shared file */}
+    <View style={{ flex: 1, backgroundColor: "#FAD5A5" }}>
       {processingShare && (
         <View
           className="flex-row"
@@ -134,6 +190,6 @@ function InnerNavigator() {
       <Stack screenOptions={{ headerShown: false }}>
         <Stack.Screen name="(drawer)" />
       </Stack>
-    </>
+    </View>
   );
 }

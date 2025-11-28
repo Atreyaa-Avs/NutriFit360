@@ -9,6 +9,7 @@ import { Ionicons } from "@expo/vector-icons";
 import Avatar from "@/assets/svgs/avatar.svg";
 import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "./Fonts";
 import HealthConnectSvg from "@/assets/svgs/Health_Connect.svg";
+import NotificationTimelineSvg from "@/assets/svgs/notificationTimeline/icon.svg";
 
 export default function Header(props: DrawerContentComponentProps) {
   const { state, navigation, descriptors, ...rest } = props;
@@ -17,6 +18,13 @@ export default function Header(props: DrawerContentComponentProps) {
   const filteredRoutes = state.routes.filter(
     (route) => route.name !== "(tabs)"
   );
+
+  const drawerLabels: Record<string, string> = {
+  home: "Home",
+  settings: "Settings",
+  healthConnect: "Health Connect",
+  notificationTimeline: "Notification Timeline",
+};
 
   // Reconstruct the navigation state safely
   const newState = {
@@ -37,6 +45,8 @@ export default function Header(props: DrawerContentComponentProps) {
         return "log-out-outline";
       case "healthConnect":
         return "HEALTH_SVG"; // custom flag
+      case "notificationTimeline":
+        return "NOTIFICATION_SVG"
       default:
         return "home-outline";
     }
@@ -44,13 +54,13 @@ export default function Header(props: DrawerContentComponentProps) {
 
   return (
     <DrawerContentScrollView {...props} contentContainerStyle={{ flexGrow: 1 }}>
-      <View className="flex-1 justify-between">
+      <View className="justify-between flex-1">
         {/* Top content */}
         <View>
           {/* Header */}
           <View className="flex-row items-center justify-between py-2 mt-2">
             {/* Left side: Logo */}
-            <View className="flex-row items-end space-x-2 w-32 pl-1">
+            <View className="flex-row items-end w-32 pl-1 space-x-2">
               <Logo height={64} width={128} />
             </View>
 
@@ -69,7 +79,7 @@ export default function Header(props: DrawerContentComponentProps) {
           <View className="flex-row items-center justify-between px-4 pb-4">
             <View>
               <GilroyBoldText className="text-2xl">Atreyaa AVS</GilroyBoldText>
-              <GilroyMediumText className="text-neutral-400 text-sm">
+              <GilroyMediumText className="text-sm text-neutral-400">
                 atreyaaavs@gmail.com
               </GilroyMediumText>
             </View>
@@ -91,7 +101,7 @@ export default function Header(props: DrawerContentComponentProps) {
               <DrawerItem
                 key={route.key}
                 label={
-                  descriptors[route.key]?.options?.drawerLabel ?? route.name
+                  drawerLabels[route.name] ?? route.name
                 }
                 focused={isFocused}
                 onPress={() => navigation.navigate(route.name)}
@@ -103,7 +113,9 @@ export default function Header(props: DrawerContentComponentProps) {
                   if (iconName === "HEALTH_SVG") {
                     return <HealthConnectSvg width={size} height={size} />;
                   }
-
+                  if (iconName === "NOTIFICATION_SVG") {
+                    return <NotificationTimelineSvg width={size} height={size} />;
+                  }
                   return (
                     <Ionicons
                       name={iconName}
@@ -126,7 +138,7 @@ export default function Header(props: DrawerContentComponentProps) {
 
         {/* Bottom Footer */}
         <View className="pb-2">
-          <GilroySemiBoldText className="text-center text-base text-neutral-500">
+          <GilroySemiBoldText className="text-base text-center text-neutral-500">
             v1.0.0
           </GilroySemiBoldText>
         </View>

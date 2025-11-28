@@ -2,7 +2,7 @@ import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 import { SchedulableTriggerInputTypes } from "expo-notifications";
 
-// Foreground notification handler
+// Foreground Notification Handler
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -22,10 +22,41 @@ interface NotificationProps {
     title: string;
     body: string;
     data?: DataCustomObjectType;
+    categoryIdentifier?: string; // ⭐ FIXED: correct key
   };
   time?: Date | string | null;
 }
 
+interface NotificationCategory {
+  id: string;
+  actions: {
+    buttonTitle: string;
+    identifier: string;
+    options?: Notifications.NotificationAction["options"];
+  }[];
+}
+
+/**
+ * ⭐ Register categories with Quick Actions
+ */
+export const registerNotificationCategories = async (
+  categories: NotificationCategory[]
+) => {
+  for (const cat of categories) {
+    await Notifications.setNotificationCategoryAsync(
+      cat.id,
+      cat.actions.map((a) => ({
+        identifier: a.identifier,
+        buttonTitle: a.buttonTitle,
+        options: a.options,
+      }))
+    );
+  }
+};
+
+/**
+ * ⭐ Send Notification (Immediate or Scheduled)
+ */
 export const sendNotification = async ({ content, time }: NotificationProps) => {
   // Request permission
   const { status } = await Notifications.requestPermissionsAsync();
@@ -34,11 +65,11 @@ export const sendNotification = async ({ content, time }: NotificationProps) => 
     return;
   }
 
-  // Android Channel
+  // Android Notification Channel
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "default",
-      importance: Notifications.AndroidImportance.DEFAULT,
+      importance: Notifications.AndroidImportance.HIGH,
     });
   }
 
@@ -46,6 +77,7 @@ export const sendNotification = async ({ content, time }: NotificationProps) => 
 
   if (time) {
     const date = typeof time === "string" ? new Date(time) : time;
+
     if (isNaN(date.getTime())) {
       console.warn("Invalid date for notification trigger");
       return;
