@@ -1,9 +1,16 @@
-fastapi==0.95.2
-uvicorn[standard]==0.22.0
-pydantic==1.10.7
+fastapi==0.110.0
+uvicorn[standard]==0.29.0
+
+# Pydantic v2 (FastAPI 0.110+ requires this)
+pydantic==2.6.4
+pydantic-settings==2.2.1
+
+# Data & ML packages (compatible with Python 3.11)
 pandas==2.0.3
 numpy==1.26.4
 scikit-learn==1.3.0
 joblib==1.3.2
+
+# Utility
 requests==2.31.0
-python-multipart
+python-multipart==0.0.9
