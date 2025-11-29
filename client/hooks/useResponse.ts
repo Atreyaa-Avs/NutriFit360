@@ -1,8 +1,10 @@
-import { IP } from "@/IP";
+import { storage } from "@/storage/mmkv";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { useDeveloperStore } from "@/store/useDeveloperStore";
 
 const fetchResponse = async (body: any): Promise<any> => {
+  const IP = storage.getString("IP") || useDeveloperStore.getState().IP;
   const response = await axios.post(`http://${IP}:8080/recommend/`, body);
   return response.data;
 };

@@ -1,0 +1,206 @@
+{
+  "Squats": {
+    "desc": "Builds strong legs and glutes, improves core stability, and enhances overall functional movement. Great for boosting lower-body strength and athletic performance.",
+    "benefits": ["strength","power","stability"],
+    "instructions": [
+      "Stand with your feet shoulder-width apart, toes slightly turned out.",
+      "Keep your chest lifted, shoulders relaxed, and core engaged.",
+      "Look straight ahead to maintain proper neck alignment.",
+      "Begin the movement by pushing your hips back and bending your knees, as if sitting into a chair.",
+      "Lower down until your thighs are parallel to the ground or slightly below if comfortable.",
+      "Ensure your knees stay in line with your toes, not collapsing inward.",
+      "Press through your heels and engage your glutes to return to a standing position.",
+      "Exhale as you push up, inhale as you lower down.",
+      "Repeat for the desired number of reps, maintaining controlled movement."
+    ],
+    "image": "squats.jpg",
+    "equipment": ["none"],
+    "level": "beginner",
+    "targetMuscles": ["quadriceps","glutes","hamstrings","core"],
+    "videoUrl": "https://www.youtube.com/watch?v=aclHkVaku9U",
+    "tips": ["Keep your back straight","Do not let knees collapse inward","Move slowly and with control"]
+  },
+  "Yoga": {
+    "desc": "Enhances flexibility, reduces stress, improves mobility, and promotes mind–body balance. Supports mental relaxation and body awareness.",
+    "benefits": ["flexibility","calm","balance"],
+    "instructions": [
+      "Begin in a comfortable seated or standing position, taking a few deep breaths.",
+      "Focus on inhaling and exhaling deeply, centering your mind.",
+      "Start with gentle warm-up stretches, moving your arms, shoulders, and neck.",
+      "Progress into a yoga flow sequence, moving slowly between poses like Downward Dog, Warrior, and Cat-Cow.",
+      "Hold each pose for several breaths, ensuring proper alignment.",
+      "Keep your movements fluid and avoid forcing stretches.",
+      "Finish your session with a relaxation pose, such as Savasana, lying flat with arms at your sides.",
+      "Close your eyes and focus on deep breathing for several minutes.",
+      "Gradually return to a seated position to end your practice."
+    ],
+    "image": "yoga.jpg",
+    "equipment": ["mat"],
+    "level": "beginner",
+    "targetMuscles": ["full body"],
+    "videoUrl": "https://www.youtube.com/watch?v=v7AYKMP6rOE",
+    "tips": ["Move slowly and mindfully","Focus on deep, steady breathing","Listen to your body and avoid strain"]
+  },
+  "Deadlifts": {
+    "desc": "Strengthens the entire posterior chain, boosts core stability, and improves full-body power. Excellent for posture, back strength, and overall functional fitness.",
+    "benefits": ["strength","posture","power"],
+    "instructions": [
+      "Stand with your feet hip-width apart, barbell or dumbbells on the floor in front of you.",
+      "Bend at the hips first, then knees, to grasp the weight with an overhand or mixed grip.",
+      "Keep your chest lifted, shoulders back, and back flat.",
+      "Engage your core and maintain a neutral spine throughout the movement.",
+      "Lift the weight by driving through your heels and extending your hips and knees simultaneously.",
+      "Keep the barbell or dumbbells close to your legs as you rise.",
+      "Pause briefly at the top, standing tall with shoulders back.",
+      "Lower the weight slowly by hinging at the hips and bending your knees, controlling the descent.",
+      "Maintain even breathing throughout: inhale down, exhale up.",
+      "Repeat for the desired number of repetitions."
+    ],
+    "image": "deadlifts.jpg",
+    "equipment": ["barbell","dumbbells"],
+    "level": "intermediate",
+    "targetMuscles": ["hamstrings","glutes","lower back","core"],
+    "videoUrl": "https://www.youtube.com/watch?v=ytGaGIn3SjE",
+    "tips": ["Keep the bar close to your body","Do not round your back","Engage your core"]
+  },
+  "Bench Presses": {
+    "desc": "Develops strong chest, shoulders, and triceps while improving overall upper-body pushing strength. Ideal for building muscle mass and upper-body power.",
+    "benefits": ["strength","hypertrophy","power"],
+    "instructions": [
+      "Lie flat on a bench with feet firmly planted on the ground.",
+      "Grip the barbell slightly wider than shoulder-width, thumbs around the bar.",
+      "Lift the bar from the rack and hold it above your chest with arms extended.",
+      "Lower the bar slowly to the mid-chest level, keeping elbows at about 45 degrees.",
+      "Ensure your lower back maintains a natural arch, not exaggerated.",
+      "Push the bar upward by extending your elbows until arms are straight.",
+      "Keep movements controlled; avoid bouncing the bar off your chest.",
+      "Inhale as you lower, exhale as you push up.",
+      "Repeat for the planned number of reps and sets."
+    ],
+    "image": "bench_presses.jpg",
+    "equipment": ["barbell","bench"],
+    "level": "intermediate",
+    "targetMuscles": ["chest","shoulders","triceps"],
+    "videoUrl": "https://www.youtube.com/watch?v=rT7DgCr-3pg",
+    "tips": ["Maintain controlled movement","Do not arch your lower back excessively","Keep wrists straight"]
+  },
+  "Overhead Presses": {
+    "desc": "Improves shoulder strength, enhances upper-body stability, and engages the core for balance. Helps with posture and functional overhead movements.",
+    "benefits": ["strength","stability","posture"],
+    "instructions": [
+      "Stand with feet shoulder-width apart and hold dumbbells or a barbell at shoulder height.",
+      "Engage your core and keep your back straight.",
+      "Press the weight overhead in a straight line until arms are fully extended.",
+      "Keep wrists aligned with elbows and avoid flaring elbows too far out.",
+      "Lower the weight slowly back to shoulder height.",
+      "Avoid leaning back; maintain a neutral spine.",
+      "Exhale while pressing up, inhale while lowering down.",
+      "Repeat for the planned number of reps.",
+      "Focus on smooth, controlled motion rather than speed."
+    ],
+    "image": "overhead_presses.jpg",
+    "equipment": ["dumbbells","barbell"],
+    "level": "intermediate",
+    "targetMuscles": ["shoulders","triceps","core"],
+    "videoUrl": "https://www.youtube.com/watch?v=2yjwXTZQDDI",
+    "tips": ["Avoid leaning back","Engage your core","Control the movement"]
+  },
+  "Brisk Walking": {
+    "desc": "Boosts cardiovascular health with low impact, improves daily stamina, and supports fat burning. Suitable for all fitness levels.",
+    "benefits": ["cardio","endurance","wellbeing"],
+    "instructions": [
+      "Stand tall with shoulders relaxed and arms swinging naturally.",
+      "Take brisk steps, maintaining a steady pace.",
+      "Keep your head up and eyes forward to maintain posture.",
+      "Swing your arms naturally in opposition to your legs.",
+      "Breathe rhythmically and consistently.",
+      "Walk continuously for at least 20–30 minutes.",
+      "Adjust pace according to fitness level, gradually increasing intensity.",
+      "Cool down at a slower pace for a few minutes at the end."
+    ],
+    "image": "brisk_walking.jpg",
+    "equipment": ["none"],
+    "level": "beginner",
+    "targetMuscles": ["legs","glutes","cardiovascular system"],
+    "videoUrl": "https://www.youtube.com/watch?v=TJLKgWsS7vw",
+    "tips": ["Swing arms naturally","Keep a steady pace","Engage core slightly for stability"]
+  },
+  "Cycling": {
+    "desc": "Strengthens leg muscles, increases cardiovascular endurance, and offers a smooth low-impact workout.",
+    "benefits": ["cardio","endurance","stamina"],
+    "instructions": [
+      "Adjust the bike seat and handlebars to a comfortable height.",
+      "Sit upright with a straight back, gripping the handlebars lightly.",
+      "Pedal at a consistent pace, keeping a smooth and controlled motion.",
+      "Engage your core to maintain balance and posture.",
+      "Keep knees aligned with feet, avoid inward or outward flare.",
+      "Cycle for the planned duration or distance.",
+      "Increase resistance or speed gradually as endurance improves.",
+      "Cool down for 5 minutes at a slower pace at the end."
+    ],
+    "image": "cycling.jpg",
+    "equipment": ["bicycle","helmet"],
+    "level": "beginner",
+    "targetMuscles": ["legs","glutes","cardiovascular system"],
+    "videoUrl": "https://www.youtube.com/watch?v=ewrf_rCHUdA",
+    "tips": ["Maintain proper posture","Keep a steady cadence","Adjust resistance appropriately"]
+  },
+  "Swimming": {
+    "desc": "Provides a full-body workout, increases endurance, and is gentle on joints while improving mobility.",
+    "benefits": ["cardio","endurance","flexibility"],
+    "instructions": [
+      "Enter the pool and position yourself for your chosen swimming stroke.",
+      "Keep your body streamlined with core engaged.",
+      "Move arms and legs in a coordinated pattern according to the stroke.",
+      "Breathe rhythmically, exhaling in water and inhaling when turning the head.",
+      "Maintain smooth, continuous strokes for endurance.",
+      "Adjust pace according to your fitness level.",
+      "Focus on proper technique to prevent strain.",
+      "Finish with gentle floating or slow swimming to cool down."
+    ],
+    "image": "swimming.jpg",
+    "equipment": ["swimming pool","goggles"],
+    "level": "beginner",
+    "targetMuscles": ["full body","core","cardiovascular system"],
+    "videoUrl": "https://www.youtube.com/watch?v=HLwLuOIw4cA",
+    "tips": ["Focus on breathing technique","Keep body streamlined","Avoid overexertion"]
+  },
+  "Dancing": {
+    "desc": "Burns calories, improves coordination, boosts mood, and offers a fun way to stay active.",
+    "benefits": ["cardio","coordination","energy"],
+    "instructions": [
+      "Choose a dance style or routine that you enjoy.",
+      "Maintain good posture with a straight back and engaged core.",
+      "Move arms and legs rhythmically to the music.",
+      "Keep your movements controlled to avoid injury.",
+      "Maintain a consistent pace for the duration of the session.",
+      "Incorporate full-body movements to maximize calorie burn.",
+      "Cool down with slower movements and gentle stretching."
+    ],
+    "image": "dancing.jpg",
+    "equipment": ["none"],
+    "level": "beginner",
+    "targetMuscles": ["legs","core","cardiovascular system"],
+    "videoUrl": "https://www.youtube.com/watch?v=ka4tN6RJvgQ",
+    "tips": ["Move freely and have fun","Control movements to avoid injury","Engage your core"]
+  },
+  "Walking": {
+    "desc": "Supports everyday health, increases mobility, reduces stress, and promotes steady daily movement.",
+    "benefits": ["health","mobility","wellbeing"],
+    "instructions": [
+      "Stand tall with shoulders relaxed and head up.",
+      "Take natural steps with even stride and swing arms gently.",
+      "Maintain a comfortable, consistent pace.",
+      "Focus on breathing deeply and evenly.",
+      "Walk for 20–30 minutes daily, adjusting pace to comfort level.",
+      "Incorporate short bursts of faster walking for cardio benefits if desired.",
+      "Finish with light stretching of legs and calves."
+    ],
+    "image": "walking.jpg",
+    "equipment": ["none"],
+    "level": "beginner",
+    "targetMuscles": ["legs","glutes","cardiovascular system"],
+    "videoUrl": "https://www.youtube.com/watch?v=-SSYX8sIOmM",
+    "tips": ["Keep posture upright","Maintain a steady pace","Engage core slightly"]
+  }
+}

@@ -1,3 +1,4 @@
+import { GilroyBoldText } from "@/components/Fonts";
 import { useFonts } from "expo-font";
 import { Stack, useNavigation } from "expo-router";
 import { Platform, Pressable, StatusBar, Text, View } from "react-native";
@@ -18,15 +19,18 @@ export default function WorkoutLayout() {
       <>
         <StatusBar barStyle="dark-content" backgroundColor="#E5E7EB" />
         <View className={`pt-2 ${!title && "pl-2 pt-6"}`}>
-          <View className={`${title && "border-b border-[#888]"}`} style={{ elevation: title ? 7 : 0 }}>
+          <View
+            className={`${title && "border-b border-[#888]"}`}
+            style={{ elevation: title ? 7 : 0 }}
+          >
             {title ? (
               <View
-                className="flex-row items-center -mt-6 gap-4 pb-2 px-2 bg-neutral-300"
+                className="flex-row items-center gap-4 px-2 pb-2 -mt-6 bg-white"
                 style={{ paddingTop: insets.top + 40 }}
               >
                 <Pressable
                   onPress={() => navigation.goBack()}
-                  className="items-center justify-center w-10 h-10 rounded-full bg-transparent overflow-hidden"
+                  className="items-center justify-center w-10 h-10 overflow-hidden bg-transparent rounded-full"
                 >
                   <Text
                     className={`text-4xl font-bold text-black ${
@@ -37,12 +41,14 @@ export default function WorkoutLayout() {
                   </Text>
                 </Pressable>
 
-                <Text className="text-xl font-bold tracking-wide">{title}</Text>
+                <GilroyBoldText className="text-xl tracking-wide">
+                  {title}
+                </GilroyBoldText>
               </View>
             ) : (
               <Pressable
                 onPress={() => navigation.goBack()}
-                className="items-center justify-center w-16 h-16 rounded-full bg-neutral-500 mt-2"
+                className="items-center justify-center w-16 h-16 mt-2 rounded-full bg-neutral-500"
                 style={{ elevation: 6 }}
               >
                 <Text className="text-3xl font-bold text-white">{"<"}</Text>
@@ -69,6 +75,20 @@ export default function WorkoutLayout() {
             <CustomWorkoutHeader title={"Workout Recommendation"} />
           ),
         }}
+      />
+      <Stack.Screen
+        name="[exercise]"
+        options={({
+          route,
+        }: {
+          route: { params?: { exercise?: string } };
+        }) => ({
+          header: () => (
+            <CustomWorkoutHeader
+              title={String(route.params?.exercise) ?? "Exercise Details"}
+            />
+          ),
+        })}
       />
     </Stack>
   );

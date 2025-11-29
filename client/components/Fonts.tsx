@@ -65,6 +65,18 @@ export const GilroyUltraLightText: React.FC<CustomTextProps> = ({
   );
 };
 
+export const InterFontText: React.FC<CustomTextProps> = ({
+  children,
+  style,
+  ...props
+}) => {
+  return (
+    <Text style={[{ fontFamily: "Inter" }, style]} {...props}>
+      {children}
+    </Text>
+  );
+};
+
 export const CoolJazzText: React.FC<CustomTextProps> = ({
   children,
   style,

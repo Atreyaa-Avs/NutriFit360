@@ -4,8 +4,8 @@ import { Dimensions, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import ExerciseSvg from "@/assets/svgs/tabs/exercise.svg";
-import CheckAPIStatus from "@/components/api/CheckAPIStatus";
 import FetchWorkoutRecommendation from "@/components/Workout/FetchWorkoutRecommendation";
+import { GilroyBoldText } from "@/components/Fonts";
 
 const WorkoutRecommendation = () => {
   const {
@@ -36,7 +36,7 @@ const WorkoutRecommendation = () => {
               stroke={"#000"}
               strokeWidth={16}
             />
-            <Text className="text-2xl font-semibold underline">Details:</Text>
+            <GilroyBoldText className="text-3xl font-semibold underline">Details:</GilroyBoldText>
           </View>
           <ScrollView
             horizontal
@@ -69,8 +69,6 @@ const WorkoutRecommendation = () => {
           </ScrollView>
         </View>
 
-        <CheckAPIStatus />
-
         <FetchWorkoutRecommendation />
       </SafeAreaView>
     </ScrollView>
@@ -93,7 +91,7 @@ const Card = ({ title, value, unit, isLast }: CardProps) => {
       }}
     >
       <View className="flex-col items-center gap-1 pt-1 pl-2">
-        <Text className="text-xl font-bold">{title}:</Text>
+        <GilroyBoldText className="text-xl">{title}:</GilroyBoldText>
         <View className="flex-row gap-2">
           <Text
             className={`text-2xl ${unit && "underline"} ${!unit && "text-lg"} ${

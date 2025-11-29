@@ -4,6 +4,10 @@ import { mapProfileToRequestBody } from "@/utils/mapProfileToRequestBody";
 import React from "react";
 import { Pressable, Text, View } from "react-native";
 import Spinner from "../Loaders/Spinner";
+import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "../Fonts";
+import AIButton from "../AIButton";
+import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import SparklesSvg from "@/assets/svgs/sparkles.svg";
 
 const FetchDietRecommendation = () => {
   const profile = useProfileStore();
@@ -21,9 +25,28 @@ const FetchDietRecommendation = () => {
         <Pressable onPress={() => refetch()}>
           <View className="flex-row items-center justify-center gap-2">
             {isFetching && <Spinner size={25} />}
-            <Text className="text-xl text-center text-white">
-              {!isFetching ? "Fetch Recommendation" : "Fetching..."}
-            </Text>
+            <GilroyBoldText className="text-xl tracking-tighter text-center text-white">
+              {!isFetching ? "Get Recommendation" : "Fetching..."}
+            </GilroyBoldText>
+          </View>
+        </Pressable>
+      </View>
+
+      <View className="flex-row gap-3 item-center">
+        <AIButton className="">
+          <SparklesSvg width={16} height={32} />
+          <View className="flex-row items-start gap-1">
+            <GilroyMediumText className="tracking-tighter text-white">Get AI Plan</GilroyMediumText>
+            <EvilIcons name="arrow-right" size={20} color={"white"} />
+          </View>
+        </AIButton>
+
+        <Pressable className="flex-1" onPress={() => {}}>
+          <View className="flex-row items-center justify-center py-5 bg-neutral-300 rounded-xl">
+            <GilroySemiBoldText className="text-lg tracking-tighter text-center text-black ">
+              Go to Meals
+            </GilroySemiBoldText>
+            <Ionicons name="chevron-forward" size={20} color="#333" />
           </View>
         </Pressable>
       </View>

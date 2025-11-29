@@ -58,6 +58,7 @@ const Diet = () => {
       <ScrollView
         bounces={false}
         contentInsetAdjustmentBehavior="never"
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 100,
         }}
@@ -143,7 +144,7 @@ const Diet = () => {
           gap={1}
         />
 
-        <View
+        {/* <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
           className="gap-2 mt-4"
         >
@@ -165,7 +166,7 @@ const Diet = () => {
             title="Haptic Selection"
             onPress={() => Haptics.selectionAsync()}
           />
-        </View>
+        </View> */}
       </ScrollView>
     </SafeAreaView>
   );

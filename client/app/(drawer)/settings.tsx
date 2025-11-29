@@ -1,5 +1,5 @@
 import { useRouter } from "expo-router";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   Text,
   TouchableOpacity,
@@ -12,14 +12,16 @@ import {
   TextInput,
   TouchableWithoutFeedback,
   Keyboard,
+  Animated,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Ionicons } from "@expo/vector-icons";
 
-import { Animated } from "react-native";
-import { useEffect, useRef } from "react";
 import PingAPISettings from "@/components/api/PingAPISettings";
+import CheckAPIStatus from "@/components/api/CheckAPIStatus";
 import { useDeveloperStore } from "@/store/useDeveloperStore";
+import { storage } from "@/storage/mmkv";
+import { useMMKVString, useMMKVBoolean } from "react-native-mmkv";
 
 interface SettingItemProps {
   icon: keyof typeof Ionicons.glyphMap;
@@ -63,6 +65,7 @@ const SettingItem = ({
           color={danger ? "#ef4444" : "#F09E54"}
         />
       </View>
+
       <View className="flex-1">
         <Text
           className={`text-base font-semibold ${
@@ -71,11 +74,13 @@ const SettingItem = ({
         >
           {title}
         </Text>
+
         {subtitle && (
-          <Text className="text-sm text-gray-500 mt-1">{subtitle}</Text>
+          <Text className="mt-1 text-sm text-gray-500">{subtitle}</Text>
         )}
       </View>
     </View>
+
     {showSwitch ? (
       <Switch
         value={switchValue}
@@ -92,18 +97,77 @@ const SettingItem = ({
 export default function SettingsScreen() {
   const router = useRouter();
   const theme = useColorScheme();
+
   const { IP, setField } = useDeveloperStore();
+
+  // -------------------------------
+  // Local states
+  // -------------------------------
   const [showIPInput, setShowIPInput] = useState(false);
-  const [tempIP, setTempIP] = useState(IP); // used only for editing
+  const [tempIP, setTempIP] = useState("");
   const [checkAPI, setCheckAPI] = useState(false);
 
-  // State for toggles
+  // Other toggles
   const [notifications, setNotifications] = useState(true);
   const [workoutReminders, setWorkoutReminders] = useState(true);
   const [mealReminders, setMealReminders] = useState(true);
   const [hydrationReminders, setHydrationReminders] = useState(true);
   const [darkMode, setDarkMode] = useState(theme === "dark");
   const [biometricAuth, setBiometricAuth] = useState(false);
+
+  // Animated fade for IP input container
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const [savedIP, setSavedIP] = useMMKVString("IP");
+  const [ipSwitch, setIPSwitch] = useMMKVBoolean("IP Switch");
+
+  // -------------------------------
+  // Load from MMKV on mount
+  // -------------------------------
+
+  useEffect(() => {
+    if (savedIP) {
+      setTempIP(savedIP);
+      setField("IP", savedIP);
+    }
+
+    if (ipSwitch) {
+      setShowIPInput(true);
+    }
+  }, [savedIP, ipSwitch]);
+
+  // Animate IP input container
+  useEffect(() => {
+    if (showIPInput) {
+      Animated.timing(fadeAnim, {
+        toValue: 1,
+        duration: 300,
+        useNativeDriver: true,
+      }).start();
+    } else {
+      fadeAnim.setValue(0);
+    }
+  }, [showIPInput]);
+
+  // -------------------------------
+  // Save IP using MMKV
+  // -------------------------------
+
+  const handleIPAddressSave = (val: string) => {
+  const ipRegex =
+    /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
+
+  if (!ipRegex.test(val)) {
+    console.warn("Invalid IP address");
+    return;
+  }
+
+  setSavedIP(val);
+  setIPSwitch(true);
+
+  setField("IP", val);
+  setCheckAPI(true);
+};
 
   const handleBack = () => {
     if (router.canGoBack()) {
@@ -116,14 +180,7 @@ export default function SettingsScreen() {
   const handleLogout = () => {
     Alert.alert("Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
-      {
-        text: "Logout",
-        style: "destructive",
-        onPress: () => {
-          // Handle logout logic here
-          // router.replace("/(auth)/login");
-        },
-      },
+      { text: "Logout", style: "destructive" },
     ]);
   };
 
@@ -133,43 +190,10 @@ export default function SettingsScreen() {
       "This action cannot be undone. All your data will be permanently deleted.",
       [
         { text: "Cancel", style: "cancel" },
-        {
-          text: "Delete",
-          style: "destructive",
-          onPress: () => {
-            // Handle account deletion logic here
-          },
-        },
+        { text: "Delete", style: "destructive" },
       ]
     );
   };
-
-  const handleIPAddressSave = () => {
-    const ipPattern =
-      /^(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(\.(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)){3}$/;
-
-    if (!ipPattern.test(tempIP)) {
-      console.warn("Invalid IP address");
-      return;
-    }
-
-    setField("IP", tempIP);
-    setCheckAPI(true);
-  };
-
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    if (showIPInput) {
-      Animated.timing(fadeAnim, {
-        toValue: 1,
-        duration: 300,
-        useNativeDriver: true,
-      }).start();
-    } else {
-      fadeAnim.setValue(0);
-    }
-  }, [showIPInput]);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
@@ -195,7 +219,7 @@ export default function SettingsScreen() {
         >
           {/* Profile Section */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Profile
             </Text>
             <SettingItem
@@ -226,7 +250,7 @@ export default function SettingsScreen() {
 
           {/* App Preferences */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               App Preferences
             </Text>
             <SettingItem
@@ -258,7 +282,7 @@ export default function SettingsScreen() {
 
           {/* Notifications */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Notifications
             </Text>
             <SettingItem
@@ -301,7 +325,7 @@ export default function SettingsScreen() {
 
           {/* Privacy & Security */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Privacy & Security
             </Text>
             <SettingItem
@@ -333,7 +357,7 @@ export default function SettingsScreen() {
 
           {/* Data & Storage */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Data & Storage
             </Text>
             <SettingItem
@@ -364,7 +388,7 @@ export default function SettingsScreen() {
 
           {/* Developer Options */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Developer Options
             </Text>
 
@@ -373,8 +397,11 @@ export default function SettingsScreen() {
               title="Backend Server IP"
               subtitle="Enable to configure your backend API address"
               showSwitch={true}
-              onSwitchChange={setShowIPInput}
               switchValue={showIPInput}
+              onSwitchChange={(val: boolean) => {
+                setShowIPInput(val);
+                storage.set("IP Switch", val ? "true" : "false");
+              }}
             />
 
             {showIPInput && (
@@ -382,33 +409,40 @@ export default function SettingsScreen() {
                 style={{ opacity: fadeAnim }}
                 className="p-4 bg-white rounded-xl"
               >
-                <View className="flex-row justify-between items-center mb-2">
+                {/* Header */}
+                <View className="flex-row items-center justify-between mb-2">
                   <Text className="text-gray-800">Enter Local IP Address:</Text>
 
                   <TouchableOpacity
-                    onPress={handleIPAddressSave}
+                    onPress={() => handleIPAddressSave(tempIP)}
                     className="bg-primary px-4 py-1.5 rounded-xl active:opacity-80"
                   >
-                    <Text className="text-white font-medium text-sm">Save</Text>
+                    <Text className="text-sm font-medium text-white">Save</Text>
                   </TouchableOpacity>
                 </View>
 
+                {/* Input */}
                 <TextInput
                   placeholder="Enter backend IP address"
                   value={tempIP}
                   onChangeText={setTempIP}
-                  className="border border-gray-900 rounded px-4 py-2 text-gray-900"
-                  keyboardType="numeric"
+                  className="px-4 py-2 text-gray-900 border border-gray-900 rounded"
+                  keyboardType="numbers-and-punctuation"
+                  autoCapitalize="none"
                 />
 
                 <PingAPISettings enabled={checkAPI} />
+
+                <View className="mt-4">
+                  <CheckAPIStatus />
+                </View>
               </Animated.View>
             )}
           </View>
 
           {/* Support */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Support
             </Text>
             <SettingItem
@@ -447,7 +481,7 @@ export default function SettingsScreen() {
 
           {/* About */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               About
             </Text>
             <SettingItem
@@ -476,7 +510,7 @@ export default function SettingsScreen() {
 
           {/* Account Actions */}
           <View className="mb-6">
-            <Text className="text-lg font-semibold text-gray-900 mb-3">
+            <Text className="mb-3 text-lg font-semibold text-gray-900">
               Account
             </Text>
             <SettingItem
@@ -498,7 +532,7 @@ export default function SettingsScreen() {
           {/* App Info */}
           <View className="items-center py-6">
             <Text className="text-sm text-gray-500">NutriFit360</Text>
-            <Text className="text-xs text-gray-400 mt-1">
+            <Text className="mt-1 text-xs text-gray-400">
               Your complete fitness companion
             </Text>
           </View>

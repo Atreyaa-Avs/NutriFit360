@@ -1,4 +1,4 @@
-from fastapi import FastAPI,Request
+from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import pandas as pd
@@ -13,19 +13,29 @@ from typing import Optional
 import os
 import json
 import re
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+# ---------------------- CORS CONFIG ----------------------
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],          # you can replace "*" with specific domains
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+# ----------------------------------------------------------
 
 # Load data and scaler
 data = joblib.load("models/data.pkl")
 scaler = joblib.load("models/scaler.pkl")
 
-# Define features
+# Features
 num_features = ['Age', 'Height', 'Weight', 'BMI']
 full_features = ['Sex', 'Age', 'Height', 'Weight', 'Hypertension', 'Diabetes',
                  'BMI', 'Level', 'Fitness Goal', 'Fitness Type']
 
-# Request Body Schema
 class UserInput(BaseModel):
     Sex: int
     Age: float
@@ -40,11 +50,10 @@ class UserInput(BaseModel):
 
 @app.get("/")
 def home_route():
-    return {"message":"API is Running!"}
+    return {"message": "API is Running!"}
 
 @app.post("/recommend/")
 def recommend(user: UserInput):
-    # Step 1: Convert input to dict & normalize
     input_dict = {
         'Sex': user.Sex,
         'Age': user.Age,
@@ -62,13 +71,12 @@ def recommend(user: UserInput):
     user_df[num_features] = scaler.transform(user_df[num_features])
     user_input_scaled = user_df[full_features]
 
-    # Step 2: Cosine similarity
     similarity_scores = cosine_similarity(data[full_features], user_input_scaled).flatten()
     top_indices = similarity_scores.argsort()[-5:][::-1]
     similar_users = data.iloc[top_indices]
+
     recommendation_1 = similar_users[['Exercises', 'Diet', 'Equipment']].mode().iloc[0]
 
-    # Step 3: Generate 2 simulated variations
     recommendations = [recommendation_1]
     for _ in range(2):
         mod_input = input_dict.copy()
@@ -83,6 +91,7 @@ def recommend(user: UserInput):
         mod_scores = cosine_similarity(data[full_features], mod_scaled).flatten()
         mod_indices = mod_scores.argsort()[-5:][::-1]
         mod_users = data.iloc[mod_indices]
+
         rec = mod_users[['Exercises', 'Diet', 'Equipment']].mode().iloc[0]
 
         if not any(
@@ -93,7 +102,6 @@ def recommend(user: UserInput):
         ):
             recommendations.append(rec)
 
-    # Step 4: Return JSON
     return {
         "recommendations": [
             {
@@ -106,7 +114,7 @@ def recommend(user: UserInput):
     }
 
 @app.post("/analyze/ollama")
-async def analyze_image(request:Request):
+async def analyze_image(request: Request):
     try:
         data = await request.json()
         image_base64 = data.get("image")
@@ -114,13 +122,11 @@ async def analyze_image(request:Request):
         if not image_base64:
             return JSONResponse(status_code=400, content={"error": "Missing base64 image data"})
 
-        # Decode base64 to bytes
         try:
             contents = base64.b64decode(image_base64)
         except Exception as decode_err:
             return JSONResponse(status_code=400, content={"error": "Invalid base64 image", "details": str(decode_err)})
 
-        # Send to Ollama
         response = requests.post(
             "http://localhost:11434/api/generate",
             json={
@@ -128,22 +134,7 @@ async def analyze_image(request:Request):
                 "prompt": (
                     "Identify the recipe name and list the ingredients that would be used to make this recipe and their approximate nutrition facts "
                     "(calories(kcal), protein(g), fat(g), carbs(g), fiber(g), sugar(g), sodium(mg), cholesterol(mg)) for the dish shown in this image. "
-                    "Respond ONLY in the following JSON format:\n"
-                    "{\n"
-                    '  "recipe": "<dish name>",\n'
-                    '  "ingredients": ["ingredient1", "ingredient2", "..."],\n'
-                    '  "nutrition": {\n'
-                    '    "calories": <number>,\n'
-                    '    "protein": <number>,\n'
-                    '    "carbs": <number>,\n'
-                    '    "fat": <number>,\n'
-                    '    "fiber": <number>,\n'
-                    '    "sugar": <number>,\n'
-                    '    "sodium": <number>,\n'
-                    '    "cholesterol": <number>\n'
-                    "  }\n"
-                    "}\n"
-                    "No other text or explanation is needed. Don't return the units."
+                    "Respond ONLY in JSON.\n"
                 ),
                 "images": [image_base64],
                 "stream": False,
@@ -152,19 +143,16 @@ async def analyze_image(request:Request):
 
         if response.ok:
             raw = response.json().get("response", "")
-
-            # Try to extract clean JSON inside triple backticks
             match = re.search(r"```(?:json)?\s*(\{.*?\})\s*```", raw, re.DOTALL)
+
             if match:
                 clean_json = match.group(1)
-                parsed = json.loads(clean_json)
-                return parsed
+                return json.loads(clean_json)
             else:
-                # fallback: raw json
                 try:
                     return json.loads(raw)
                 except:
-                    return JSONResponse(status_code=500, content={"error": "Model response is not valid JSON", "raw": raw})
+                    return JSONResponse(status_code=500, content={"error": "Model response invalid", "raw": raw})
         else:
             return JSONResponse(status_code=response.status_code, content={"error": response.text})
 

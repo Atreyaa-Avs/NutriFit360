@@ -4,8 +4,8 @@ import { Dimensions, Platform, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 import FoodSvg from "@/assets/svgs/tabs/food.svg";
-import CheckAPIStatus from "@/components/api/CheckAPIStatus";
 import FetchDietRecommendation from "@/components/Diet/FetchDietRecommendation";
+import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
 
 const DietRecommendation = () => {
   const {
@@ -28,7 +28,7 @@ const DietRecommendation = () => {
     <ScrollView contentContainerStyle={{ marginTop: -40 }}>
       <SafeAreaView className="min-h-screen p-4 pb-28">
         <View className={`${Platform.OS === "android" ? "mt-4" : "mt-10"}`}>
-          <View className="flex-row items-center gap-2 mb-4 mx-auto">
+          <View className="flex-row items-center gap-2 mx-auto mb-4">
             <FoodSvg
               width={24}
               height={24}
@@ -36,7 +36,9 @@ const DietRecommendation = () => {
               stroke={"#000"}
               strokeWidth={6}
             />
-            <Text className="text-2xl font-semibold underline">Details:</Text>
+            <GilroyBoldText className="text-2xl font-semibold underline">
+              Details:
+            </GilroyBoldText>
           </View>
           <ScrollView
             horizontal
@@ -69,8 +71,6 @@ const DietRecommendation = () => {
           </ScrollView>
         </View>
 
-        <CheckAPIStatus />
-
         <FetchDietRecommendation />
       </SafeAreaView>
     </ScrollView>
@@ -91,7 +91,7 @@ const Card = ({ title, value, unit, isLast }: CardProps) => {
       style={{ elevation: 6 }}
     >
       <View className="flex-col items-center gap-1 pt-1 pl-2">
-        <Text className="text-xl font-bold">{title}:</Text>
+        <GilroyBoldText className="text-xl">{title}:</GilroyBoldText>
         <View className="flex-row gap-2">
           <Text
             className={`text-2xl ${unit && "underline"} ${!unit && "text-lg"} ${

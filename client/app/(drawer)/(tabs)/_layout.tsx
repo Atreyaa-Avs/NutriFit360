@@ -63,7 +63,7 @@ export default function TabsLayout() {
 
     const currentRouteName = getFocusedRouteName(state);
 
-    const hidePattern = /Meal|Recommendation|AnalyzeRecipe/;
+    const hidePattern = /Meal|Recommendation|AnalyzeRecipe|\[exercise\]/;
     const shouldHide = hidePattern.test(currentRouteName);
 
     setTabBarVisible(!shouldHide); // Show tab bar when not matching

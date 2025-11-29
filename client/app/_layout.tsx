@@ -18,7 +18,6 @@ import { registerNotificationCategories } from "@/utils/notification";
 import * as QuickActions from "expo-quick-actions";
 import { useQuickActionRouting } from "expo-quick-actions/router";
 
-// SplashScreen.preventAutoHideAsync();
 
 const queryClient = new QueryClient();
 
@@ -33,6 +32,7 @@ export default function RootLayout() {
     "Gilroy-Medium": require("@/assets/fonts/Gilroy-Medium.ttf"),
     "Gilroy-UltraLight": require("@/assets/fonts/Gilroy-UltraLight.ttf"),
     "Cool-Jazz": require("@/assets/fonts/CoolJazz.ttf"),
+    Inter: require("@/assets/fonts/Inter.ttf"),
   });
 
   useQuickActionRouting();
@@ -66,7 +66,7 @@ export default function RootLayout() {
         icon: "notification_icon",
         id: "3",
         params: { href: "/(drawer)/notificationTimeline" },
-      }
+      },
     ]);
   }, []);
 
@@ -75,19 +75,13 @@ export default function RootLayout() {
       {
         id: "water_reminder",
         actions: [
-          {
-            identifier: "DONE",
-            buttonTitle: "Done",
-          },
+          { identifier: "DONE", buttonTitle: "Done" },
           {
             identifier: "SNOOZE",
             buttonTitle: "Snooze",
             options: { opensAppToForeground: false },
           },
-          {
-            identifier: "DISMISS",
-            buttonTitle: "Dismiss",
-          },
+          { identifier: "DISMISS", buttonTitle: "Dismiss" },
         ],
       },
     ]);
@@ -95,7 +89,6 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (fontsLoaded) {
-      // Simulate any preload work
       setTimeout(async () => {
         setAppReady(true);
         await SplashScreen.hideAsync();
@@ -103,12 +96,10 @@ export default function RootLayout() {
     }
   }, [fontsLoaded]);
 
-  // 🚀 Show animated splash until fonts + appReady
   if (!fontsLoaded || !appReady) {
     return <AnimatedSplashScreen />;
   }
 
-  // Default font wrapper
   const AppText: React.FC<TextProps> = (props) => (
     <RNText
       {...props}
@@ -127,13 +118,9 @@ export default function RootLayout() {
   );
 }
 
-// ---------------------------------------------
-// INNER NAVIGATOR
-// ---------------------------------------------
 function InnerNavigator() {
   const router = useRouter();
   const { hasShareIntent, shareIntent } = useShareIntentContext();
-
   const [processingShare, setProcessingShare] = useState(false);
 
   useEffect(() => {

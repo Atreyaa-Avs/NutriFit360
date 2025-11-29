@@ -3,6 +3,7 @@ import RecommendationWorkout from "@/assets/svgs/workout/RecommendWorkout.svg";
 import StackCircles from "@/components/Diet/StackCircles";
 import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
 import ProgressCalendar from "@/components/Progress/ProgressCalendar";
+import ExerciseCard from "@/components/Workout/ExerciseCard";
 import { Link } from "expo-router";
 import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
@@ -34,6 +35,7 @@ const Workout = () => {
       <ScrollView
         bounces={false}
         contentInsetAdjustmentBehavior="never"
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{
           paddingBottom: 100,
         }}
@@ -50,10 +52,12 @@ const Workout = () => {
           />
         </View>
 
-        <GilroyMediumText>Selected Date: {formatDateToDMY(selectedDate)}</GilroyMediumText>
+        <GilroyMediumText>
+          Selected Date: {formatDateToDMY(selectedDate)}
+        </GilroyMediumText>
 
         <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
-          <Pressable className="my-4 bg-white/50 rounded-xl p-4 flex-row items-center justify-center gap-2">
+          <Pressable className="flex-row items-center justify-center gap-2 p-4 my-4 bg-white/50 rounded-xl">
             <RecommendationWorkout />
             <GilroyMediumText className="text-lg font-semibold text-center">
               View Workout Recommendation
@@ -92,6 +96,73 @@ const Workout = () => {
           ]}
           gap={1}
         />
+
+        <View className="mt-6 ml-1">
+          <GilroyBoldText className="mb-4 text-3xl tracking-tighter">
+            Exercises
+          </GilroyBoldText>
+          <View className="flex-col gap-4">
+            <ExerciseCard
+              title="Squats"
+              desc="Builds strong legs and glutes, improves core stability, and enhances overall functional movement."
+              benefits="strength,power,stability"
+            />
+
+            <ExerciseCard
+              title="Yoga"
+              desc="Enhances flexibility, reduces stress, improves mobility, and promotes mind–body balance."
+              benefits="flexibility,calm,balance"
+            />
+
+            <ExerciseCard
+              title="Deadlifts"
+              desc="Strengthens the entire posterior chain, boosts core stability, and improves full-body power."
+              benefits="strength,posture,power"
+            />
+
+            <ExerciseCard
+              title="Bench Presses"
+              desc="Develops strong chest, shoulders, and triceps while improving overall upper-body pushing strength."
+              benefits="strength,hypertrophy,power"
+            />
+
+            <ExerciseCard
+              title="Overhead Presses"
+              desc="Improves shoulder strength, enhances upper-body stability, and engages the core for balance."
+              benefits="strength,stability,posture"
+            />
+
+            <ExerciseCard
+              title="Brisk Walking"
+              desc="Boosts cardiovascular health with low impact, improves daily stamina, and supports fat burning."
+              benefits="cardio,endurance,wellbeing"
+            />
+
+            <ExerciseCard
+              title="Cycling"
+              desc="Strengthens leg muscles, increases cardiovascular endurance, and offers a smooth low-impact workout."
+              benefits="cardio,endurance,stamina"
+            />
+
+            <ExerciseCard
+              title="Swimming"
+              desc="Provides a full-body workout, increases endurance, and is gentle on joints while improving mobility."
+              benefits="cardio,endurance,flexibility"
+            />
+
+            <ExerciseCard
+              title="Dancing"
+              desc="Burns calories, improves coordination, boosts mood, and offers a fun way to stay active."
+              benefits="cardio,coordination,energy"
+            />
+
+            <ExerciseCard
+              title="Walking"
+              desc="Supports everyday health, increases mobility, reduces stress, and promotes steady daily movement."
+              benefits="health,mobility,wellbeing"
+            />
+          </View>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );

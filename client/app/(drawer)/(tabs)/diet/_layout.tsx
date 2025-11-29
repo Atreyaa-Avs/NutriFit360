@@ -1,3 +1,4 @@
+import { GilroyBoldText } from "@/components/Fonts";
 import { Stack, useNavigation } from "expo-router";
 import { Platform, Pressable, StatusBar, Text, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -15,12 +16,12 @@ export default function DietLayout() {
           <View className={`${title && "border-b border-[#888]"}`} style={{ elevation: title ? 7 : 0 }}>
             {title ? (
               <View
-                className="flex-row items-center -mt-6 gap-4 pb-2 px-2 bg-neutral-300"
+                className="flex-row items-center gap-4 px-2 pb-2 -mt-6 bg-neutral-300"
                 style={{ paddingTop: insets.top + 40 }}
               >
                 <Pressable
                   onPress={() => navigation.goBack()}
-                  className="items-center justify-center w-10 h-10 rounded-full bg-transparent overflow-hidden"
+                  className="items-center justify-center w-10 h-10 overflow-hidden bg-transparent rounded-full"
                 >
                   <Text
                     className={`text-4xl font-bold text-black ${
@@ -31,12 +32,12 @@ export default function DietLayout() {
                   </Text>
                 </Pressable>
 
-                <Text className="text-xl font-bold tracking-wide">{title}</Text>
+                <GilroyBoldText className="text-xl tracking-wide">{title}</GilroyBoldText>
               </View>
             ) : (
               <Pressable
                 onPress={() => navigation.goBack()}
-                className="items-center justify-center w-16 h-16 rounded-full bg-neutral-500 mt-14 pr-1"
+                className="items-center justify-center w-16 h-16 pr-1 rounded-full bg-neutral-500 mt-14"
                 style={{ elevation: 6 }}
               >
                 <Text className="text-3xl font-bold text-white">{"<"}</Text>
