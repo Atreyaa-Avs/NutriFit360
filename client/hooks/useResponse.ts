@@ -1,15 +1,15 @@
-import { storage } from "@/storage/mmkv";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { useDeveloperStore } from "@/store/useDeveloperStore";
 
 const fetchResponse = async (body: any): Promise<any> => {
-  const IP = storage.getString("IP") || useDeveloperStore.getState().IP;
-  const response = await axios.post(`http://${IP}:8080/recommend/`, body);
+  const response = await axios.post(
+    `${process.env.EXPO_PUBLIC_BACKEND_URL}/recommend/`,
+    body
+  );
   return response.data;
 };
 
-export const useResponse = (body: any,mode: string, enabled = true) => {
+export const useResponse = (body: any, mode: string, enabled = true) => {
   return useQuery({
     queryKey: [`response${mode}`, body],
     queryFn: () => fetchResponse(body),

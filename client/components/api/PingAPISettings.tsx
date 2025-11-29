@@ -2,30 +2,19 @@ import { View, Text, ActivityIndicator } from "react-native";
 import AcceptSvg from "@/assets/svgs/diet/accept.svg";
 import RejectSvg from "@/assets/svgs/diet/reject.svg";
 import React from "react";
+import { useDeveloperStore } from "@/store/useDeveloperStore";
 import { useCheckAPI } from "@/hooks/useCheckAPI";
-import { useMMKVString } from "react-native-mmkv";
 
 interface PingAPISettingsProps {
   enabled: boolean;
 }
 
 const PingAPISettings = ({ enabled }: PingAPISettingsProps) => {
-  // Use MMKV hook to get saved IP
-  const [IP] = useMMKVString("IP");
+  const { IP } = useDeveloperStore();
 
-  // Run API check ONLY if enabled and IP exists
   const { data, isLoading, isError } = useCheckAPI();
 
-  if (!enabled) return null;
-
-  if (IP)
-    return (
-      <Text>
-        Loading saved IP...
-        {`\nSaved: ${IP}`}
-        {`\nReq: http://${IP}:8080/recommend`}
-      </Text>
-    );
+  if (!enabled) return null; // Don't render anything until user presses Save
 
   return (
     <View className="flex-col justify-between pt-5">
