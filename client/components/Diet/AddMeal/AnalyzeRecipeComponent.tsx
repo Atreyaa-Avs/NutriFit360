@@ -1,6 +1,12 @@
-import { useCloudVisionResponse } from "@/hooks/useCloudVisionResponse";
+import {
+  GilroyBoldText,
+  GilroyRegularText,
+  GilroySemiBoldText,
+  InterFontText,
+} from "@/components/Fonts";
+import { fetchResponse } from "@/hooks/useCloudVisionResponse";
 import { useLocalSearchParams } from "expo-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ActivityIndicator,
   Image,
@@ -19,23 +25,35 @@ const AnalyzeRecipeComponent = () => {
     Array.isArray(imageBase64) ? imageBase64[0] : imageBase64 || ""
   );
 
-  const { data, isLoading, error, refetch } = useCloudVisionResponse(
-    base64,
-    false
-  );
+  const [data, setData] = useState<any>(null);
+  const [isLoading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const analyzeImage = async () => {
+    try {
+      setLoading(true);
+      setError(null);
+      const result = await fetchResponse(base64);
+      setData(result);
+    } catch (err: any) {
+      setError("Failed to analyze image.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
-    refetch();
+    analyzeImage();
   }, []);
 
   const nutrition = data?.nutrition as Nutrition;
 
   return (
-    <ScrollView>
+    <ScrollView showsVerticalScrollIndicator={false}>
+
       <View className="p-2 pb-32">
         <View className="flex-row items-center mx-3">
-          <Text className="text-2xl font-bold underline">Image</Text>
-          <Text className="text-2xl font-bold">:</Text>
+          <GilroyBoldText className="text-2xl underline">Image:</GilroyBoldText>
         </View>
 
         <View className="flex-row justify-center mt-6">
@@ -55,37 +73,35 @@ const AnalyzeRecipeComponent = () => {
           >
             <View className="flex-row items-center gap-3 px-4 py-2 space-x-2">
               <ActivityIndicator size="small" color="#4B5563" />
-              <Text className="text-black">Analyzing image...</Text>
+              <InterFontText className="text-black">
+                Analyzing image...
+              </InterFontText>
             </View>
           </View>
         )}
 
         {error && (
-          <Text className="mt-4 text-center text-red-500">
-            Error analyzing image.
-          </Text>
+          <Text className="mt-4 text-center text-red-500">{error}</Text>
         )}
 
         {data && (
           <>
             {/* Recipe Name */}
             <View className="flex-row items-start gap-3 mx-4 mt-6 mb-3">
-              <View className="flex-row items-center">
-                <Text className="text-2xl font-bold underline">Name</Text>
-                <Text className="text-2xl font-bold">:</Text>
-              </View>
-              <Text className="mr-20 text-xl">{data.recipe}</Text>
+              <GilroySemiBoldText className="text-xl underline">
+                Name:
+              </GilroySemiBoldText>
+              <GilroyRegularText className="mr-20 text-xl">
+                {data.recipe}
+              </GilroyRegularText>
             </View>
 
             {/* Ingredients */}
             <View className="m-4 bg-white rounded-lg" style={{ elevation: 4 }}>
               <View className="flex-row justify-center w-full gap-1 py-3 rounded-t-lg bg-primary">
-                <Text className="text-xl font-bold text-center text-neutral-900">
-                  1.
-                </Text>
-                <Text className="text-xl font-bold text-center underline text-neutral-900">
+                <GilroySemiBoldText className="text-xl underline text-neutral-900">
                   Ingredients
-                </Text>
+                </GilroySemiBoldText>
               </View>
 
               <View className="flex-row flex-wrap p-2 pb-4 mx-4 my-4">
@@ -101,12 +117,9 @@ const AnalyzeRecipeComponent = () => {
               style={{ elevation: 4 }}
             >
               <View className="flex-row justify-center w-full gap-1 py-3 rounded-t-lg bg-primary">
-                <Text className="text-xl font-bold text-center text-neutral-900">
-                  2.
-                </Text>
-                <Text className="text-xl font-bold text-center underline text-neutral-900">
+                <GilroySemiBoldText className="text-xl underline text-neutral-900">
                   Estimated Nutrition
-                </Text>
+                </GilroySemiBoldText>
               </View>
 
               <View
@@ -127,56 +140,59 @@ const AnalyzeRecipeComponent = () => {
 
 export default AnalyzeRecipeComponent;
 
-type NutritionInfoProps = {
-  title: string;
-  amount: number;
-};
 
-const NutritionInfo = ({ title, amount }: NutritionInfoProps) => {
-  const units: Record<string, string> = {
-    calories: "kcal",
-    protein: "g",
-    fat: "g",
-    carbs: "g",
-    fiber: "g",
-    sugar: "g",
-    sodium: "mg",
-    cholesterol: "mg",
+  type NutritionInfoProps = {
+    title: string;
+    amount: number;
   };
 
-  return (
-    <View className="my-2">
-      <View className="flex-row items-end justify-between w-full mb-1">
-        <Text className="text-lg capitalize">{title}:</Text>
-        <View className="flex-row items-center ">
-          <Text className="text-2xl font-bold">{amount} </Text>
-          <Text>{units[title] || ""}</Text>
+  const NutritionInfo = ({ title, amount }: NutritionInfoProps) => {
+    const units: Record<string, string> = {
+      calories: "kcal",
+      protein: "g",
+      fat: "g",
+      carbs: "g",
+      fiber: "g",
+      sugar: "g",
+      sodium: "mg",
+      cholesterol: "mg",
+    };
+
+    return (
+      <View className="my-2">
+        <View className="flex-row items-end justify-between w-full mb-1">
+          <InterFontText className="text-lg capitalize">{title}:</InterFontText>
+          <View className="flex-row items-center ">
+            <GilroyBoldText className="text-2xl">{amount} </GilroyBoldText>
+            <InterFontText>{units[title] || ""}</InterFontText>
+          </View>
         </View>
+        <View className="border-[#ccc] border-b mx-4" />
       </View>
-      <View className="border-[#ccc] border-b mx-4" />
-    </View>
-  );
-};
+    );
+  };
 
-type CardProps = {
-  val: string;
-};
+  type CardProps = {
+    val: string;
+  };
 
-const Card = ({ val }: CardProps) => {
-  return (
-    <View
-      className="flex-1 min-w-[32%] p-3 m-2 bg-[#ccc] rounded-md"
-      style={{ elevation: 4 }}
-    >
-      <Text className="font-medium text-center capitalize">{val}</Text>
-    </View>
-  );
-};
+  const Card = ({ val }: CardProps) => {
+    return (
+      <View
+        className="flex-1 min-w-[32%] p-3 m-2 bg-[#ccc] rounded-md"
+        style={{ elevation: 4 }}
+      >
+        <InterFontText className="font-medium text-center capitalize">
+          {val}
+        </InterFontText>
+      </View>
+    );
+  };
 
-const styles = StyleSheet.create({
-  imagePreview: {
-    width: 350,
-    height: 250,
-    borderRadius: 10,
-  },
-});
+  const styles = StyleSheet.create({
+    imagePreview: {
+      width: 350,
+      height: 250,
+      borderRadius: 10,
+    },
+  });
