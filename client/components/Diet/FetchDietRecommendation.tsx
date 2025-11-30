@@ -2,7 +2,7 @@ import { useResponse } from "@/hooks/useResponse";
 import { useProfileStore } from "@/store/useProfileStore";
 import { mapProfileToRequestBody } from "@/utils/mapProfileToRequestBody";
 import React from "react";
-import { Pressable, Text, View } from "react-native";
+import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import Spinner from "../Loaders/Spinner";
 import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "../Fonts";
 import AIButton from "../AIButton";
@@ -24,7 +24,7 @@ const FetchDietRecommendation = () => {
       <View className="p-3 my-3 bg-blue-500 rounded-xl">
         <Pressable onPress={() => refetch()}>
           <View className="flex-row items-center justify-center gap-2">
-            {isFetching && <Spinner size={25} />}
+            {isFetching && <ActivityIndicator size={20} color={"#fff"} />}
             <GilroyBoldText className="text-xl tracking-tighter text-center text-white">
               {!isFetching ? "Get Recommendation" : "Fetching..."}
             </GilroyBoldText>

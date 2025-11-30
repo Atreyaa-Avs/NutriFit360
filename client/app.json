@@ -54,6 +54,13 @@
       "expo-camera",
       "expo-health-connect",
       [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/NotificationStatusBar.png",
+          "color": "#FFFFFF"
+        }
+      ],
+      [
         "expo-share-intent",
         {
           "iosActivationRules": {

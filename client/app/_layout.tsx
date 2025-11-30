@@ -14,16 +14,27 @@ import * as FileSystem from "expo-file-system/legacy";
 import { GilroySemiBoldText } from "@/components/Fonts";
 import AnimatedSplashScreen from "@/components/AnimatedSplashScreen";
 import * as SplashScreen from "expo-splash-screen";
-import { registerNotificationCategories } from "@/utils/notification";
+
+import {
+  createNotificationChannel,
+  registerNotificationCategories,
+  requestNotificationPermissions,
+} from "@/utils/notification";
+
 import * as QuickActions from "expo-quick-actions";
 import { useQuickActionRouting } from "expo-quick-actions/router";
-
+import { scheduleFullDailyRoutine } from "@/utils/dailyRoutine";
+import { useMMKVBoolean } from "react-native-mmkv";
 
 const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
+  const [scheduled, setScheduled] = useMMKVBoolean("notifications_scheduled_v2");
 
+  // -----------------------------
+  // Load Fonts
+  // -----------------------------
   const [fontsLoaded] = useFonts({
     SpaceMono: require("@/assets/fonts/SpaceMono-Regular.ttf"),
     "Gilroy-Regular": require("@/assets/fonts/Gilroy-Regular.ttf"),
@@ -37,11 +48,37 @@ export default function RootLayout() {
 
   useQuickActionRouting();
 
+  // -----------------------------
+  // 1. Schedule Daily Routine Once
+  // -----------------------------
+  useEffect(() => {
+    if (!scheduled) {
+      (async () => {
+        try {
+          const success = await scheduleFullDailyRoutine();
+          if (success) {
+            console.log("Daily routine notifications scheduled");
+            setScheduled(true);
+          } else {
+            console.log(
+              "Failed to schedule notifications (permissions likely denied)"
+            );
+          }
+        } catch (e) {
+          console.error("Error scheduling notifications:", e);
+        }
+      })();
+    }
+  }, [scheduled]);
+
+  // -----------------------------
+  // 2. Quick Actions
+  // -----------------------------
   useEffect(() => {
     QuickActions.setItems([
       {
         title: "Diet",
-        subtitle: "Log a meal to your diet",
+        subtitle: "Log a meal",
         icon: "diet_icon",
         id: "0",
         params: { href: "/(drawer)/(tabs)/diet" },
@@ -62,10 +99,52 @@ export default function RootLayout() {
       },
       {
         title: "Notification Timeline",
-        subtitle: "Go to Notification Timeline",
+        subtitle: "View notifications",
         icon: "notification_icon",
         id: "3",
         params: { href: "/(drawer)/notificationTimeline" },
+      },
+    ]);
+  }, []);
+
+  // -----------------------------
+  // 3. Setup Notifications
+  // -----------------------------
+  useEffect(() => {
+    requestNotificationPermissions();
+    createNotificationChannel();
+    registerNotificationCategories([
+      {
+        id: "water_reminder",
+        actions: [
+          { identifier: "DONE", buttonTitle: "Done" },
+          {
+            identifier: "SNOOZE",
+            buttonTitle: "Snooze",
+            options: { opensAppToForeground: false },
+          },
+          { identifier: "DISMISS", buttonTitle: "Dismiss" },
+        ],
+      },
+      {
+        id: "daily_routine",
+        actions: [
+          {
+            identifier: "DONE",
+            buttonTitle: "Done",
+            options: { opensAppToForeground: true },
+          } as any,
+          {
+            identifier: "DO_LATER",
+            buttonTitle: "Do Later",
+            options: { opensAppToForeground: true },
+          },
+          {
+            identifier: "MUTE",
+            buttonTitle: "Mute",
+            options: { opensAppToForeground: false },
+          },
+        ],
       },
     ]);
   }, []);
@@ -80,13 +159,16 @@ export default function RootLayout() {
             identifier: "SNOOZE",
             buttonTitle: "Snooze",
             options: { opensAppToForeground: false },
-          },
+          }as any,
           { identifier: "DISMISS", buttonTitle: "Dismiss" },
         ],
       },
     ]);
   }, []);
 
+  // -----------------------------
+  // 4. Splash screen handling
+  // -----------------------------
   useEffect(() => {
     if (fontsLoaded) {
       setTimeout(async () => {
@@ -101,10 +183,7 @@ export default function RootLayout() {
   }
 
   const AppText: React.FC<TextProps> = (props) => (
-    <RNText
-      {...props}
-      style={[props.style, { fontFamily: "Gilroy-Regular" }]}
-    />
+    <RNText {...props} style={[props.style, { fontFamily: "Gilroy-Regular" }]} />
   );
 
   return (
@@ -118,11 +197,14 @@ export default function RootLayout() {
   );
 }
 
+// INNER NAVIGATOR
+
 function InnerNavigator() {
   const router = useRouter();
   const { hasShareIntent, shareIntent } = useShareIntentContext();
   const [processingShare, setProcessingShare] = useState(false);
 
+  // Handle incoming share intents
   useEffect(() => {
     if (!hasShareIntent) return;
     if (!shareIntent?.files?.length) return;

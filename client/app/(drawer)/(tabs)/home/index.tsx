@@ -5,7 +5,7 @@ import {
   GilroyRegularText,
 } from "@/components/Fonts";
 import Stats from "@/components/home/Stats";
-import { sendNotification } from "@/utils/notification";
+import { sendImmediateNotification } from "@/utils/notification";
 import {
   Button,
   Image,
@@ -22,12 +22,10 @@ export default function Index() {
   const theme = useColorScheme();
 
   const showNotificationNow = async () => {
-    await sendNotification({
-      content: {
-        title: "💧 Stay Hydrated!, Atreyaa",
-        body: "Drink a glass of water now",
-        categoryIdentifier: "water_reminder", // ⭐ Required
-      },
+    await sendImmediateNotification({
+      title: "💧 Stay Hydrated!, Atreyaa",
+      body: "Drink a glass of water now",
+      categoryIdentifier: "water_reminder", // Required
     });
   };
 

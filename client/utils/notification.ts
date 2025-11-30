@@ -1,8 +1,8 @@
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
-import { SchedulableTriggerInputTypes } from "expo-notifications";
 
-// Foreground Notification Handler
+// FOREGROUND HANDLER
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowBanner: true,
@@ -12,35 +12,26 @@ Notifications.setNotificationHandler({
   }),
 });
 
-type DataCustomObjectType = {
-  type: string;
-  id: string;
+//REQUEST PERMISSIONS
+
+export const requestNotificationPermissions = async () => {
+  const { status } = await Notifications.requestPermissionsAsync();
+  return status === "granted";
 };
 
-interface NotificationProps {
-  content: {
-    title: string;
-    body: string;
-    data?: DataCustomObjectType;
-    categoryIdentifier?: string; // ⭐ FIXED: correct key
-  };
-  time?: Date | string | null;
-}
+// CREATE ANDROID CHANNEL
+export const createNotificationChannel = async () => {
+  if (Platform.OS !== "android") return;
 
-interface NotificationCategory {
-  id: string;
-  actions: {
-    buttonTitle: string;
-    identifier: string;
-    options?: Notifications.NotificationAction["options"];
-  }[];
-}
+  await Notifications.setNotificationChannelAsync("daily_routine", {
+    name: "Daily Routine",
+    importance: Notifications.AndroidImportance.HIGH,
+    sound: "default",
+  });
+};
 
-/**
- * ⭐ Register categories with Quick Actions
- */
 export const registerNotificationCategories = async (
-  categories: NotificationCategory[]
+  categories: { id: string; actions: { identifier: string; buttonTitle: string }[] }[]
 ) => {
   for (const cat of categories) {
     await Notifications.setNotificationCategoryAsync(
@@ -48,55 +39,71 @@ export const registerNotificationCategories = async (
       cat.actions.map((a) => ({
         identifier: a.identifier,
         buttonTitle: a.buttonTitle,
-        options: a.options,
       }))
     );
   }
 };
 
-/**
- * ⭐ Send Notification (Immediate or Scheduled)
- */
-export const sendNotification = async ({ content, time }: NotificationProps) => {
-  // Request permission
-  const { status } = await Notifications.requestPermissionsAsync();
-  if (status !== "granted") {
-    console.warn("Notification permission not granted");
-    return;
-  }
+export const sendImmediateNotification = async ({
+  title,
+  body,
+  data,
+  categoryIdentifier,
+}: {
+  title: string;
+  body: string;
+  data?: any;
+  categoryIdentifier?: string;
+}) => {
+  if (!(await requestNotificationPermissions())) return;
 
-  // Android Notification Channel
-  if (Platform.OS === "android") {
-    await Notifications.setNotificationChannelAsync("default", {
-      name: "default",
-      importance: Notifications.AndroidImportance.HIGH,
-    });
-  }
-
-  let trigger: Notifications.CalendarTriggerInput | null = null;
-
-  if (time) {
-    const date = typeof time === "string" ? new Date(time) : time;
-
-    if (isNaN(date.getTime())) {
-      console.warn("Invalid date for notification trigger");
-      return;
-    }
-
-    trigger = {
-      type: SchedulableTriggerInputTypes.CALENDAR,
-      year: date.getFullYear(),
-      month: date.getMonth() + 1,
-      day: date.getDate(),
-      hour: date.getHours(),
-      minute: date.getMinutes(),
-      second: date.getSeconds(),
-      repeats: false,
-    };
-  }
+  await createNotificationChannel();
 
   await Notifications.scheduleNotificationAsync({
-    content,
+    content: {
+      title,
+      body,
+      data,
+      categoryIdentifier,
+      channelId: "daily_routine",
+    }as any,
+    trigger: null, // immediate
+  });
+};
+
+export const scheduleDailyNotification = async ({
+  hour,
+  minute,
+  title,
+  body,
+  data,
+  categoryIdentifier = "daily_routine",
+}: {
+  hour: number;
+  minute: number;
+  title: string;
+  body: string;
+  data?: any;
+  categoryIdentifier?: string;
+}) => {
+  if (!(await requestNotificationPermissions())) return;
+
+  await createNotificationChannel();
+
+  const trigger = {
+    hour,
+    minute,
+    repeats: true,
+  } as any;
+
+  await Notifications.scheduleNotificationAsync({
+    content: {
+      title,
+      body,
+      data,
+      categoryIdentifier,
+      channelId: "daily_routine",
+    } as any,
     trigger,
   });
 };
