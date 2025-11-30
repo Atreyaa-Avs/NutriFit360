@@ -1,3 +1,4 @@
+import { useCloudVisionResponse } from "@/hooks/useCloudVisionResponse";
 import { useOllamaVisionResponse } from "@/hooks/useOllamaVisionResponse";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
@@ -21,7 +22,7 @@ const AnalyzeRecipeComponent = () => {
     Array.isArray(imageBase64) ? imageBase64[0] : imageBase64 || ""
   );
 
-  const { data, isLoading, error, refetch } = useOllamaVisionResponse(base64, false);
+  const { data, isLoading, error, refetch } = useCloudVisionResponse(base64, false);
 
   useEffect(() => {
     refetch();

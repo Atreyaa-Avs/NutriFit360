@@ -4,7 +4,7 @@ import axios from "axios";
 
 const fetchResponse = async (base64: string): Promise<any> => {
   const response = await axios.post(
-    `http://${IP}:8080/analyze/cloud`,
+    `${process.env.EXPO_PUBLIC_BACKEND_URL!}/analyze/cloud`,
     {
       image: base64,
     },
