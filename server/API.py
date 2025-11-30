@@ -34,7 +34,7 @@ load_dotenv()
 data = joblib.load("models/data.pkl")
 scaler = joblib.load("models/scaler.pkl")
 
-GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")    # <-- put your key here
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")  # put your key here
 GEMINI_URL = (
     f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
 )
@@ -136,9 +136,25 @@ async def analyze_cloud(request: Request):
                     "parts": [
                         {
                             "text": (
-                                "Identify the recipe name and list the ingredients used to make this dish "
-                                "and their approximate nutrition facts (calories, protein, fat, carbs, fiber, "
-                                "sugar, sodium, cholesterol). Respond ONLY in JSON."
+                                "Identify the recipe name, list the ingredients used to make this recipe, "
+                                "and estimate the nutrition facts for the dish shown in this image. "
+                                "Nutrition facts must include: calories (kcal), protein (g), fat (g), "
+                                "carbs (g), fiber (g), sugar (g), sodium (mg), and cholesterol (mg). "
+                                "Respond ONLY in the following JSON format with no explanation:\n\n"
+                                "{\n"
+                                "  \"recipe\": \"string\",\n"
+                                "  \"ingredients\": [\"string\", \"string\", ...],\n"
+                                "  \"nutrition\": {\n"
+                                "    \"calories\": number,\n"
+                                "    \"protein\": number,\n"
+                                "    \"fat\": number,\n"
+                                "    \"carbs\": number,\n"
+                                "    \"fiber\": number,\n"
+                                "    \"sugar\": number,\n"
+                                "    \"sodium\": number,\n"
+                                "    \"cholesterol\": number\n"
+                                "  }\n"
+                                "}\n"
                             )
                         },
                         {
@@ -153,7 +169,6 @@ async def analyze_cloud(request: Request):
         }
 
         response = requests.post(GEMINI_URL, json=payload)
-
         if not response.ok:
             return JSONResponse(
                 status_code=response.status_code,
@@ -161,12 +176,20 @@ async def analyze_cloud(request: Request):
             )
 
         result = response.json()
-
-        # Extract plain JSON text
         raw_text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
 
-        # Return parsed JSON (no regex, no cleaning)
-        return json.loads(raw_text)
+        # Clean the text: remove markdown/code fences if present
+        raw_text = re.sub(r"```(?:json)?\s*", "", raw_text)
+        raw_text = raw_text.replace("```", "")
+
+        # Extract JSON object from the text
+        match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+        if not match:
+            return JSONResponse(status_code=500, content={"error": "No JSON found in model response", "raw": raw_text})
+
+        clean_json = match.group(0)
+
+        return JSONResponse(content=json.loads(clean_json))
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
@@ -206,10 +229,10 @@ async def analyze_image(request: Request):
 
             if match:
                 clean_json = match.group(1)
-                return json.loads(clean_json)
+                return JSONResponse(content=json.loads(clean_json))
             else:
                 try:
-                    return json.loads(raw)
+                    return JSONResponse(content=json.loads(raw))
                 except:
                     return JSONResponse(status_code=500, content={"error": "Model response invalid", "raw": raw})
         else:

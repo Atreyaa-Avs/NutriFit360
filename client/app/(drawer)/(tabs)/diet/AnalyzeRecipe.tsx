@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 const AnalyzeRecipe = () => {
   return (
-    <SafeAreaView className="mt-14">
+    <SafeAreaView className="">
       
       <AnalyzeRecipeComponent />
     </SafeAreaView>

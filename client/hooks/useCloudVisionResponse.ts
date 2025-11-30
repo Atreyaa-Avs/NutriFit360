@@ -2,12 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Constants from "expo-constants";
 
-const BASE_URL = Constants.expoConfig?.extra?.EXPO_PUBLIC_BACKEND_URL;
-
 const fetchResponse = async (base64: string) => {
   try {
     const response = await axios.post(
-      `${BASE_URL}/analyze/cloud`,
+      `${process.env.EXPO_PUBLIC_BACKEND_URL!}/analyze/cloud`,
       { image: base64 },
       { headers: { "Content-Type": "application/json" } }
     );
