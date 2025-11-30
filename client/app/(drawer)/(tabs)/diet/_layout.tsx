@@ -13,10 +13,13 @@ export default function DietLayout() {
       <>
         <StatusBar barStyle="dark-content" backgroundColor="#E5E7EB" />
         <View className={`pt-2 ${!title && "pl-2 pt-6"}`}>
-          <View className={`${title && "border-b border-[#888]"}`} style={{ elevation: title ? 7 : 0 }}>
+          <View
+            className={`${title && "border-b border-[#888]"}`}
+            style={{ elevation: title ? 7 : 0 }}
+          >
             {title ? (
               <View
-                className="flex-row items-center gap-4 px-2 pb-2 -mt-6 bg-neutral-300"
+                className="flex-row items-center gap-4 px-2 pb-2 -mt-8 bg-neutral-300"
                 style={{ paddingTop: insets.top + 40 }}
               >
                 <Pressable
@@ -32,7 +35,9 @@ export default function DietLayout() {
                   </Text>
                 </Pressable>
 
-                <GilroyBoldText className="text-xl tracking-wide">{title}</GilroyBoldText>
+                <GilroyBoldText className="text-xl tracking-wide">
+                  {title}
+                </GilroyBoldText>
               </View>
             ) : (
               <Pressable
@@ -75,6 +80,20 @@ export default function DietLayout() {
           presentation: "modal",
           header: () => <CustomMealHeader title="Analyze Recipe" />,
         }}
+      />
+      <Stack.Screen
+        name="[RecipeHome]"
+        options={({
+          route,
+        }: {
+          route: { params?: { Title?: string } };
+        }) => ({
+          header: () => (
+            <CustomMealHeader
+              title={"Recipe Video"}
+            />
+          ),
+        })}
       />
     </Stack>
   );

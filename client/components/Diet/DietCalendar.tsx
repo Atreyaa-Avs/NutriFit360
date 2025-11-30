@@ -7,7 +7,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
-import { GilroyRegularText, GilroySemiBoldText } from "../Fonts";
+import { GilroyBoldText, GilroyRegularText, GilroySemiBoldText } from "../Fonts";
 
 interface CalendarProps {
   selectedDate: string;
@@ -66,9 +66,9 @@ const DietCalendar = ({ selectedDate, setSelectedDate }: CalendarProps) => {
   return (
     <View>
       <View className="flex-row items-center justify-between bg-primary px-4 py-2 rounded-lg mb-2">
-        <GilroySemiBoldText className="text-base text-white">
+        <GilroyBoldText className="text-white">
           Calendar
-        </GilroySemiBoldText>
+        </GilroyBoldText>
         <GilroyRegularText className="flex-1 text-sm text-center text-white">
           {isToday(selectedDate) ? "Today" : formatDate(selectedDate)}
         </GilroyRegularText>

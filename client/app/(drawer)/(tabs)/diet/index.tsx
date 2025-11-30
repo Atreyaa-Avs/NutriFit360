@@ -10,7 +10,14 @@ import React, { useState } from "react";
 import { Button, Pressable, ScrollView, Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import rawData from "./DietDemo.json";
-import { GilroyBoldText } from "@/components/Fonts";
+import {
+  GilroyBoldText,
+  GilroyRegularText,
+  GilroySemiBoldText,
+  InterFontText,
+} from "@/components/Fonts";
+import TodayMeals from "@/components/Diet/TodayMeals";
+import Recipes from "@/components/Diet/Recipes";
 
 // interface DietIndexProps {
 //   selectedDate: Array<String>[]
@@ -64,7 +71,9 @@ const Diet = () => {
         }}
         style={{ paddingLeft: 16, paddingRight: 16 }}
       >
-        <GilroyBoldText className={`pb-3 text-4xl font-semibold tracking-tighter`}>
+        <GilroyBoldText
+          className={`pb-3 text-4xl font-semibold tracking-tighter`}
+        >
           Diet Tracker
         </GilroyBoldText>
         <View>{/* <Calendar /> */}</View>
@@ -74,7 +83,10 @@ const Diet = () => {
             setSelectedDate={setSelectedDate}
           />
         </View>
-        <Text>Selected Date: {formatDateToDMY(selectedDate)}</Text>
+        <GilroyRegularText>
+          <GilroyBoldText>Selected Date:</GilroyBoldText>{" "}
+          {formatDateToDMY(selectedDate)}
+        </GilroyRegularText>
         <View>
           {Data[formatDateToDMY(selectedDate)]?.breakfast?.map(
             (item: MealItem, index: number) => (
@@ -88,7 +100,6 @@ const Diet = () => {
             )
           )}
         </View>
-        <Text>{Data["06-07-2025"].breakfast[0].name}</Text>
         <View className="flex-row w-full gap-4">
           <View className="flex-1">
             <Pressable
@@ -105,9 +116,9 @@ const Diet = () => {
           <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
             <Pressable className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
               <RecommendationRecipeSvg />
-              <Text className="text-lg font-semibold text-center">
+              <GilroySemiBoldText className="text-lg text-center tracking-tighter">
                 View Diet Recommendation
-              </Text>
+              </GilroySemiBoldText>
             </Pressable>
           </Link>
         </View>
@@ -143,6 +154,9 @@ const Diet = () => {
           ]}
           gap={1}
         />
+
+        <TodayMeals date={"06-07-2025"} />
+        <Recipes />
 
         {/* <View
           style={{ flex: 1, justifyContent: "center", alignItems: "center" }}

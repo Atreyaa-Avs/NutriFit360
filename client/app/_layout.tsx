@@ -30,7 +30,6 @@ const queryClient = new QueryClient();
 
 export default function RootLayout() {
   const [appReady, setAppReady] = useState(false);
-  const [scheduled, setScheduled] = useMMKVBoolean("notifications_scheduled_v2");
 
   // -----------------------------
   // Load Fonts
@@ -47,29 +46,6 @@ export default function RootLayout() {
   });
 
   useQuickActionRouting();
-
-  // -----------------------------
-  // 1. Schedule Daily Routine Once
-  // -----------------------------
-  useEffect(() => {
-    if (!scheduled) {
-      (async () => {
-        try {
-          const success = await scheduleFullDailyRoutine();
-          if (success) {
-            console.log("Daily routine notifications scheduled");
-            setScheduled(true);
-          } else {
-            console.log(
-              "Failed to schedule notifications (permissions likely denied)"
-            );
-          }
-        } catch (e) {
-          console.error("Error scheduling notifications:", e);
-        }
-      })();
-    }
-  }, [scheduled]);
 
   // -----------------------------
   // 2. Quick Actions
