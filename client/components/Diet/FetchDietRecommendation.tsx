@@ -4,7 +4,7 @@ import { mapProfileToRequestBody } from "@/utils/mapProfileToRequestBody";
 import React from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import Spinner from "../Loaders/Spinner";
-import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "../Fonts";
+import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText, InterFontText } from "../Fonts";
 import AIButton from "../AIButton";
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
 import SparklesSvg from "@/assets/svgs/sparkles.svg";
@@ -33,7 +33,7 @@ const FetchDietRecommendation = () => {
       </View>
 
       <View className="flex-row gap-3 item-center">
-        <AIButton className="">
+        <AIButton className="" onPressGoto={"/(drawer)/(tabs)/diet"}>
           <SparklesSvg width={16} height={32} />
           <View className="flex-row items-start gap-1">
             <GilroyMediumText className="tracking-tighter text-white">Get AI Plan</GilroyMediumText>
@@ -58,8 +58,8 @@ const FetchDietRecommendation = () => {
         </Text>
       )}
       {data && (
-        <View className="p-2 rounded">
-          <Text className="mb-3 text-2xl font-bold">Diet:</Text>
+        <View className="p-2 rounded mt-5">
+          <GilroyBoldText className="mb-3 text-2xl">Diet:</GilroyBoldText>
           <View className="flex-col gap-4">
             {data?.recommendations[0]?.Diet?.split(";").map(
               (ele: string, indx: number) => (
@@ -103,12 +103,12 @@ const CardWrapper = ({ res, indx }: CardWrapperProps) => {
   return (
     <View className="rounded-lg">
       <View className="flex-row justify-center gap-1 py-3 rounded-t-lg bg-primary">
-        <Text className="text-xl font-bold text-center text-neutral-900">
+        <GilroyBoldText className="text-xl text-center text-neutral-900">
           {indx}.
-        </Text>
-        <Text className="text-xl font-bold text-center underline text-neutral-900">
+        </GilroyBoldText>
+        <GilroyBoldText className="text-xl text-center underline text-neutral-900">
           {formattedResponse[0]}
-        </Text>
+        </GilroyBoldText>
       </View>
 
       <View className="flex-row flex-wrap p-3 bg-white rounded-b-lg">
@@ -130,7 +130,7 @@ const Card = ({ ele }: CardProps) => {
       className="flex-1 min-w-[32%] p-3 m-2 bg-[#ccc] rounded-md"
       style={{ elevation: 4 }}
     >
-      <Text className="font-medium text-center"> {ele} </Text>
+      <InterFontText className="font-medium text-center"> {ele} </InterFontText>
     </View>
   );
 };

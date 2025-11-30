@@ -2,12 +2,25 @@ import { useResponse } from "@/hooks/useResponse";
 import { useProfileStore } from "@/store/useProfileStore";
 import { mapProfileToRequestBody } from "@/utils/mapProfileToRequestBody";
 import React from "react";
-import { ActivityIndicator, Pressable, Text, View } from "react-native";
+import {
+  ActivityIndicator,
+  Button,
+  Pressable,
+  Text,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import Spinner from "../Loaders/Spinner";
-import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "../Fonts";
+import {
+  GilroyBoldText,
+  GilroyMediumText,
+  GilroySemiBoldText,
+  InterFontText,
+} from "../Fonts";
 import AIButton from "../AIButton";
 import SparklesSvg from "@/assets/svgs/sparkles.svg";
 import { EvilIcons, Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 
 const FetchWorkoutRecommendation = () => {
   const profile = useProfileStore();
@@ -32,22 +45,34 @@ const FetchWorkoutRecommendation = () => {
         </Pressable>
       </View>
       <View className="flex-row gap-3 item-center">
-        <AIButton className="">
-          <SparklesSvg width={16} height={32} />
-          <View className="flex-row items-start gap-1">
-            <GilroyMediumText className="tracking-tighter text-white">
-              Get AI Plan
-            </GilroyMediumText>
-            <EvilIcons name="arrow-right" size={20} color={"white"} />
-          </View>
-        </AIButton>
+        <Pressable
+          onPress={() => router.navigate("/(drawer)/(tabs)/workout/AIPlanner")}
+        >
+          <AIButton onPressGoto={"/(drawer)/(tabs)/workout/AIWorkoutPlanner"}>
+            <SparklesSvg width={16} height={32} />
+            <View className="flex-row items-start gap-1">
+              <GilroyMediumText className="tracking-tighter text-white">
+                Get AI Plan
+              </GilroyMediumText>
+              <EvilIcons name="arrow-right" size={20} color="white" />
+            </View>
+          </AIButton>
+        </Pressable>
 
         <Pressable className="flex-1" onPress={() => {}}>
-          <View className="flex-row items-center justify-center py-5 bg-neutral-300 rounded-xl">
+          <View
+            className="flex-row items-center justify-center bg-neutral-300 rounded-xl"
+            style={{ paddingVertical: 14 }}
+          >
             <GilroySemiBoldText className="text-lg tracking-tighter text-center text-black ">
               Go to Exercise
             </GilroySemiBoldText>
-            <Ionicons name="chevron-forward" size={20} color="#333" />
+            <Ionicons
+              name="chevron-forward"
+              size={18}
+              color="#333"
+              style={{ marginTop: -1 }}
+            />
           </View>
         </Pressable>
       </View>
@@ -60,8 +85,8 @@ const FetchWorkoutRecommendation = () => {
       )}
 
       {data && (
-        <View className="p-2 rounded">
-          <Text className="mb-3 text-2xl font-bold">Workout:</Text>
+        <View className="p-2 rounded mt-5">
+          <GilroyBoldText className="mb-3 text-2xl">Workout:</GilroyBoldText>
           <View className="flex-col gap-4">
             <View>
               <CardWrapper
@@ -117,12 +142,12 @@ const CardWrapper = ({ title, res, indx }: CardWrapperProps) => {
   return (
     <View className="rounded-lg">
       <View className="flex-row justify-center gap-1 py-3 rounded-t-lg bg-primary">
-        <Text className="text-xl font-bold text-center text-neutral-900">
+        <GilroyBoldText className="text-xl text-center text-neutral-900">
           {indx}.
-        </Text>
-        <Text className="text-xl font-bold text-center underline text-neutral-900">
+        </GilroyBoldText>
+        <GilroyBoldText className="text-xl text-center underline text-neutral-900">
           {title}
-        </Text>
+        </GilroyBoldText>
       </View>
       <View className="flex-row flex-wrap p-2 pb-4 bg-white rounded-b-lg">
         {formatItems(res)
@@ -145,7 +170,10 @@ const Card = ({ val }: CardProps) => {
       className="flex-1 min-w-[32%] p-3 m-2 bg-[#ccc] rounded-md"
       style={{ elevation: 4 }}
     >
-      <Text className="font-medium text-center capitalize"> {val} </Text>
+      <InterFontText className="font-medium text-center capitalize">
+        {" "}
+        {val}{" "}
+      </InterFontText>
     </View>
   );
 };

@@ -5,7 +5,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import ExerciseSvg from "@/assets/svgs/tabs/exercise.svg";
 import FetchWorkoutRecommendation from "@/components/Workout/FetchWorkoutRecommendation";
-import { GilroyBoldText } from "@/components/Fonts";
+import { GilroyBoldText, GilroySemiBoldText } from "@/components/Fonts";
 
 const WorkoutRecommendation = () => {
   const {
@@ -25,8 +25,8 @@ const WorkoutRecommendation = () => {
   const snapWidth = screenWidth * 0.48 + 115;
 
   return (
-    <ScrollView>
-      <SafeAreaView className="min-h-screen p-4 pb-28">
+    <ScrollView showsVerticalScrollIndicator={false}>
+      <SafeAreaView className="min-h-screen p-4">
         <View className="-mt-5">
           <View className="flex-row items-center justify-center gap-2 mb-4">
             <ExerciseSvg
@@ -36,7 +36,9 @@ const WorkoutRecommendation = () => {
               stroke={"#000"}
               strokeWidth={16}
             />
-            <GilroyBoldText className="text-3xl font-semibold underline">Details:</GilroyBoldText>
+            <GilroyBoldText className="text-3xl font-semibold underline">
+              Details:
+            </GilroyBoldText>
           </View>
           <ScrollView
             horizontal
@@ -70,6 +72,15 @@ const WorkoutRecommendation = () => {
         </View>
 
         <FetchWorkoutRecommendation />
+        
+        <View className="items-center w-full mt-10">
+          <GilroyBoldText className="text-sm text-gray-500">
+            NutriFit360
+          </GilroyBoldText>
+          <GilroySemiBoldText className="mt-1 text-xs text-gray-400">
+            Your complete fitness companion app.
+          </GilroySemiBoldText>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

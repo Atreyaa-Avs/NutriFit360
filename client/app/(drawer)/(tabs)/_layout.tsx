@@ -63,7 +63,7 @@ export default function TabsLayout() {
 
     const currentRouteName = getFocusedRouteName(state);
 
-    const hidePattern = /Meal|Recommendation|AnalyzeRecipe|\[exercise\]|\[RecipeHome\]/;
+    const hidePattern = /Meal|Recommendation|AnalyzeRecipe|AIWorkoutPlanner|\[exercise\]|\[RecipeHome\]/;
 
     const shouldHide = hidePattern.test(currentRouteName);
 

@@ -5,7 +5,11 @@ import { SafeAreaView } from "react-native-safe-area-context";
 
 import FoodSvg from "@/assets/svgs/tabs/food.svg";
 import FetchDietRecommendation from "@/components/Diet/FetchDietRecommendation";
-import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
+import {
+  GilroyBoldText,
+  GilroyMediumText,
+  GilroySemiBoldText,
+} from "@/components/Fonts";
 
 const DietRecommendation = () => {
   const {
@@ -25,8 +29,10 @@ const DietRecommendation = () => {
   const snapWidth = screenWidth * 0.48 + 115;
 
   return (
-    <ScrollView contentContainerStyle={{ marginTop: -40 }}>
-      <SafeAreaView className="min-h-screen p-4 pb-28">
+    <ScrollView
+      showsVerticalScrollIndicator={false}
+    >
+      <SafeAreaView className="min-h-screen p-4 -mt-8">
         <View className={`${Platform.OS === "android" ? "mt-4" : "mt-10"}`}>
           <View className="flex-row items-center gap-2 mx-auto mb-4">
             <FoodSvg
@@ -72,6 +78,14 @@ const DietRecommendation = () => {
         </View>
 
         <FetchDietRecommendation />
+        <View className="items-center w-full mt-10">
+          <GilroyBoldText className="text-sm text-gray-500">
+            NutriFit360
+          </GilroyBoldText>
+          <GilroySemiBoldText className="mt-1 text-xs text-gray-400">
+            Your complete fitness companion app.
+          </GilroySemiBoldText>
+        </View>
       </SafeAreaView>
     </ScrollView>
   );

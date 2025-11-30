@@ -241,6 +241,84 @@ async def analyze_image(request: Request):
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
 
+@app.post("/ai/workout-plan")
+async def ai_workout_plan(request: Request):
+    """
+    Generate a 3-day detailed workout plan in JSON format using Gemini API.
+    Each day has morning, afternoon, evening slots with focus, summary, duration,
+    intensity, calories, and exercises.
+    """
+    try:
+        body = await request.json()
+        workoutRecommendation = body.get("workoutRecommendation")
+        if not workoutRecommendation:
+            return JSONResponse(status_code=400, content={"error": "Missing workoutRecommendation"})
+
+        # ---------------------- Gemini Prompt ----------------------
+        llm_prompt = f"""
+You are a professional fitness coach. Based on this user recommended exercises: "{workoutRecommendation}",
+generate a 3-day workout plan for a beginner-to-intermediate user.
+
+Each day should have:
+- day: "Day 1", "Day 2", "Day 3"
+- focus: one line
+- summary: one line
+- morning, afternoon, evening slots:
+    - summary
+    - focus
+    - duration (minutes, e.g., "20 minutes")
+    - intensity ("Light", "Moderate", "High")
+    - calories (approximate)
+    - exercises (array of exercise names) should not be empty for any entry
+
+Return ONLY JSON with the following structure (no explanations):
+
+{{
+  "days": [
+    {{
+      "day": "Day 1",
+      "focus": "...",
+      "summary": "...",
+      "morning": {{ ... }},
+      "afternoon": {{ ... }},
+      "evening": {{ ... }}
+    }},
+    ...
+  ]
+}}
+        """
+
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": llm_prompt}
+                    ]
+                }
+            ]
+        }
+
+        # ---------------------- Call Gemini ----------------------
+        response = requests.post(GEMINI_URL, json=payload)
+        if not response.ok:
+            return JSONResponse(status_code=response.status_code, content={"error": response.text})
+
+        result = response.json()
+        raw_text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+
+        # ---------------------- Clean JSON ----------------------
+        raw_text = re.sub(r"```(?:json)?\s*", "", raw_text)
+        raw_text = raw_text.replace("```", "")
+        match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+        if not match:
+            return JSONResponse(status_code=500, content={"error": "No JSON found in model response", "raw": raw_text})
+
+        clean_json = match.group(0)
+        plan = json.loads(clean_json)
+        return JSONResponse(content=plan)
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
 
 if __name__ == "__main__":
     uvicorn.run("API:app", host="0.0.0.0", port=8080, reload=True)

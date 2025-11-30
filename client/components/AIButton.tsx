@@ -1,13 +1,15 @@
 import React, { useRef, useEffect } from "react";
 import { View, TouchableOpacity, Animated } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
+import { router , Href} from "expo-router";
 
 interface AIButtonProps {
   children: React.ReactNode;
   className?: string;
+  onPressGoto: Href;
 }
 
-const AIButton = ({ className, children }: AIButtonProps) => {
+const AIButton = ({ className, children, onPressGoto }: AIButtonProps) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -30,6 +32,7 @@ const AIButton = ({ className, children }: AIButtonProps) => {
       <TouchableOpacity
         activeOpacity={0.85}
         className="relative flex-row items-center justify-center p-1 overflow-hidden bg-white rounded-lg"
+        onPress={() => router.navigate(onPressGoto)}
       >
         {/* Rotating Circular Glow */}
         <Animated.View

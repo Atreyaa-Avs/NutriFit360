@@ -90,6 +90,14 @@ export default function WorkoutLayout() {
           ),
         })}
       />
+      <Stack.Screen
+        name="AIWorkoutPlanner"
+        options={{
+          header: () => (
+            <CustomWorkoutHeader title={"AI Workout Planner"} />
+          ),
+        }}
+      />
     </Stack>
   );
 }

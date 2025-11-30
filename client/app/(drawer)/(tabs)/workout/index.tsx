@@ -58,7 +58,7 @@ const Workout = () => {
         </GilroyMediumText>
 
         <View className="my-4">
-          <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
+          <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
               <Pressable className="flex-row items-center justify-center gap-2 p-4 bg-white/50 rounded-tr-xl rounded-tl-xl">
                 <RecommendationWorkout />
                 <GilroySemiBoldText className="text-lg text-center tracking-tighter">
