@@ -18,6 +18,7 @@ import {
 } from "@/components/Fonts";
 import TodayMeals from "@/components/Diet/TodayMeals";
 import Recipes from "@/components/Diet/Recipes";
+import SparklesSvg from "@/assets/svgs/sparkles.svg";
 
 // interface DietIndexProps {
 //   selectedDate: Array<String>[]
@@ -112,15 +113,19 @@ const Diet = () => {
             <ViewMeal />
           </View>
         </View>
-        <View>
+        <View className="flex-col mb-4">
           <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
-            <Pressable className="flex-row items-center justify-center gap-2 p-4 mb-4 bg-white/50 rounded-xl">
+            <Pressable className="flex-row items-center justify-center gap-2 p-4 bg-white/50 rounded-tr-xl rounded-tl-xl">
               <RecommendationRecipeSvg />
               <GilroySemiBoldText className="text-lg text-center tracking-tighter">
                 View Diet Recommendation
               </GilroySemiBoldText>
             </Pressable>
           </Link>
+          <View className="flex flex-row justify-center items-center gap-2 bg-black rounded-bl-xl rounded-br-xl">
+            <SparklesSvg width={16} height={25} />
+            <GilroySemiBoldText className="text-white text-center text-xs">with AI</GilroySemiBoldText>
+          </View>
         </View>
 
         <StackCircles
@@ -134,22 +139,22 @@ const Diet = () => {
               label: "Carbs",
               percentage: 75,
               strokeColor: "#8EFBFC",
-              value: 40,
-              target: 500,
+              value: 150,
+              target: 350,
             },
             {
               label: "Protein",
               percentage: 40,
               strokeColor: "#BFFA64",
-              value: 40,
-              target: 500,
+              value: 70,
+              target: 750,
             },
             {
               label: "Fats",
               percentage: 60,
               strokeColor: "#FA111E",
-              value: 40,
-              target: 500,
+              value: 45,
+              target: 200,
             },
           ]}
           gap={1}

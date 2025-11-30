@@ -71,28 +71,27 @@ const Progress = () => {
           title="Metrics"
           start={true}
           scale={0.9}
-          unit="min"
           data={[
             {
               label: "Steps",
               percentage: 75,
               strokeColor: "#FF9F1C",
               value: 40,
-              target: 500,
+              target: 100,
             },
             {
               label: "Speed",
               percentage: 40,
               strokeColor: "#2EC4B6",
               value: 40,
-              target: 500,
+              target: 100,
             },
             {
               label: "Calories",
               percentage: 60,
               strokeColor: "#E71D36",
-              value: 40,
-              target: 500,
+              value: 20,
+              target: 100,
             },
           ]}
           gap={1}

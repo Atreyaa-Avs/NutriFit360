@@ -139,7 +139,7 @@ export default function Header(props: DrawerContentComponentProps) {
         {/* Bottom Footer */}
         <View className="pb-2">
           <GilroySemiBoldText className="text-base text-center text-neutral-500">
-            v1.0.0
+            v0.1.0
           </GilroySemiBoldText>
         </View>
       </View>

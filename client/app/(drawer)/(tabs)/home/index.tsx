@@ -10,8 +10,10 @@ import {
   Button,
   Image,
   Platform,
+  Pressable,
   StatusBar,
   Text,
+  TouchableOpacity,
   View,
   useColorScheme,
 } from "react-native";
@@ -56,10 +58,16 @@ export default function Index() {
               • Completed 40% of your workout
             </GilroyRegularText>
           </View>
-          <Button
-            title="Show Hydration Alert Now"
-            onPress={showNotificationNow}
-          />
+          <TouchableOpacity
+            onPress={() => showNotificationNow()}
+            className="bg-blue-500 p-3 rounded-lg"
+            style={{ elevation: 3 }}
+            activeOpacity={0.7}
+          >
+            <GilroyBoldText className="text-white text-center">
+              Show Hydration Alert Now
+            </GilroyBoldText>
+          </TouchableOpacity>
         </View>
 
         <Stats />

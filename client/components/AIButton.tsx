@@ -29,7 +29,7 @@ const AIButton = ({ className, children }: AIButtonProps) => {
     <View className={className}>
       <TouchableOpacity
         activeOpacity={0.85}
-        className="relative flex-row items-center justify-center px-3 py-2 overflow-hidden bg-white rounded-lg"
+        className="relative flex-row items-center justify-center p-1 overflow-hidden bg-white rounded-lg"
       >
         {/* Rotating Circular Glow */}
         <Animated.View
@@ -61,7 +61,7 @@ const AIButton = ({ className, children }: AIButtonProps) => {
         </Animated.View>
 
         {/* Label */}
-        <View className="flex-row items-center justify-center gap-3 px-6 py-2 bg-black rounded-lg">
+        <View className="flex-row items-center justify-center gap-3 px-5 py-2 bg-black rounded-lg">
           {children}
         </View>
       </TouchableOpacity>

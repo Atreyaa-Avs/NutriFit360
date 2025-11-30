@@ -30,7 +30,7 @@ interface ActivityRingsProps {
   gap?: number;
   start?: boolean;
   scale?: number;
-  unit: string;
+  unit?: string;
 }
 
 const StackCircles = ({
@@ -181,7 +181,7 @@ interface StackComponentProps {
   target: number;
   strokeColor: string;
   percentage: number;
-  unit: string;
+  unit?: string;
 }
 
 const InfoComponent = ({

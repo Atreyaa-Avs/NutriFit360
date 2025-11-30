@@ -1,7 +1,7 @@
 import ActivityRingWorkout from "@/assets/svgs/workout/AcitivityRingCenter.svg";
 import RecommendationWorkout from "@/assets/svgs/workout/RecommendWorkout.svg";
 import StackCircles from "@/components/Diet/StackCircles";
-import { GilroyBoldText, GilroyMediumText } from "@/components/Fonts";
+import { GilroyBoldText, GilroyMediumText, GilroySemiBoldText } from "@/components/Fonts";
 import ProgressCalendar from "@/components/Progress/ProgressCalendar";
 import ExerciseCard from "@/components/Workout/ExerciseCard";
 import { Link } from "expo-router";
@@ -9,6 +9,7 @@ import React, { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import SparklesSvg from "@/assets/svgs/sparkles.svg";
 
 const formatDateToDMY = (isoDate: string) => {
   const [year, month, day] = isoDate.split("-");
@@ -56,14 +57,20 @@ const Workout = () => {
           Selected Date: {formatDateToDMY(selectedDate)}
         </GilroyMediumText>
 
-        <Link href={"/(drawer)/(tabs)/workout/Recommendation"} asChild>
-          <Pressable className="flex-row items-center justify-center gap-2 p-4 my-4 bg-white/50 rounded-xl">
-            <RecommendationWorkout />
-            <GilroyMediumText className="text-lg font-semibold text-center">
-              View Workout Recommendation
-            </GilroyMediumText>
-          </Pressable>
-        </Link>
+        <View className="my-4">
+          <Link href={"/(drawer)/(tabs)/diet/Recommendation"} asChild>
+              <Pressable className="flex-row items-center justify-center gap-2 p-4 bg-white/50 rounded-tr-xl rounded-tl-xl">
+                <RecommendationWorkout />
+                <GilroySemiBoldText className="text-lg text-center tracking-tighter">
+                  View Workout Recommendation
+                </GilroySemiBoldText>
+              </Pressable>
+            </Link>
+            <View className="flex flex-row justify-center items-center gap-2 bg-black rounded-bl-xl rounded-br-xl">
+              <SparklesSvg width={16} height={25} />
+              <GilroySemiBoldText className="text-white text-center text-xs">with AI</GilroySemiBoldText>
+            </View>
+        </View>
 
         <StackCircles
           Icon={ActivityRingWorkout}
@@ -76,22 +83,22 @@ const Workout = () => {
               label: "Cardio",
               percentage: 75,
               strokeColor: "#FF9F1C",
-              value: 40,
-              target: 500,
+              value: 55,
+              target: 150,
             },
             {
               label: "Yoga",
               percentage: 40,
               strokeColor: "#2EC4B6",
-              value: 40,
-              target: 500,
+              value: 70,
+              target: 100,
             },
             {
               label: "Stretch",
               percentage: 60,
               strokeColor: "#E71D36",
-              value: 40,
-              target: 500,
+              value: 30,
+              target: 75,
             },
           ]}
           gap={1}

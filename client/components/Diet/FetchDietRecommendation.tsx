@@ -42,11 +42,11 @@ const FetchDietRecommendation = () => {
         </AIButton>
 
         <Pressable className="flex-1" onPress={() => {}}>
-          <View className="flex-row items-center justify-center py-5 bg-neutral-300 rounded-xl">
-            <GilroySemiBoldText className="text-lg tracking-tighter text-center text-black ">
+          <View className="flex-row items-center justify-center bg-neutral-300 rounded-xl" style={{paddingVertical: 16}}>
+            <GilroySemiBoldText className="tracking-tighter text-center text-black ">
               Go to Meals
             </GilroySemiBoldText>
-            <Ionicons name="chevron-forward" size={20} color="#333" />
+            <Ionicons name="chevron-forward" size={16} color="#333" />
           </View>
         </Pressable>
       </View>
