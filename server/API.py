@@ -14,6 +14,7 @@ import os
 import json
 import re
 from fastapi.middleware.cors import CORSMiddleware
+from dotenv import load_dotenv
 
 app = FastAPI()
 
@@ -30,6 +31,11 @@ app.add_middleware(
 # Load data and scaler
 data = joblib.load("models/data.pkl")
 scaler = joblib.load("models/scaler.pkl")
+
+GEMINI_API_KEY = load_dotenv("GEMINI_API_KEY")    # <-- put your key here
+GEMINI_URL = (
+    f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
+)
 
 # Features
 num_features = ['Age', 'Height', 'Weight', 'BMI']
@@ -112,6 +118,57 @@ def recommend(user: UserInput):
             for rec in recommendations
         ]
     }
+
+@app.post("/analyze/cloud")
+async def analyze_cloud(request: Request):
+    try:
+        body = await request.json()
+        image_base64 = body.get("image")
+
+        if not image_base64:
+            return JSONResponse(status_code=400, content={"error": "Missing base64 image data"})
+
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {
+                            "text": (
+                                "Identify the recipe name and list the ingredients used to make this dish "
+                                "and their approximate nutrition facts (calories, protein, fat, carbs, fiber, "
+                                "sugar, sodium, cholesterol). Respond ONLY in JSON."
+                            )
+                        },
+                        {
+                            "inline_data": {
+                                "mime_type": "image/jpeg",
+                                "data": image_base64
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+
+        response = requests.post(GEMINI_URL, json=payload)
+
+        if not response.ok:
+            return JSONResponse(
+                status_code=response.status_code,
+                content={"error": response.text}
+            )
+
+        result = response.json()
+
+        # Extract plain JSON text
+        raw_text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+
+        # Return parsed JSON (no regex, no cleaning)
+        return json.loads(raw_text)
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 @app.post("/analyze/ollama")
 async def analyze_image(request: Request):
