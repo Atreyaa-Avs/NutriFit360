@@ -1,5 +1,4 @@
 import { useCloudVisionResponse } from "@/hooks/useCloudVisionResponse";
-import { useOllamaVisionResponse } from "@/hooks/useOllamaVisionResponse";
 import { useLocalSearchParams } from "expo-router";
 import React, { useEffect } from "react";
 import {
@@ -11,9 +10,7 @@ import {
   View,
 } from "react-native";
 
-type Nutrition = {
-  [key: string]: number;
-};
+type Nutrition = { [key: string]: number };
 
 const AnalyzeRecipeComponent = () => {
   const { imageBase64 } = useLocalSearchParams();
@@ -22,7 +19,10 @@ const AnalyzeRecipeComponent = () => {
     Array.isArray(imageBase64) ? imageBase64[0] : imageBase64 || ""
   );
 
-  const { data, isLoading, error, refetch } = useCloudVisionResponse(base64, false);
+  const { data, isLoading, error, refetch } = useCloudVisionResponse(
+    base64,
+    false
+  );
 
   useEffect(() => {
     refetch();
@@ -37,6 +37,7 @@ const AnalyzeRecipeComponent = () => {
           <Text className="text-2xl font-bold underline">Image</Text>
           <Text className="text-2xl font-bold">:</Text>
         </View>
+
         <View className="flex-row justify-center mt-6">
           {base64 && (
             <Image
@@ -60,60 +61,45 @@ const AnalyzeRecipeComponent = () => {
         )}
 
         {error && (
-          <Text className="mt-4 text-center text-red-500">Error analyzing image.</Text>
+          <Text className="mt-4 text-center text-red-500">
+            Error analyzing image.
+          </Text>
         )}
 
-        {/* {data && (
-          <View className="mt-4 space-y-2">
-            <Text className="text-lg font-semibold">Response:</Text>
-            <Text className="text-sm">{JSON.stringify(data, null, 2)}</Text>
-          </View>
-        )} */}
-
         {data && (
-          <View className="flex-row items-start gap-3 mx-4 mt-6 mb-3">
-            <View className="flex-row items-center">
-              <Text className="text-2xl font-bold underline">Name</Text>
-              <Text className="text-2xl font-bold">:</Text>
+          <>
+            {/* Recipe Name */}
+            <View className="flex-row items-start gap-3 mx-4 mt-6 mb-3">
+              <View className="flex-row items-center">
+                <Text className="text-2xl font-bold underline">Name</Text>
+                <Text className="text-2xl font-bold">:</Text>
+              </View>
+              <Text className="mr-20 text-xl">{data.recipe}</Text>
             </View>
-            <Text className="mr-20 text-xl">{data?.recipe}</Text>
-          </View>
-        )}
 
-        {data && (
-          <View className="flex-row items-center mx-4 mt-4">
-            <Text className="text-xl font-bold underline">Nutrition Info</Text>
-            <Text className="text-xl font-bold">:</Text>
-          </View>
-        )}
+            {/* Ingredients */}
+            <View className="m-4 bg-white rounded-lg" style={{ elevation: 4 }}>
+              <View className="flex-row justify-center w-full gap-1 py-3 rounded-t-lg bg-primary">
+                <Text className="text-xl font-bold text-center text-neutral-900">
+                  1.
+                </Text>
+                <Text className="text-xl font-bold text-center underline text-neutral-900">
+                  Ingredients
+                </Text>
+              </View>
 
-        {data && (
-          <View className="m-4 bg-white rounded-lg" style={{ elevation: 4 }}>
-            <View className="flex-row justify-center w-full gap-1 py-3 rounded-t-lg bg-primary">
-              <Text className="text-xl font-bold text-center text-neutral-900">
-                1.
-              </Text>
-              <Text className="text-xl font-bold text-center underline text-neutral-900">
-                Ingredients
-              </Text>
+              <View className="flex-row flex-wrap p-2 pb-4 mx-4 my-4">
+                {data.ingredients.map((ele: string, indx: number) => (
+                  <Card key={indx} val={ele} />
+                ))}
+              </View>
             </View>
-            <View className="flex-row flex-wrap p-2 pb-4 mx-4 my-4">
-              {data?.ingredients.map((ele: string, indx: number) => (
-                <Card
-                  key={indx}
-                  val={ele.replace(/\s*\([^)]*\)/g, "").trim()}
-                /> // Remove whatever is enclosed in () :-> Regex!
-              ))}
-            </View>
-          </View>
-        )}
 
-        {data && (
-          <View
-            className="mx-4 my-4 bg-neutral-300 rounded-xl"
-            style={{ elevation: 4 }}
-          >
-            <View className="flex-row items-center">
+            {/* Nutrition Info */}
+            <View
+              className="mx-4 my-4 bg-neutral-300 rounded-xl"
+              style={{ elevation: 4 }}
+            >
               <View className="flex-row justify-center w-full gap-1 py-3 rounded-t-lg bg-primary">
                 <Text className="text-xl font-bold text-center text-neutral-900">
                   2.
@@ -122,16 +108,17 @@ const AnalyzeRecipeComponent = () => {
                   Estimated Nutrition
                 </Text>
               </View>
+
+              <View
+                className="px-4 mx-4 my-6 bg-white rounded-lg"
+                style={{ elevation: 7 }}
+              >
+                {Object.entries(nutrition || {}).map(([key, value]) => (
+                  <NutritionInfo key={key} title={key} amount={value} />
+                ))}
+              </View>
             </View>
-            <View
-              className="px-4 mx-4 my-6 bg-white rounded-lg"
-              style={{ elevation: 7 }}
-            >
-              {Object.entries(nutrition || {}).map(([key, value]) => (
-                <NutritionInfo key={key} title={key} amount={value} />
-              ))}
-            </View>
-          </View>
+          </>
         )}
       </View>
     </ScrollView>
@@ -142,8 +129,6 @@ export default AnalyzeRecipeComponent;
 
 type NutritionInfoProps = {
   title: string;
-  //   percentage: number;
-  //   color: string;
   amount: number;
 };
 
@@ -183,7 +168,7 @@ const Card = ({ val }: CardProps) => {
       className="flex-1 min-w-[32%] p-3 m-2 bg-[#ccc] rounded-md"
       style={{ elevation: 4 }}
     >
-      <Text className="font-medium text-center capitalize"> {val} </Text>
+      <Text className="font-medium text-center capitalize">{val}</Text>
     </View>
   );
 };

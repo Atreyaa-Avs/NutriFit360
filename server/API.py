@@ -28,11 +28,13 @@ app.add_middleware(
 )
 # ----------------------------------------------------------
 
+load_dotenv()
+
 # Load data and scaler
 data = joblib.load("models/data.pkl")
 scaler = joblib.load("models/scaler.pkl")
 
-GEMINI_API_KEY = load_dotenv("GEMINI_API_KEY")    # <-- put your key here
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")    # <-- put your key here
 GEMINI_URL = (
     f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key={GEMINI_API_KEY}"
 )
