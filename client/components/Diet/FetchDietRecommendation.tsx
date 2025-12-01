@@ -33,7 +33,7 @@ const FetchDietRecommendation = () => {
       </View>
 
       <View className="flex-row gap-3 item-center">
-        <AIButton className="" onPressGoto={"/(drawer)/(tabs)/diet"}>
+        <AIButton className="" onPressGoto={"/(drawer)/(tabs)/diet/AIDietPlanner"}>
           <SparklesSvg width={16} height={32} />
           <View className="flex-row items-start gap-1">
             <GilroyMediumText className="tracking-tighter text-white">Get AI Plan</GilroyMediumText>
@@ -58,7 +58,7 @@ const FetchDietRecommendation = () => {
         </Text>
       )}
       {data && (
-        <View className="p-2 rounded mt-5">
+        <View className="p-2 mt-5 rounded">
           <GilroyBoldText className="mb-3 text-2xl">Diet:</GilroyBoldText>
           <View className="flex-col gap-4">
             {data?.recommendations[0]?.Diet?.split(";").map(

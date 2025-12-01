@@ -24,7 +24,7 @@ interface SlotSectionProps {
 const SlotSection: React.FC<SlotSectionProps> = ({ title, slot }) => {
   return (
     <View className="mt-4">
-      <GilroyBoldText className="text-xl mb-2">{title}</GilroyBoldText>
+      <GilroyBoldText className="mb-2 text-xl">{title}</GilroyBoldText>
 
       <InterFontText>
         <GilroySemiBoldText>Focus:</GilroySemiBoldText> {slot.focus}
@@ -48,10 +48,10 @@ const SlotSection: React.FC<SlotSectionProps> = ({ title, slot }) => {
 
       <GilroySemiBoldText className="mt-2 mb-1">Exercises:</GilroySemiBoldText>
       <View className="flex-row flex-wrap">
-        {slot.exercises.map((ex: any, idx: number) => (
+        {slot.exercises.map((ex: string, idx: number) => (
           <View
             key={idx}
-            className="px-3 py-1 bg-gray-200 rounded-lg mr-2 mb-2"
+            className="px-3 py-1 mb-2 mr-2 bg-gray-200 rounded-lg"
           >
             <InterFontText className="capitalize">{ex}</InterFontText>
           </View>
@@ -61,20 +61,16 @@ const SlotSection: React.FC<SlotSectionProps> = ({ title, slot }) => {
   );
 };
 
-/* ---------------------------------------------
- * MAIN COMPONENT
- * ------------------------------------------- */
 const AIWorkoutPlannerUI: React.FC<AIPlannerUIProps> = ({
   workoutRecommendation,
 }) => {
-  const { data, isLoading, isFetching, error, refetch } = useAIWorkoutPlan(
-    workoutRecommendation
-  );
+  const { data, isLoading, isFetching, error, refetch } =
+    useAIWorkoutPlan(workoutRecommendation);
 
   if (isLoading || isFetching) {
     return (
-      <View className="flex-row justify-center items-center p-5">
-        <View className="flex-row w-fit items-center bg-white gap-3 p-3 rounded-xl">
+      <View className="flex-row items-center justify-center p-5">
+        <View className="flex-row items-center gap-3 p-3 bg-white w-fit rounded-xl">
           <ActivityIndicator size="small" color="#000" />
           <GilroyBoldText className="text-gray-700">
             Generating AI Plan...
@@ -87,11 +83,11 @@ const AIWorkoutPlannerUI: React.FC<AIPlannerUIProps> = ({
   if (error || !data) {
     return (
       <View className="p-5">
-        <Text className="text-red-600 text-center">
+        <Text className="text-center text-red-600">
           Something went wrong. Try again.
         </Text>
         <Text
-          className="text-blue-600 text-center mt-3"
+          className="mt-3 text-center text-blue-600"
           onPress={() => refetch()}
         >
           Tap to retry
@@ -102,29 +98,29 @@ const AIWorkoutPlannerUI: React.FC<AIPlannerUIProps> = ({
 
   return (
     <View>
-      <GilroyBoldText className="text-2xl my-4">
-        Your AI Workout Plan
+      <GilroyBoldText className="my-4 text-2xl">
+        Your Weekly AI Workout Plan
       </GilroyBoldText>
 
-      {data.days.map((day: any, index: number) => (
+      {Object.entries(data.workoutPlan).map(([dayName, dayData]: any) => (
         <View
-          key={index}
-          className="flex-col gap-2 bg-white rounded-xl p-4 mb-6"
+          key={dayName}
+          className="flex-col gap-2 p-4 mb-6 bg-white rounded-xl"
           style={{ elevation: 3 }}
         >
-          <GilroyBoldText className="text-xl">{day.day}</GilroyBoldText>
+          <GilroyBoldText className="text-xl">{dayName}</GilroyBoldText>
 
           <InterFontText>
-            <GilroySemiBoldText>Focus:</GilroySemiBoldText> {day.focus}
+            <GilroySemiBoldText>Focus:</GilroySemiBoldText> {dayData.focus}
           </InterFontText>
 
           <InterFontText>
-            <GilroySemiBoldText>Summary:</GilroySemiBoldText> {day.summary}
+            <GilroySemiBoldText>Summary:</GilroySemiBoldText> {dayData.summary}
           </InterFontText>
 
-          <SlotSection title="Morning" slot={day.morning} />
-          <SlotSection title="Afternoon" slot={day.afternoon} />
-          <SlotSection title="Evening" slot={day.evening} />
+          <SlotSection title="Morning" slot={dayData.morning} />
+          <SlotSection title="Afternoon" slot={dayData.afternoon} />
+          <SlotSection title="Evening" slot={dayData.evening} />
         </View>
       ))}
     </View>

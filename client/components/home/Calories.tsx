@@ -7,7 +7,7 @@ import { GilroySemiBoldText } from "../Fonts";
 const Calories = ({ startAnimation }: { startAnimation: boolean }) => {
   return (
     <View className="p-4">
-      <View className="flex flex-row justify-between items-center mb-10">
+      <View className="flex flex-row items-center justify-between mb-10">
         <GilroySemiBoldText className="text-xl font-semibold tracking-tight">Calories</GilroySemiBoldText>
         <CaloriesSvg width={32} height={32} fill="#41B576" />
       </View>

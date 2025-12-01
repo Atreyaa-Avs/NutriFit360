@@ -8,11 +8,10 @@ interface FetchPlanParams {
 const fetchAIWorkoutPlan = async ({ workoutRecommendation }: FetchPlanParams) => {
   try {
     const response = await axios.post(
-      "http://192.168.1.19:8080/ai/workout-plan",
+      `${process.env.EXPO_PUBLIC_BACKEND_URL!}/ai/workout-plan`,
       { workoutRecommendation: workoutRecommendation },
       {
         headers: { "Content-Type": "application/json" },
-        timeout: 15000,
       }
     );
 

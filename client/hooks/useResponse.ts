@@ -3,8 +3,7 @@ import axios from "axios";
 
 const fetchResponse = async (body: any): Promise<any> => {
   const response = await axios.post(
-    // `${process.env.EXPO_PUBLIC_BACKEND_URL}/recommend/`,
-    "http://192.168.1.19:8080/recommend",
+    `${process.env.EXPO_PUBLIC_BACKEND_URL}/recommend/`,
     body
   );
   return response.data;

@@ -95,6 +95,14 @@ export default function DietLayout() {
           ),
         })}
       />
+      <Stack.Screen
+        name="AIDietPlanner"
+        options={{
+          header: () => (
+            <CustomMealHeader title={"AI Diet Planner"} />
+          ),
+        }}
+      />
     </Stack>
   );
 }

@@ -237,22 +237,10 @@ const HealthConnect = () => {
               last7DaysSteps={last7DaysSteps}
               loadingLast7Days={loadingLast7Days}
             />
-            <HealthStepsSection
-              steps={steps}
-              loadingSteps={loadingSteps}
-              last7DaysSteps={last7DaysSteps}
-              loadingLast7Days={loadingLast7Days}
-            />
-            <HealthStepsSection
-              steps={steps}
-              loadingSteps={loadingSteps}
-              last7DaysSteps={last7DaysSteps}
-              loadingLast7Days={loadingLast7Days}
-            />
           </View>
 
           {/* Footer */}
-          <View className="items-center w-full mt-10">
+          <View className="items-center w-full mt-24">
             <GilroyBoldText className="text-sm text-gray-500">
               NutriFit360
             </GilroyBoldText>
@@ -293,8 +281,7 @@ const HealthStepsSection = ({
             {steps} steps
           </GilroyBoldText>
 
-          {/* Last 7 Days Section */}
-          {loadingLast7Days ? (
+          {/* {loadingLast7Days ? (
             <ActivityIndicator size="small" className="mt-4" />
           ) : (
             last7DaysSteps.length > 0 && (
@@ -303,9 +290,7 @@ const HealthStepsSection = ({
                   Steps in the Last 7 Days
                 </GilroySemiBoldText>
 
-                {/* TABLE */}
                 <View className="p-2 bg-gray-100 rounded-lg">
-                  {/* Header Row */}
                   <View className="flex-row justify-between px-1 pb-2 border-b border-gray-300">
                     <GilroySemiBoldText className="flex-1 text-left">
                       Date
@@ -315,7 +300,6 @@ const HealthStepsSection = ({
                     </GilroySemiBoldText>
                   </View>
 
-                  {/* Data Rows */}
                   {last7DaysSteps.map((entry, index) => (
                     <View
                       key={index}
@@ -332,7 +316,7 @@ const HealthStepsSection = ({
                 </View>
               </View>
             )
-          )}
+          )} */}
         </View>
       )}
     </View>

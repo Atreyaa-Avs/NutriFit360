@@ -244,7 +244,8 @@ async def analyze_image(request: Request):
 @app.post("/ai/workout-plan")
 async def ai_workout_plan(request: Request):
     """
-    Generate a 3-day detailed workout plan in JSON format using Gemini API.
+    Generate a 7-day detailed workout plan in JSON format using Gemini API.
+    Days: Monday → Sunday
     Each day has morning, afternoon, evening slots with focus, summary, duration,
     intensity, calories, and exercises.
     """
@@ -256,35 +257,43 @@ async def ai_workout_plan(request: Request):
 
         # ---------------------- Gemini Prompt ----------------------
         llm_prompt = f"""
-You are a professional fitness coach. Based on this user recommended exercises: "{workoutRecommendation}",
-generate a 3-day workout plan for a beginner-to-intermediate user.
+You are a professional fitness coach. Based on this user recommendation: "{workoutRecommendation}",
+generate a 7-day workout plan for a beginner-to-intermediate user.
 
-Each day should have:
-- day: "Day 1", "Day 2", "Day 3"
-- focus: one line
-- summary: one line
-- morning, afternoon, evening slots:
-    - summary
-    - focus
-    - duration (minutes, e.g., "20 minutes")
-    - intensity ("Light", "Moderate", "High")
-    - calories (approximate)
-    - exercises (array of exercise names) should not be empty for any entry
+Requirements:
+- Days: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday
+- Each day should include:
+    - focus: one line
+    - summary: one line
+    - morning, afternoon, evening slots:
+        - summary
+        - focus
+        - duration (minutes, e.g., "20 minutes")
+        - intensity ("Light", "Moderate", "High")
+        - calories (approximate)
+        - exercises (array of exercise names, non-empty)
+- Exercises must vary throughout the week
+- Use realistic beginner-to-intermediate exercises
+- Ensure total weekly intensity is balanced
 
-Return ONLY JSON with the following structure (no explanations):
+Return ONLY JSON with the following structure (no explanations, no extra text):
 
 {{
-  "days": [
-    {{
-      "day": "Day 1",
+  "workoutPlan": {{
+    "Monday": {{
       "focus": "...",
       "summary": "...",
       "morning": {{ ... }},
       "afternoon": {{ ... }},
       "evening": {{ ... }}
     }},
-    ...
-  ]
+    "Tuesday": {{ ... }},
+    "Wednesday": {{ ... }},
+    "Thursday": {{ ... }},
+    "Friday": {{ ... }},
+    "Saturday": {{ ... }},
+    "Sunday": {{ ... }}
+  }}
 }}
         """
 
@@ -311,7 +320,10 @@ Return ONLY JSON with the following structure (no explanations):
         raw_text = raw_text.replace("```", "")
         match = re.search(r"\{.*\}", raw_text, re.DOTALL)
         if not match:
-            return JSONResponse(status_code=500, content={"error": "No JSON found in model response", "raw": raw_text})
+            return JSONResponse(
+                status_code=500,
+                content={"error": "No JSON found in model response", "raw": raw_text}
+            )
 
         clean_json = match.group(0)
         plan = json.loads(clean_json)
@@ -319,6 +331,133 @@ Return ONLY JSON with the following structure (no explanations):
 
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
+    
+@app.post("/ai/diet-plan")
+async def ai_diet_plan(request: Request):
+    """
+    Generate a 7-day detailed diet plan in JSON format using Gemini API.
+    Days must be: Monday, Tuesday, Wednesday, Thursday, Friday, Saturday, Sunday.
+    Meals: Breakfast, Lunch, Snacks, Dinner.
+
+    IMPORTANT:
+    The dietRecommendation string contains exactly 3 categories:
+    - Vegetables
+    - Protein Intake
+    - Juices
+
+    The AI must ONLY use items from these categories.
+    Also include dishes[] = dishes that can be prepared ONLY using the items in items[].
+    """
+    try:
+        body = await request.json()
+        dietRecommendation = body.get("dietRecommendation")
+
+        if not dietRecommendation:
+            return JSONResponse(status_code=400, content={"error": "Missing dietRecommendation"})
+
+        llm_prompt = f"""
+You are a certified nutritionist. The user has provided a recommendation string 
+with EXACTLY these categories:
+1. Vegetables  
+2. Protein Intake  
+3. Juices  
+
+User text: "{dietRecommendation}"
+
+==================================
+ STRICT RULES (VERY IMPORTANT)
+==================================
+Dish Names Rules:
+ - Dish names may reference global healthy cuisine styles 
+   (fried rice style, curry-style, paratha-style, stir-fry inspired, bowl, fusion mix).
+ - MUST NOT imply use of forbidden ingredients (wheat, rice, oil, spices, lentils, butter, bread).
+ - items[] MUST use ONLY the user-provided ingredients.
+ - If referencing a cuisine, describe it as:
+     "style", "inspired", "mix", "fusion", or "bowl".
+
+==================================
+ OUTPUT FORMAT (MANDATORY)
+==================================
+
+Return ONLY valid JSON:
+
+{{
+  "dietPlan": {{
+    "Monday": {{
+      "meals": {{
+        "Breakfast": {{
+          "description": "...",
+          "items": ["...", "..."],
+          "dishes": ["...", "..."]
+        }},
+        "Lunch": {{
+          "description": "...",
+          "items": ["...", "..."],
+          "dishes": ["...", "..."]
+        }},
+        "Snacks": {{
+          "description": "...",
+          "items": ["...", "..."],
+          "dishes": ["...", "..."]
+        }},
+        "Dinner": {{
+          "description": "...",
+          "items": ["...", "..."],
+          "dishes": ["...", "..."]
+        }}
+      }}
+    }},
+    "Tuesday": {{ ... }},
+    "Wednesday": {{ ... }},
+    "Thursday": {{ ... }},
+    "Friday": {{ ... }},
+    "Saturday": {{ ... }},
+    "Sunday": {{ ... }}
+  }}
+}}
+
+Return ONLY JSON. No explanations before or after.
+"""
+
+        payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": llm_prompt}
+                    ]
+                }
+            ]
+        }
+
+        # ---------------------- Call Gemini ----------------------
+        response = requests.post(GEMINI_URL, json=payload)
+
+        if not response.ok:
+            return JSONResponse(status_code=response.status_code, content={"error": response.text})
+
+        result = response.json()
+        raw_text = result["candidates"][0]["content"]["parts"][0]["text"].strip()
+
+        # ---------------------- Clean JSON ----------------------
+        raw_text = re.sub(r"```(?:json)?\s*", "", raw_text)
+        raw_text = raw_text.replace("```", "")
+
+        # Extract strict JSON portion
+        match = re.search(r"\{.*\}", raw_text, re.DOTALL)
+        if not match:
+            return JSONResponse(
+                status_code=500,
+                content={"error": "No JSON found in model response", "raw": raw_text},
+            )
+
+        clean_json = match.group(0)
+        plan = json.loads(clean_json)
+
+        return JSONResponse(content=plan)
+
+    except Exception as e:
+        return JSONResponse(status_code=500, content={"error": str(e)})
+
 
 if __name__ == "__main__":
     uvicorn.run("API:app", host="0.0.0.0", port=8080, reload=True)
