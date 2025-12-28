@@ -146,37 +146,44 @@ const NotificationTimeline = () => {
       </SafeAreaView>
 
       {/* 🔥 MAIN TIMELINE */}
-      <Timeline
-        data={data}
-        circleSize={20}
-        circleColor="#FF5733"
-        lineColor="#D1D5DB"
-        timeContainerStyle={{ minWidth: 72 }}
-        timeStyle={{
-          textAlign: "center",
-          backgroundColor: "#FF5733",
-          color: "white",
-          padding: 5,
-          borderRadius: 8,
-        }}
-        titleStyle={{
-          fontFamily: "Gilroy-Bold",
-          fontSize: 16,
-          color: "#111827",
-          fontWeight: "normal",
-          backgroundColor: "white",
-          padding: 4,
-          borderRadius: 5,
-          paddingLeft: 12,
-          letterSpacing: -0.4,
-        }}
-        descriptionStyle={{
-          fontFamily: "Inter",
-          color: "#6B7280",
-        }}
-        innerCircle={"dot"}
-        style={{ margin: 16 }}
-      />
+      <ScrollView>
+        <Timeline
+          data={data}
+          circleSize={20}
+          circleColor="#FF5733"
+          lineColor="#D1D5DB"
+          timeContainerStyle={{ minWidth: 72 }}
+          timeStyle={{
+            textAlign: "center",
+            backgroundColor: "#FF5733",
+            color: "white",
+            padding: 5,
+            borderRadius: 8,
+          }}
+          titleStyle={{
+            fontFamily: "Gilroy-Bold",
+            fontSize: 16,
+            color: "#111827",
+            fontWeight: "normal",
+            backgroundColor: "white",
+            padding: 4,
+            borderRadius: 5,
+            paddingLeft: 6,
+            paddingTop: 6,
+            paddingBottom: 6,
+            letterSpacing: -0.4,
+          }}
+          descriptionStyle={{
+            fontFamily: "Inter",
+            color: "#6B7280",
+            fontSize: 14,
+            marginTop: 4,
+            paddingLeft: 6,
+          }}
+          innerCircle={"dot"}
+          style={{ margin: 16 }}
+        />
+      </ScrollView>
 
       <View className="items-center w-full pt-5 mb-10 border-t border-neutral-200">
         <GilroyBoldText className="text-sm text-gray-500">
